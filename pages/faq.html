@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>常见问题 - Proxy 101</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="light-mode">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>🚀 Proxy 101</h1>
+                <p class="nav-tagline">全面的代理知识库</p>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3>基础理论</h3>
+                    <ul>
+                        <li><a href="basics.html">代理基础概念</a></li>
+                        <li><a href="terminology.html">核心术语解析</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>VPS 相关</h3>
+                    <ul>
+                        <li><a href="vps.html">VPS 基础知识</a></li>
+                        <li><a href="providers.html">VPS 提供商</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>协议与工具</h3>
+                    <ul>
+                        <li><a href="protocols.html">代理协议详解</a></li>
+                        <li><a href="tools.html">部署工具</a></li>
+                        <li><a href="clients.html">客户端推荐</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>安全与防护</h3>
+                    <ul>
+                        <li><a href="security.html">安全防护机制</a></li>
+                        <li><a href="gfw.html">GFW 检测原理</a></li>
+                        <li><a href="ip-blocking.html">IP 封禁机制</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>进阶与实战</h3>
+                    <ul>
+                        <li><a href="advanced.html">进阶优化</a></li>
+                        <li><a href="faq.html">常见问题</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content content-page">
+            <div class="breadcrumb">
+                <a href="../index.html">首页</a>
+                <span>/</span>
+                <span>常见问题</span>
+            </div>
+
+            <h1>❓ 常见问题与故障排查</h1>
+
+            <h2>新手常见问题</h2>
+
+            <h3>Q1: 第一次搭建，推荐什么方案？</h3>
+            <div class="success-box">
+                <p><strong>A:</strong> 推荐方案：</p>
+                <ol>
+                    <li><strong>VPS</strong>: Vultr 日本/新加坡节点（$6/月）</li>
+                    <li><strong>系统</strong>: Ubuntu 22.04 LTS</li>
+                    <li><strong>工具</strong>: 3X-UI 面板</li>
+                    <li><strong>协议</strong>: VLESS + Reality（无需域名）</li>
+                    <li><strong>客户端</strong>: v2rayN (Windows) / Shadowrocket (iOS)</li>
+                </ol>
+            </div>
+
+            <h3>Q2: 需要懂编程吗？</h3>
+            <div class="info-box">
+                <p><strong>A:</strong> 不需要。使用一键脚本和图形化面板，只需要：</p>
+                <ul>
+                    <li>会用 SSH 连接服务器</li>
+                    <li>会复制粘贴命令</li>
+                    <li>基本的操作系统使用能力</li>
+                </ul>
+            </div>
+
+            <h3>Q3: 需要域名吗？</h3>
+            <div class="info-box">
+                <p><strong>A:</strong> 看协议：</p>
+                <ul>
+                    <li>✅ <strong>不需要域名</strong>: VLESS Reality、Shadowsocks、Hysteria2</li>
+                    <li>❌ <strong>需要域名</strong>: Trojan、VMess + WebSocket + TLS</li>
+                </ul>
+                <p>新手推荐 Reality，无需域名，隐蔽性最强。</p>
+            </div>
+
+            <h3>Q4: 自建 vs 机场，选哪个？</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>对比项</th>
+                        <th>自建</th>
+                        <th>机场</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>隐私</strong></td>
+                        <td>✅ 完全私有</td>
+                        <td>❌ 流量被监控</td>
+                    </tr>
+                    <tr>
+                        <td><strong>稳定性</strong></td>
+                        <td>✅ 自己控制</td>
+                        <td>⚠️ 可能跑路</td>
+                    </tr>
+                    <tr>
+                        <td><strong>成本</strong></td>
+                        <td>$5-10/月</td>
+                        <td>$5-20/月</td>
+                    </tr>
+                    <tr>
+                        <td><strong>技术门槛</strong></td>
+                        <td>⚠️ 需要基本技能</td>
+                        <td>✅ 开箱即用</td>
+                    </tr>
+                    <tr>
+                        <td><strong>节点数量</strong></td>
+                        <td>自己搭建几个</td>
+                        <td>✅ 通常很多节点</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>建议</strong>: 注重隐私和技术学习 → 自建；只想快速使用 → 机场。</p>
+
+            <h2>连接问题</h2>
+
+            <h3>Q5: 无法连接服务器</h3>
+            <div class="warning-box">
+                <p><strong>A:</strong> 排查步骤：</p>
+                <ol>
+                    <li><strong>测试 IP 是否被墙</strong>
+                        <pre><code>ping your-vps-ip</code></pre>
+                    </li>
+                    <li><strong>检查端口是否开放</strong>
+                        <pre><code>telnet your-vps-ip 443</code></pre>
+                    </li>
+                    <li><strong>检查服务是否运行</strong>
+                        <pre><code>systemctl status xray
+systemctl status x-ui</code></pre>
+                    </li>
+                    <li><strong>检查防火墙</strong>
+                        <pre><code>ufw status
+ufw allow 443/tcp</code></pre>
+                    </li>
+                    <li><strong>检查配置是否正确</strong>
+                        <ul>
+                            <li>IP 地址、端口、UUID、协议是否匹配</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <h3>Q6: 连接后网速很慢</h3>
+            <div class="info-box">
+                <p><strong>A:</strong> 可能原因和解决：</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>原因</th>
+                            <th>解决方案</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>线路拥堵（晚高峰）</td>
+                            <td>更换为 CN2 GIA 或 IPLC 线路</td>
+                        </tr>
+                        <tr>
+                            <td>VPS 性能不足</td>
+                            <td>升级配置或更换商家</td>
+                        </tr>
+                        <tr>
+                            <td>QoS 限速</td>
+                            <td>使用伪装协议（Reality、Trojan）</td>
+                        </tr>
+                        <tr>
+                            <td>未启用 BBR</td>
+                            <td>安装 BBR 加速</td>
+                        </tr>
+                        <tr>
+                            <td>服务器位置远</td>
+                            <td>选择香港、日本等近距离节点</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Q7: 频繁断线</h3>
+            <div class="info-box">
+                <p><strong>A:</strong> 检查：</p>
+                <ul>
+                    <li>协议是否被识别（改用 Reality、Trojan）</li>
+                    <li>IP 是否被轻度封锁（测试端口连通性）</li>
+                    <li>客户端是否开启了 "自动重连"</li>
+                    <li>VPS 是否稳定（查看 uptime 和 CPU 使用率）</li>
+                </ul>
+            </div>
+
+            <h2>配置问题</h2>
+
+            <h3>Q8: 忘记面板密码怎么办？</h3>
+            <div class="info-box">
+                <p><strong>A:</strong> 3X-UI 重置方法：</p>
+                <pre><code># 重置管理员账号
+x-ui
+
+# 选择 6 - 修改账号密码
+# 输入新的用户名和密码</code></pre>
+            </div>
+
+            <h3>Q9: 如何备份配置？</h3>
+            <div class="info-box">
+                <pre><code># 备份重要文件
+tar -czf backup.tar.gz /etc/xray /etc/x-ui /etc/nginx
+
+# 下载到本地
+scp root@your-vps-ip:backup.tar.gz ./</code></pre>
+            </div>
+
+            <h3>Q10: 如何迁移到新服务器？</h3>
+            <div class="info-box">
+                <ol>
+                    <li>在旧服务器备份配置</li>
+                    <li>在新服务器安装相同版本的面板</li>
+                    <li>恢复配置文件</li>
+                    <li>修改客户端的服务器 IP</li>
+                    <li>测试连接后删除旧服务器</li>
+                </ol>
+            </div>
+
+            <h2>安全问题</h2>
+
+            <h3>Q11: SSH 无法登录</h3>
+            <div class="warning-box">
+                <p><strong>A:</strong> 可能原因：</p>
+                <ul>
+                    <li>修改端口后忘记（查看商家控制台的 Console 登录）</li>
+                    <li>禁用密码登录但密钥配置错误</li>
+                    <li>防火墙阻止了 SSH 端口</li>
+                    <li>fail2ban 误封了你的 IP</li>
+                </ul>
+                <p><strong>解决</strong>: 使用商家提供的 VNC/Console 登录修复。</p>
+            </div>
+
+            <h3>Q12: 服务器被入侵怎么办？</h3>
+            <div class="warning-box">
+                <ol>
+                    <li>立即断开服务器网络</li>
+                    <li>备份重要数据</li>
+                    <li>重装系统</li>
+                    <li>加固安全配置（修改 SSH 端口、密钥登录、防火墙）</li>
+                    <li>分析入侵原因</li>
+                </ol>
+            </div>
+
+            <h2>协议与客户端</h2>
+
+            <h3>Q13: Reality vs Trojan，选哪个？</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>对比项</th>
+                        <th>Reality</th>
+                        <th>Trojan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>需要域名</strong></td>
+                        <td>✅ 不需要</td>
+                        <td>❌ 需要</td>
+                    </tr>
+                    <tr>
+                        <td><strong>隐蔽性</strong></td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>⭐⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td><strong>配置难度</strong></td>
+                        <td>中等</td>
+                        <td>中等</td>
+                    </tr>
+                    <tr>
+                        <td><strong>客户端支持</strong></td>
+                        <td>需要新版本</td>
+                        <td>支持广泛</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>建议</strong>: 没有域名 → Reality；有域名 → 两者都可以，Reality 更强。</p>
+
+            <h3>Q14: iOS 客户端哪个最好？</h3>
+            <div class="success-box">
+                <p><strong>A:</strong> 推荐顺序：</p>
+                <ol>
+                    <li><strong>Shadowrocket</strong> ($2.99) - 最佳选择，功能全面</li>
+                    <li><strong>Quantumult X</strong> ($7.99) - 功能最强，适合进阶</li>
+                    <li><strong>Loon</strong> ($5.99) - 界面美观，配置灵活</li>
+                </ol>
+                <p>新手直接买 Shadowrocket 即可。</p>
+            </div>
+
+            <h3>Q15: 如何在路由器上配置代理？</h3>
+            <div class="info-box">
+                <p><strong>A:</strong> 方案：</p>
+                <ul>
+                    <li><strong>方案 1</strong>: 刷梅林固件 + 安装 Clash</li>
+                    <li><strong>方案 2</strong>: 使用软路由（OpenWrt + PassWall）</li>
+                    <li><strong>方案 3</strong>: 树莓派 + 透明代理</li>
+                </ul>
+                <p>具体教程需要另外学习，建议先掌握基础配置。</p>
+            </div>
+
+            <h2>费用与选择</h2>
+
+            <h3>Q16: 每月预算多少合适？</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>预算</th>
+                        <th>配置</th>
+                        <th>适用人群</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>$5-10/月</strong></td>
+                        <td>基础 VPS + 普通线路</td>
+                        <td>轻度使用、学习测试</td>
+                    </tr>
+                    <tr>
+                        <td><strong>$10-20/月</strong></td>
+                        <td>CN2 GT 或高配 VPS</td>
+                        <td>日常使用、看视频</td>
+                    </tr>
+                    <tr>
+                        <td><strong>$20-50/月</strong></td>
+                        <td>CN2 GIA 或多节点</td>
+                        <td>重度使用、追求体验</td>
+                    </tr>
+                    <tr>
+                        <td><strong>$50+/月</strong></td>
+                        <td>IPLC 专线</td>
+                        <td>企业、极致稳定</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Q17: 流量够用吗？</h3>
+            <div class="info-box">
+                <p><strong>A:</strong> 流量消耗参考：</p>
+                <ul>
+                    <li>浏览网页：10-50 MB/小时</li>
+                    <li>1080P 视频：3-5 GB/小时</li>
+                    <li>4K 视频：15-20 GB/小时</li>
+                    <li>下载文件：按文件大小</li>
+                </ul>
+                <p>个人使用 500GB/月 通常够用，重度看视频需要 1-2TB。</p>
+            </div>
+
+            <h2>故障排查流程</h2>
+
+            <div class="warning-box">
+                <h4>标准排查步骤</h4>
+                <ol>
+                    <li><strong>确认基础连通性</strong>
+                        <ul>
+                            <li>ping 服务器 IP</li>
+                            <li>telnet 服务器端口</li>
+                        </ul>
+                    </li>
+                    <li><strong>检查服务状态</strong>
+                        <pre><code>systemctl status xray
+journalctl -u xray -n 50</code></pre>
+                    </li>
+                    <li><strong>验证配置正确</strong>
+                        <ul>
+                            <li>对比服务端和客户端配置</li>
+                            <li>检查 UUID、端口、协议</li>
+                        </ul>
+                    </li>
+                    <li><strong>查看日志</strong>
+                        <pre><code>tail -f /var/log/xray/access.log
+tail -f /var/log/xray/error.log</code></pre>
+                    </li>
+                    <li><strong>测试替代方案</strong>
+                        <ul>
+                            <li>换个客户端试试</li>
+                            <li>换个节点试试</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <h2>学习资源</h2>
+
+            <div class="success-box">
+                <h4>推荐资源</h4>
+                <ul>
+                    <li><strong>论坛社区</strong>
+                        <ul>
+                            <li>Hostloc - VPS 讨论</li>
+                            <li>V2EX - 技术交流</li>
+                            <li>GitHub Issues - 项目问题</li>
+                        </ul>
+                    </li>
+                    <li><strong>文档</strong>
+                        <ul>
+                            <li>Xray 官方文档</li>
+                            <li>V2Ray 白话文教程</li>
+                            <li>各工具的 GitHub README</li>
+                        </ul>
+                    </li>
+                    <li><strong>视频教程</strong>
+                        <ul>
+                            <li>YouTube 搜索 "v2ray 教程"</li>
+                            <li>B站搜索相关内容</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <h2>获取帮助</h2>
+
+            <div class="info-box">
+                <p>遇到问题时：</p>
+                <ol>
+                    <li>先查阅本文档和官方文档</li>
+                    <li>搜索论坛和 GitHub Issues</li>
+                    <li>描述清楚问题（系统、版本、错误信息）</li>
+                    <li>提供日志和配置（隐藏敏感信息）</li>
+                </ol>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Proxy 101 知识库. 仅供技术学习使用.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

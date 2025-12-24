@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPS 提供商 - Proxy 101</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="light-mode">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>🚀 Proxy 101</h1>
+                <p class="nav-tagline">全面的代理知识库</p>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3>基础理论</h3>
+                    <ul>
+                        <li><a href="basics.html">代理基础概念</a></li>
+                        <li><a href="terminology.html">核心术语解析</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>VPS 相关</h3>
+                    <ul>
+                        <li><a href="vps.html">VPS 基础知识</a></li>
+                        <li><a href="providers.html">VPS 提供商</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>协议与工具</h3>
+                    <ul>
+                        <li><a href="protocols.html">代理协议详解</a></li>
+                        <li><a href="tools.html">部署工具</a></li>
+                        <li><a href="clients.html">客户端推荐</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>安全与防护</h3>
+                    <ul>
+                        <li><a href="security.html">安全防护机制</a></li>
+                        <li><a href="gfw.html">GFW 检测原理</a></li>
+                        <li><a href="ip-blocking.html">IP 封禁机制</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>进阶与实战</h3>
+                    <ul>
+                        <li><a href="advanced.html">进阶优化</a></li>
+                        <li><a href="faq.html">常见问题</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content content-page">
+            <div class="breadcrumb">
+                <a href="../index.html">首页</a>
+                <span>/</span>
+                <span>VPS 提供商</span>
+            </div>
+
+            <h1>🌐 VPS 提供商推荐</h1>
+
+            <h2>主流 VPS 商家对比</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>商家</th>
+                        <th>特点</th>
+                        <th>推荐线路</th>
+                        <th>价格范围</th>
+                        <th>官网</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Vultr</strong></td>
+                        <td>按小时计费，可随时删除</td>
+                        <td>美国/日本/新加坡</td>
+                        <td>$5-10/月</td>
+                        <td>vultr.com</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DigitalOcean</strong></td>
+                        <td>稳定，文档丰富</td>
+                        <td>美国旧金山/新加坡</td>
+                        <td>$6-12/月</td>
+                        <td>digitalocean.com</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Linode</strong></td>
+                        <td>性价比高，亚洲节点多</td>
+                        <td>日本/新加坡/印度</td>
+                        <td>$5-10/月</td>
+                        <td>linode.com</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BandwagonHost</strong></td>
+                        <td>CN2 GIA 线路</td>
+                        <td>洛杉矶 CN2</td>
+                        <td>$49.99/年起</td>
+                        <td>bandwagonhost.com</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DMIT</strong></td>
+                        <td>高端线路，速度快</td>
+                        <td>洛杉矶/圣何塞</td>
+                        <td>$14.9/月起</td>
+                        <td>dmit.io</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contabo</strong></td>
+                        <td>性价比极高，流量多</td>
+                        <td>美国/欧洲</td>
+                        <td>€4.99/月起</td>
+                        <td>contabo.com</td>
+                    </tr>
+                    <tr>
+                        <td><strong>RackNerd</strong></td>
+                        <td>促销价格低</td>
+                        <td>美国多城市</td>
+                        <td>$10-20/年</td>
+                        <td>racknerd.com</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>新手推荐商家</h2>
+
+            <h3>1. Vultr <span class="badge badge-success">首选推荐</span></h3>
+            <div class="info-box">
+                <h4>为什么推荐？</h4>
+                <ul>
+                    <li>✅ <strong>按小时计费</strong> - 不满意随时删除，只扣除使用时间</li>
+                    <li>✅ <strong>全球机房</strong> - 17 个数据中心，亚洲节点多</li>
+                    <li>✅ <strong>支付宝付款</strong> - 国内用户方便</li>
+                    <li>✅ <strong>新手友好</strong> - 界面简单，一键部署</li>
+                    <li>✅ <strong>IP 可更换</strong> - IP 被墙可以重新快照部署</li>
+                </ul>
+                
+                <h4>推荐配置</h4>
+                <p>$6/月：1 vCPU, 1GB RAM, 25GB SSD, 2TB 流量</p>
+                
+                <h4>推荐机房</h4>
+                <ul>
+                    <li>日本东京（低延迟）</li>
+                    <li>新加坡（稳定性好）</li>
+                    <li>美国洛杉矶（性价比高）</li>
+                </ul>
+            </div>
+
+            <h3>2. DigitalOcean <span class="badge badge-info">稳定可靠</span></h3>
+            <div class="info-box">
+                <h4>特点</h4>
+                <ul>
+                    <li>✅ 全球知名，上市公司，稳定性高</li>
+                    <li>✅ 文档教程丰富</li>
+                    <li>✅ 技术社区活跃</li>
+                    <li>⚠️ 不支持支付宝，需信用卡或 PayPal</li>
+                </ul>
+                
+                <h4>推荐配置</h4>
+                <p>$6/月：1 vCPU, 1GB RAM, 25GB SSD, 1TB 流量</p>
+            </div>
+
+            <h3>3. Linode (Akamai) <span class="badge badge-info">性价比高</span></h3>
+            <div class="info-box">
+                <h4>特点</h4>
+                <ul>
+                    <li>✅ 被 Akamai（全球 CDN 巨头）收购，更稳定</li>
+                    <li>✅ 亚洲节点表现好（日本、新加坡）</li>
+                    <li>✅ 性价比高</li>
+                    <li>⚠️ 日本机房 IP 有时被墙</li>
+                </ul>
+                
+                <h4>推荐配置</h4>
+                <p>$5/月：1 vCPU, 1GB RAM, 25GB SSD, 1TB 流量</p>
+            </div>
+
+            <h2>CN2 线路专业商家</h2>
+
+            <h3>BandwagonHost（搬瓦工）<span class="badge badge-success">CN2 首选</span></h3>
+            <div class="success-box">
+                <h4>核心优势</h4>
+                <ul>
+                    <li>🚀 <strong>CN2 GIA 线路</strong> - 全程优化，晚高峰不拥堵</li>
+                    <li>✅ 稳定运营多年，口碑好</li>
+                    <li>✅ 中文支持</li>
+                    <li>✅ 支持支付宝</li>
+                    <li>⚠️ 价格较贵，经常缺货</li>
+                </ul>
+                
+                <h4>推荐套餐</h4>
+                <p><strong>CN2 GIA-E</strong>: $49.99/年 - 1 vCPU, 1GB RAM, 20GB SSD, 1TB/月</p>
+                <p><strong>延迟参考</strong>: 国内 120-150ms</p>
+            </div>
+
+            <h3>DMIT <span class="badge badge-success">高端线路</span></h3>
+            <div class="info-box">
+                <h4>特点</h4>
+                <ul>
+                    <li>🚀 提供多种优化线路（CN2 GIA、BGP、IPLC）</li>
+                    <li>✅ 速度快，稳定性极佳</li>
+                    <li>✅ 技术支持响应快</li>
+                    <li>⚠️ 价格昂贵</li>
+                </ul>
+                
+                <h4>推荐套餐</h4>
+                <p><strong>Premium</strong>: $14.9/月 - 2GB RAM, 20GB SSD, CN2 GIA</p>
+            </div>
+
+            <h2>性价比商家</h2>
+
+            <h3>RackNerd <span class="badge badge-warning">超低价</span></h3>
+            <div class="info-box">
+                <h4>特点</h4>
+                <ul>
+                    <li>💰 价格极低，年付套餐 $10-20</li>
+                    <li>✅ 适合首次尝试</li>
+                    <li>✅ 美国多机房</li>
+                    <li>⚠️ 线路一般，晚高峰可能慢</li>
+                </ul>
+            </div>
+
+            <h3>Contabo <span class="badge badge-warning">大流量</span></h3>
+            <div class="info-box">
+                <h4>特点</h4>
+                <ul>
+                    <li>✅ 配置高，流量超大（10-32TB/月）</li>
+                    <li>✅ 价格便宜</li>
+                    <li>⚠️ 超售严重，速度不稳定</li>
+                    <li>⚠️ 延迟较高（欧洲为主）</li>
+                </ul>
+            </div>
+
+            <h2>购买流程示例（Vultr）</h2>
+
+            <div class="info-box">
+                <h4>步骤 1: 注册账号</h4>
+                <p>访问 vultr.com，使用邮箱注册账号</p>
+                
+                <h4>步骤 2: 充值</h4>
+                <p>选择支付宝/PayPal/信用卡，最低充值 $10</p>
+                
+                <h4>步骤 3: 部署服务器</h4>
+                <ol>
+                    <li>点击 "Deploy New Server"</li>
+                    <li>选择 "Cloud Compute"</li>
+                    <li>选择机房（推荐：东京、新加坡、洛杉矶）</li>
+                    <li>选择系统：Ubuntu 22.04 LTS x64</li>
+                    <li>选择配置：$6/月（1GB RAM）</li>
+                    <li>点击 "Deploy Now"</li>
+                </ol>
+                
+                <h4>步骤 4: 获取连接信息</h4>
+                <p>部署完成后，查看服务器详情页，获取：</p>
+                <ul>
+                    <li>IP 地址</li>
+                    <li>用户名（通常是 root）</li>
+                    <li>密码</li>
+                </ul>
+            </div>
+
+            <h2>使用建议</h2>
+
+            <h3>按需求选择</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>你的需求</th>
+                        <th>推荐商家</th>
+                        <th>原因</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>首次尝试</strong></td>
+                        <td>Vultr / DigitalOcean</td>
+                        <td>按小时计费，随时删除</td>
+                    </tr>
+                    <tr>
+                        <td><strong>追求速度</strong></td>
+                        <td>BandwagonHost / DMIT</td>
+                        <td>CN2 GIA 线路最优</td>
+                    </tr>
+                    <tr>
+                        <td><strong>预算有限</strong></td>
+                        <td>RackNerd / Contabo</td>
+                        <td>价格超低</td>
+                    </tr>
+                    <tr>
+                        <td><strong>长期稳定</strong></td>
+                        <td>DigitalOcean / Linode</td>
+                        <td>大公司，稳定性高</td>
+                    </tr>
+                    <tr>
+                        <td><strong>游戏加速</strong></td>
+                        <td>香港/日本节点（Vultr、Linode）</td>
+                        <td>低延迟</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>注意事项</h2>
+
+            <div class="warning-box">
+                <h4>⚠️ 购买前必读</h4>
+                <ul>
+                    <li>🔍 <strong>检查 IP</strong> - 购买后先 ping 测试，IP 被墙立即删除重建</li>
+                    <li>📖 <strong>阅读 ToS</strong> - 确认允许代理使用</li>
+                    <li>💰 <strong>利用退款期</strong> - 多数商家有 7-30 天退款保证</li>
+                    <li>🔐 <strong>数据备份</strong> - VPS 可能被封，重要数据要备份</li>
+                    <li>⚡ <strong>测速后决定</strong> - 先测试性能再考虑续费</li>
+                </ul>
+            </div>
+
+            <h2>下一步</h2>
+            <div class="success-box">
+                <p>购买了 VPS 后，接下来可以：</p>
+                <ul>
+                    <li><a href="tools.html">部署工具</a> - 在 VPS 上部署代理服务</li>
+                    <li><a href="security.html">安全防护</a> - 加固服务器安全</li>
+                    <li><a href="clients.html">客户端推荐</a> - 选择客户端软件连接</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Proxy 101 知识库. 仅供技术学习使用.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

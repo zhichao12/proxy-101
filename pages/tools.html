@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>部署工具 - Proxy 101</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="light-mode">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>🚀 Proxy 101</h1>
+                <p class="nav-tagline">全面的代理知识库</p>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3>基础理论</h3>
+                    <ul>
+                        <li><a href="basics.html">代理基础概念</a></li>
+                        <li><a href="terminology.html">核心术语解析</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>VPS 相关</h3>
+                    <ul>
+                        <li><a href="vps.html">VPS 基础知识</a></li>
+                        <li><a href="providers.html">VPS 提供商</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>协议与工具</h3>
+                    <ul>
+                        <li><a href="protocols.html">代理协议详解</a></li>
+                        <li><a href="tools.html">部署工具</a></li>
+                        <li><a href="clients.html">客户端推荐</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>安全与防护</h3>
+                    <ul>
+                        <li><a href="security.html">安全防护机制</a></li>
+                        <li><a href="gfw.html">GFW 检测原理</a></li>
+                        <li><a href="ip-blocking.html">IP 封禁机制</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>进阶与实战</h3>
+                    <ul>
+                        <li><a href="advanced.html">进阶优化</a></li>
+                        <li><a href="faq.html">常见问题</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content content-page">
+            <div class="breadcrumb">
+                <a href="../index.html">首页</a>
+                <span>/</span>
+                <span>部署工具</span>
+            </div>
+
+            <h1>🛠️ 部署工具</h1>
+
+            <p>本章介绍各种一键脚本、可视化面板和管理工具，帮助你快速在 VPS 上部署代理服务。</p>
+
+            <h2>工具分类</h2>
+
+            <h3>一键脚本 vs 可视化面板</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>类型</th>
+                        <th>优点</th>
+                        <th>缺点</th>
+                        <th>适合人群</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>一键脚本</strong></td>
+                        <td>
+                            <ul>
+                                <li>✅ 安装快速</li>
+                                <li>✅ 资源占用少</li>
+                                <li>✅ 纯净安装</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>⚠️ 命令行操作</li>
+                                <li>⚠️ 管理不直观</li>
+                            </ul>
+                        </td>
+                        <td>有一定 Linux 基础</td>
+                    </tr>
+                    <tr>
+                        <td><strong>可视化面板</strong></td>
+                        <td>
+                            <ul>
+                                <li>✅ 图形化界面</li>
+                                <li>✅ 操作简单</li>
+                                <li>✅ 功能丰富</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>⚠️ 资源占用多</li>
+                                <li>⚠️ 额外风险</li>
+                            </ul>
+                        </td>
+                        <td>新手、需要管理多用户</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>推荐一键脚本</h2>
+
+            <h3>1. Xray-install（官方脚本）<span class="badge badge-success">推荐</span></h3>
+            <div class="success-box">
+                <h4>特点</h4>
+                <ul>
+                    <li>✅ Xray 官方维护</li>
+                    <li>✅ 纯净安装</li>
+                    <li>✅ 支持 VLESS、VMess、Trojan</li>
+                    <li>✅ 支持 Reality 协议</li>
+                </ul>
+                
+                <h4>安装命令</h4>
+                <pre><code>bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install</code></pre>
+                
+                <h4>项目地址</h4>
+                <p><a href="https://github.com/XTLS/Xray-install" target="_blank">GitHub: XTLS/Xray-install</a></p>
+            </div>
+
+            <h3>2. v2ray-agent（多协议）<span class="badge badge-success">推荐</span></h3>
+            <div class="info-box">
+                <h4>特点</h4>
+                <ul>
+                    <li>✅ 支持多协议共存（Xray、V2Ray、Trojan、NaiveProxy）</li>
+                    <li>✅ 中文交互界面</li>
+                    <li>✅ 支持 IPv6</li>
+                    <li>✅ 支持 CDN</li>
+                    <li>✅ 功能最全面</li>
+                </ul>
+                
+                <h4>安装命令</h4>
+                <pre><code>wget -P /root -N --no-check-certificate "https://raw.githubusercontent.com/mack-a/v2ray-agent/master/install.sh" && chmod 700 /root/install.sh && /root/install.sh</code></pre>
+                
+                <h4>项目地址</h4>
+                <p><a href="https://github.com/mack-a/v2ray-agent" target="_blank">GitHub: mack-a/v2ray-agent</a></p>
+            </div>
+
+            <h3>3. Hysteria2-install（极速协议）</h3>
+            <div class="info-box">
+                <h4>特点</h4>
+                <ul>
+                    <li>⚡ 专注 Hysteria2 协议</li>
+                    <li>✅ 自动配置 BBR 加速</li>
+                    <li>✅ 自动申请 TLS 证书</li>
+                    <li>✅ 配置简单</li>
+                </ul>
+                
+                <h4>安装命令</h4>
+                <pre><code>bash <(curl -fsSL https://get.hy2.sh/)</code></pre>
+                
+                <h4>项目地址</h4>
+                <p><a href="https://github.com/apernet/hysteria" target="_blank">GitHub: apernet/hysteria</a></p>
+            </div>
+
+            <h2>可视化管理面板</h2>
+
+            <h3>1. 3X-UI（最流行）<span class="badge badge-success">强烈推荐</span></h3>
+            <div class="success-box">
+                <h4>核心特性</h4>
+                <table>
+                    <tr>
+                        <td><strong>支持协议</strong></td>
+                        <td>VMess、VLESS、Trojan、Shadowsocks、Reality</td>
+                    </tr>
+                    <tr>
+                        <td><strong>核心引擎</strong></td>
+                        <td>Xray-core</td>
+                    </tr>
+                    <tr>
+                        <td><strong>界面</strong></td>
+                        <td>中文 Web 面板</td>
+                    </tr>
+                    <tr>
+                        <td><strong>功能</strong></td>
+                        <td>
+                            <ul>
+                                <li>✅ 多用户管理</li>
+                                <li>✅ 流量统计</li>
+                                <li>✅ 订阅链接生成</li>
+                                <li>✅ Telegram Bot 通知</li>
+                                <li>✅ 在线终端</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+                
+                <h4>安装命令</h4>
+                <pre><code>bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)</code></pre>
+                
+                <h4>默认访问</h4>
+                <p>安装完成后访问：<code>http://your-vps-ip:54321</code></p>
+                <p>默认用户名：<code>admin</code> | 默认密码：<code>admin</code></p>
+                
+                <h4>项目地址</h4>
+                <p><a href="https://github.com/MHSanaei/3x-ui" target="_blank">GitHub: MHSanaei/3x-ui</a></p>
+            </div>
+
+            <h3>2. S-UI（Sing-box 面板）</h3>
+            <div class="info-box">
+                <h4>核心特性</h4>
+                <table>
+                    <tr>
+                        <td><strong>支持协议</strong></td>
+                        <td>VLESS、Reality、Trojan、Shadowsocks、Hysteria2、TUIC</td>
+                    </tr>
+                    <tr>
+                        <td><strong>核心引擎</strong></td>
+                        <td>Sing-box（更现代）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>特点</strong></td>
+                        <td>
+                            <ul>
+                                <li>✅ 支持最新协议</li>
+                                <li>✅ 性能优秀</li>
+                                <li>✅ 配置灵活</li>
+                                <li>⚠️ 相对较新</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+                
+                <h4>安装命令</h4>
+                <pre><code>bash <(curl -Ls https://raw.githubusercontent.com/alireza0/s-ui/master/install.sh)</code></pre>
+                
+                <h4>项目地址</h4>
+                <p><a href="https://github.com/alireza0/s-ui" target="_blank">GitHub: alireza0/s-ui</a></p>
+            </div>
+
+            <h3>3X-UI vs S-UI 对比</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>对比项</th>
+                        <th>3X-UI</th>
+                        <th>S-UI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>核心</strong></td>
+                        <td>Xray-core</td>
+                        <td>Sing-box</td>
+                    </tr>
+                    <tr>
+                        <td><strong>协议支持</strong></td>
+                        <td>传统协议齐全</td>
+                        <td>新协议更多（Hysteria2/TUIC）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>稳定性</strong></td>
+                        <td>⭐⭐⭐⭐⭐ 非常稳定</td>
+                        <td>⭐⭐⭐⭐ 较新，持续更新</td>
+                    </tr>
+                    <tr>
+                        <td><strong>社区支持</strong></td>
+                        <td>文档丰富，教程多</td>
+                        <td>相对较少</td>
+                    </tr>
+                    <tr>
+                        <td><strong>推荐场景</strong></td>
+                        <td>生产环境、稳定第一</td>
+                        <td>尝试新协议、技术爱好者</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>部署流程示例（3X-UI）</h2>
+
+            <div class="info-box">
+                <h4>步骤 1: 连接 VPS</h4>
+                <pre><code># 使用 SSH 连接
+ssh root@your-vps-ip
+
+# 输入密码登录</code></pre>
+                
+                <h4>步骤 2: 安装面板</h4>
+                <pre><code>bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)</code></pre>
+                
+                <h4>步骤 3: 访问面板</h4>
+                <p>打开浏览器访问：<code>http://your-vps-ip:54321</code></p>
+                <p>使用默认账号密码登录：<code>admin</code> / <code>admin</code></p>
+                
+                <h4>步骤 4: 创建入站</h4>
+                <ol>
+                    <li>点击"入站列表" → "添加入站"</li>
+                    <li>选择协议（推荐 VLESS + Reality）</li>
+                    <li>配置端口和参数</li>
+                    <li>点击"添加"保存</li>
+                </ol>
+                
+                <h4>步骤 5: 获取连接信息</h4>
+                <p>点击"操作" → "二维码"或"链接"，导入到客户端使用</p>
+            </div>
+
+            <h2>工具选择建议</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>使用场景</th>
+                        <th>推荐工具</th>
+                        <th>原因</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>新手用户</strong></td>
+                        <td>3X-UI</td>
+                        <td>图形化界面，操作简单</td>
+                    </tr>
+                    <tr>
+                        <td><strong>追求纯净</strong></td>
+                        <td>Xray-install（官方）</td>
+                        <td>无额外组件，最小化风险</td>
+                    </tr>
+                    <tr>
+                        <td><strong>多协议需求</strong></td>
+                        <td>v2ray-agent</td>
+                        <td>支持协议最全面</td>
+                    </tr>
+                    <tr>
+                        <td><strong>追求速度</strong></td>
+                        <td>Hysteria2-install</td>
+                        <td>专注高速协议</td>
+                    </tr>
+                    <tr>
+                        <td><strong>多用户管理</strong></td>
+                        <td>3X-UI 或 S-UI</td>
+                        <td>面板管理方便</td>
+                    </tr>
+                    <tr>
+                        <td><strong>尝试新技术</strong></td>
+                        <td>S-UI</td>
+                        <td>支持 Sing-box 和新协议</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>安全提示</h2>
+
+            <div class="warning-box">
+                <h4>⚠️ 使用面板的注意事项</h4>
+                <ul>
+                    <li>🔒 <strong>立即修改默认密码</strong> - 安装后第一件事</li>
+                    <li>🔐 <strong>修改默认端口</strong> - 避免使用 54321 等常见端口</li>
+                    <li>🛡️ <strong>启用防火墙</strong> - 只开放必要端口</li>
+                    <li>🚫 <strong>不要使用弱密码</strong> - 使用强密码或密钥</li>
+                    <li>💾 <strong>定期备份配置</strong> - 防止数据丢失</li>
+                    <li>🔄 <strong>及时更新</strong> - 保持软件最新版本</li>
+                </ul>
+            </div>
+
+            <h2>常见问题</h2>
+
+            <h3>Q: 脚本安装失败怎么办？</h3>
+            <div class="info-box">
+                <p><strong>A:</strong> 常见原因和解决方案：</p>
+                <ul>
+                    <li>检查网络连接是否正常</li>
+                    <li>确保系统是 Ubuntu/Debian（推荐 Ubuntu 22.04）</li>
+                    <li>检查是否已安装其他代理软件（可能冲突）</li>
+                    <li>查看安装日志，寻找具体错误信息</li>
+                </ul>
+            </div>
+
+            <h3>Q: 面板无法访问？</h3>
+            <div class="info-box">
+                <p><strong>A:</strong> 检查以下几点：</p>
+                <ul>
+                    <li>确认防火墙已开放面板端口</li>
+                    <li>检查服务是否正常运行：<code>systemctl status x-ui</code></li>
+                    <li>确认 IP 地址和端口正确</li>
+                    <li>尝试使用 http 而非 https</li>
+                </ul>
+            </div>
+
+            <h2>下一步学习</h2>
+            <div class="success-box">
+                <p>部署完成后，接下来可以：</p>
+                <ul>
+                    <li><a href="clients.html">客户端推荐</a> - 选择合适的客户端连接</li>
+                    <li><a href="security.html">安全防护</a> - 加强服务器安全配置</li>
+                    <li><a href="advanced.html">进阶优化</a> - 优化性能和隐蔽性</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Proxy 101 知识库. 仅供技术学习使用.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Proxy 101 - 全面的代理知识库，涵盖HTTP、SOCKS、VPN等代理类型，面向初学者和进阶用户">
+    <title>Proxy 101 - 代理知识库</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="light-mode">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>🚀 Proxy 101</h1>
+                <p class="nav-tagline">全面的代理知识库</p>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3>基础理论</h3>
+                    <ul>
+                        <li><a href="pages/basics.html">代理基础概念</a></li>
+                        <li><a href="pages/terminology.html">核心术语解析</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>VPS 相关</h3>
+                    <ul>
+                        <li><a href="pages/vps.html">VPS 基础知识</a></li>
+                        <li><a href="pages/providers.html">VPS 提供商</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>协议与工具</h3>
+                    <ul>
+                        <li><a href="pages/protocols.html">代理协议详解</a></li>
+                        <li><a href="pages/tools.html">部署工具</a></li>
+                        <li><a href="pages/clients.html">客户端推荐</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>安全与防护</h3>
+                    <ul>
+                        <li><a href="pages/security.html">安全防护机制</a></li>
+                        <li><a href="pages/gfw.html">GFW 检测原理</a></li>
+                        <li><a href="pages/ip-blocking.html">IP 封禁机制</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>进阶与实战</h3>
+                    <ul>
+                        <li><a href="pages/advanced.html">进阶优化</a></li>
+                        <li><a href="pages/faq.html">常见问题</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <section class="hero">
+                <h2>欢迎来到 Proxy 101 知识库</h2>
+                <p class="hero-subtitle">一份全面的代理知识库，用通俗易懂的语言解释代理技术的方方面面</p>
+            </section>
+
+            <section class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>系统全面</h3>
+                    <p>从基础概念到高级优化，涵盖代理技术的方方面面</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>通俗易懂</h3>
+                    <p>用简单的语言解释复杂的技术概念，适合初学者</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>实用性强</h3>
+                    <p>提供详细的工具对比、部署指南和故障排查方案</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>安全为先</h3>
+                    <p>深入讲解安全防护、隐私保护和反检测技术</p>
+                </div>
+            </section>
+
+            <section class="quick-start">
+                <h2>快速开始</h2>
+                <div class="quick-links">
+                    <a href="pages/basics.html" class="quick-link-card">
+                        <h4>🎓 代理基础</h4>
+                        <p>了解什么是代理、工作原理和核心概念</p>
+                    </a>
+                    <a href="pages/protocols.html" class="quick-link-card">
+                        <h4>🔐 协议详解</h4>
+                        <p>深入了解各种代理协议的优缺点和使用场景</p>
+                    </a>
+                    <a href="pages/vps.html" class="quick-link-card">
+                        <h4>🖥️ VPS 选择</h4>
+                        <p>学习如何选择合适的 VPS 和线路类型</p>
+                    </a>
+                    <a href="pages/tools.html" class="quick-link-card">
+                        <h4>🛠️ 部署工具</h4>
+                        <p>探索一键脚本和可视化面板工具</p>
+                    </a>
+                </div>
+            </section>
+
+            <section class="content-overview">
+                <h2>内容导览</h2>
+                
+                <div class="overview-section">
+                    <h3>📖 基础理论部分</h3>
+                    <ul>
+                        <li><strong>代理基础概念</strong> — 什么是代理、为什么需要、工作原理图解、核心组成</li>
+                        <li><strong>核心术语深度解析</strong> — 落地机、线路机、中转、CN2 GIA/GT、家宽、机房、住宅IP等</li>
+                    </ul>
+                </div>
+
+                <div class="overview-section">
+                    <h3>🖥️ VPS 相关</h3>
+                    <ul>
+                        <li><strong>VPS 基础知识</strong> — VPS 定义、如何选择、线路类型详解（CN2、IPLC、BGP 等）</li>
+                        <li><strong>VPS 提供商</strong> — 国外商家对比、国内商家推荐、选择建议</li>
+                    </ul>
+                </div>
+
+                <div class="overview-section">
+                    <h3>🔧 协议与工具</h3>
+                    <ul>
+                        <li><strong>代理协议详解</strong> — Shadowsocks、V2Ray、Xray、Trojan、Hysteria2 等协议的优缺点</li>
+                        <li><strong>部署工具</strong> — 一键脚本、可视化面板（3X-UI、S-UI）、管理工具</li>
+                        <li><strong>客户端推荐</strong> — 桌面端、移动端、命令行工具的选择</li>
+                    </ul>
+                </div>
+
+                <div class="overview-section">
+                    <h3>🛡️ 安全与防护</h3>
+                    <ul>
+                        <li><strong>安全防护机制</strong> — 防火墙配置、防暴力破解、协议安全、加密方案</li>
+                        <li><strong>GFW 检测原理</strong> — DPI/QoS 机制、流量特征识别、混淆与对抗方案</li>
+                        <li><strong>IP 封禁机制</strong> — IP 被墙的原因、判断方法、规避和替换方案</li>
+                    </ul>
+                </div>
+
+                <div class="overview-section">
+                    <h3>🚀 进阶与实战</h3>
+                    <ul>
+                        <li><strong>进阶优化</strong> — CDN 中转、多层代理、分流规则、性能优化</li>
+                        <li><strong>常见问题</strong> — FAQ、选择建议、常见错误和解决方案</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="disclaimer">
+                <h2>⚠️ 免责声明</h2>
+                <p>本知识库仅用于技术学习和网络技术研究，请遵守当地法律法规。使用相关技术时，请确保符合当地法律要求，用户对使用本知识库内容产生的任何后果自行负责。</p>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Proxy 101 知识库. 仅供技术学习使用.</p>
+            <p>开源项目 | <a href="https://github.com" target="_blank">GitHub</a></p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPS 基础知识 - Proxy 101</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="light-mode">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>🚀 Proxy 101</h1>
+                <p class="nav-tagline">全面的代理知识库</p>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3>基础理论</h3>
+                    <ul>
+                        <li><a href="basics.html">代理基础概念</a></li>
+                        <li><a href="terminology.html">核心术语解析</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>VPS 相关</h3>
+                    <ul>
+                        <li><a href="vps.html">VPS 基础知识</a></li>
+                        <li><a href="providers.html">VPS 提供商</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>协议与工具</h3>
+                    <ul>
+                        <li><a href="protocols.html">代理协议详解</a></li>
+                        <li><a href="tools.html">部署工具</a></li>
+                        <li><a href="clients.html">客户端推荐</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>安全与防护</h3>
+                    <ul>
+                        <li><a href="security.html">安全防护机制</a></li>
+                        <li><a href="gfw.html">GFW 检测原理</a></li>
+                        <li><a href="ip-blocking.html">IP 封禁机制</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>进阶与实战</h3>
+                    <ul>
+                        <li><a href="advanced.html">进阶优化</a></li>
+                        <li><a href="faq.html">常见问题</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content content-page">
+            <div class="breadcrumb">
+                <a href="../index.html">首页</a>
+                <span>/</span>
+                <span>VPS 基础知识</span>
+            </div>
+
+            <h1>🖥️ VPS 基础知识</h1>
+
+            <h2>什么是 VPS？</h2>
+            <div class="info-box">
+                <h4>定义</h4>
+                <p><strong>VPS</strong>（Virtual Private Server，虚拟专用服务器）是通过虚拟化技术，将一台物理服务器分割成多个独立的虚拟服务器。每个 VPS 拥有独立的操作系统、IP 地址、存储空间和带宽。</p>
+            </div>
+
+            <h3>VPS vs 其他主机类型</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>类型</th>
+                        <th>性能</th>
+                        <th>价格</th>
+                        <th>控制权</th>
+                        <th>适用场景</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>共享主机</strong></td>
+                        <td>⭐⭐</td>
+                        <td>💰</td>
+                        <td>❌ 无</td>
+                        <td>简单网站托管</td>
+                    </tr>
+                    <tr>
+                        <td><strong>VPS</strong></td>
+                        <td>⭐⭐⭐⭐</td>
+                        <td>💰💰</td>
+                        <td>✅ 完全控制</td>
+                        <td>代理、个人项目</td>
+                    </tr>
+                    <tr>
+                        <td><strong>独立服务器</strong></td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>💰💰💰💰</td>
+                        <td>✅ 完全控制</td>
+                        <td>大型应用、企业</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>VPS 配置说明</h2>
+
+            <h3>核心参数解读</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>说明</th>
+                        <th>推荐配置</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>CPU</strong></td>
+                        <td>处理器核心数</td>
+                        <td>1-2 核（个人使用足够）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>内存 (RAM)</strong></td>
+                        <td>运行内存大小</td>
+                        <td>512MB - 1GB（轻量代理）<br>2GB+（面板管理）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>存储空间</strong></td>
+                        <td>硬盘容量（SSD/HDD）</td>
+                        <td>10-20GB（足够基本使用）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>带宽</strong></td>
+                        <td>网络速度上限</td>
+                        <td>100Mbps - 1Gbps</td>
+                    </tr>
+                    <tr>
+                        <td><strong>流量</strong></td>
+                        <td>每月数据传输限额</td>
+                        <td>500GB - 1TB（个人使用）<br>无限流量（理想）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IP 地址</strong></td>
+                        <td>公网 IP 数量</td>
+                        <td>1 个（通常足够）</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>线路类型详解</h2>
+            <p>线路类型决定了从中国大陆访问 VPS 的速度和稳定性。</p>
+
+            <h3>主流线路对比</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>线路类型</th>
+                        <th>延迟</th>
+                        <th>速度</th>
+                        <th>稳定性</th>
+                        <th>价格</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>CN2 GIA</strong></td>
+                        <td>🟢 低</td>
+                        <td>🟢 快</td>
+                        <td>🟢 高</td>
+                        <td>💰💰💰</td>
+                        <td>电信下一代承载网，全程优化，最佳选择</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CN2 GT</strong></td>
+                        <td>🟡 中</td>
+                        <td>🟡 中</td>
+                        <td>🟡 中</td>
+                        <td>💰💰</td>
+                        <td>部分 CN2，性价比较高</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IPLC 专线</strong></td>
+                        <td>🟢 极低</td>
+                        <td>🟢 极快</td>
+                        <td>🟢 极高</td>
+                        <td>💰💰💰💰</td>
+                        <td>点对点专线，不过墙，最稳定</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BGP 多线</strong></td>
+                        <td>🟢 低</td>
+                        <td>🟢 快</td>
+                        <td>🟢 高</td>
+                        <td>💰💰💰</td>
+                        <td>多运营商接入，自动优选</td>
+                    </tr>
+                    <tr>
+                        <td><strong>普通线路</strong></td>
+                        <td>🔴 高</td>
+                        <td>🔴 慢</td>
+                        <td>🔴 低</td>
+                        <td>💰</td>
+                        <td>国际带宽，晚高峰拥堵</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>线路选择建议</h3>
+            <div class="info-box">
+                <h4>💡 如何选择线路？</h4>
+                <ul>
+                    <li><strong>预算充足 + 追求体验</strong> → CN2 GIA 或 IPLC</li>
+                    <li><strong>性价比优先</strong> → CN2 GT 或普通 BGP</li>
+                    <li><strong>首次尝试</strong> → 普通线路（便宜，可随时更换）</li>
+                    <li><strong>企业/团队使用</strong> → IPLC 专线</li>
+                </ul>
+            </div>
+
+            <h2>服务器位置选择</h2>
+
+            <h3>常见地区对比</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>地区</th>
+                        <th>延迟(ms)</th>
+                        <th>优点</th>
+                        <th>缺点</th>
+                        <th>适用场景</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>香港</strong></td>
+                        <td>10-30</td>
+                        <td>延迟最低，访问国内网站快</td>
+                        <td>价格贵，带宽小</td>
+                        <td>追求低延迟、游戏</td>
+                    </tr>
+                    <tr>
+                        <td><strong>日本/韩国</strong></td>
+                        <td>40-80</td>
+                        <td>延迟低，流媒体支持好</td>
+                        <td>价格较贵</td>
+                        <td>看日本动漫、韩国综艺</td>
+                    </tr>
+                    <tr>
+                        <td><strong>新加坡</strong></td>
+                        <td>60-100</td>
+                        <td>连接稳定，价格适中</td>
+                        <td>部分时段拥堵</td>
+                        <td>平衡性能和价格</td>
+                    </tr>
+                    <tr>
+                        <td><strong>美国西海岸</strong></td>
+                        <td>120-180</td>
+                        <td>带宽大，价格便宜</td>
+                        <td>延迟较高</td>
+                        <td>下载、流媒体</td>
+                    </tr>
+                    <tr>
+                        <td><strong>美国东海岸</strong></td>
+                        <td>180-250</td>
+                        <td>价格便宜，流媒体解锁好</td>
+                        <td>延迟高</td>
+                        <td>不玩游戏，主要下载</td>
+                    </tr>
+                    <tr>
+                        <td><strong>欧洲</strong></td>
+                        <td>200-300</td>
+                        <td>隐私保护好</td>
+                        <td>延迟很高</td>
+                        <td>注重隐私、访问欧洲服务</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>地区选择建议</h3>
+            <div class="success-box">
+                <h4>🎯 推荐方案</h4>
+                <ul>
+                    <li><strong>游戏/实时通信</strong> → 香港 > 日本 > 新加坡</li>
+                    <li><strong>视频/下载</strong> → 美国西海岸 > 新加坡 > 日本</li>
+                    <li><strong>首次尝试</strong> → 新加坡或美国西海岸（性价比高）</li>
+                    <li><strong>流媒体解锁</strong> → 对应地区原生 IP（如日本 Netflix）</li>
+                </ul>
+            </div>
+
+            <h2>操作系统选择</h2>
+
+            <h3>主流系统对比</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>系统</th>
+                        <th>特点</th>
+                        <th>推荐度</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Ubuntu 20.04/22.04</strong></td>
+                        <td>
+                            <ul>
+                                <li>✅ 最流行，教程最多</li>
+                                <li>✅ 新手友好</li>
+                                <li>✅ 软件包丰富</li>
+                            </ul>
+                        </td>
+                        <td><span class="badge badge-success">强烈推荐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Debian 11/12</strong></td>
+                        <td>
+                            <ul>
+                                <li>✅ 极其稳定</li>
+                                <li>✅ 资源占用少</li>
+                                <li>⚠️ 软件包版本保守</li>
+                            </ul>
+                        </td>
+                        <td><span class="badge badge-success">推荐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>CentOS Stream / Rocky</strong></td>
+                        <td>
+                            <ul>
+                                <li>✅ 企业级稳定</li>
+                                <li>⚠️ CentOS 已停止维护</li>
+                                <li>⚠️ 部分脚本不支持</li>
+                            </ul>
+                        </td>
+                        <td><span class="badge badge-warning">一般</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <h4>💡 新手建议</h4>
+                <p>选择 <strong>Ubuntu 22.04 LTS (64位)</strong>，这是最安全、兼容性最好的选择。几乎所有一键脚本都支持 Ubuntu。</p>
+            </div>
+
+            <h2>VPS 选购要点</h2>
+
+            <h3>购买前检查清单</h3>
+            <div class="warning-box">
+                <h4>⚠️ 必须检查的项目</h4>
+                <ul>
+                    <li>✅ <strong>IP 是否被墙</strong> - 购买前可以 ping 测试</li>
+                    <li>✅ <strong>是否允许代理</strong> - 查看 ToS（服务条款）</li>
+                    <li>✅ <strong>退款政策</strong> - 至少有 7 天退款保证</li>
+                    <li>✅ <strong>付款方式</strong> - 支持支付宝/PayPal/虚拟信用卡</li>
+                    <li>✅ <strong>客服响应</strong> - 遇到问题能否及时解决</li>
+                </ul>
+            </div>
+
+            <h3>常见陷阱</h3>
+            <div class="warning-box">
+                <h4>🚫 需要避免的情况</h4>
+                <ul>
+                    <li>❌ <strong>超售严重</strong> - CPU 经常 100%，速度极慢</li>
+                    <li>❌ <strong>IP 被墙</strong> - 购买后无法连接</li>
+                    <li>❌ <strong>无退款</strong> - 不好用也无法退款</li>
+                    <li>❌ <strong>小商家</strong> - 可能随时跑路</li>
+                    <li>❌ <strong>价格过低</strong> - 一分钱一分货，警惕欺诈</li>
+                </ul>
+            </div>
+
+            <h2>VPS 性能测试</h2>
+
+            <h3>购买后必做测试</h3>
+            <div class="info-box">
+                <h4>1. 网络连接测试</h4>
+                <pre><code># 测试延迟
+ping your-vps-ip
+
+# 测试端口
+telnet your-vps-ip 22</code></pre>
+
+                <h4>2. 线路测试</h4>
+                <pre><code># 安装测试工具
+wget -qO- bench.sh | bash
+
+# 或使用 Superbench
+wget -qO- git.io/superbench.sh | bash</code></pre>
+
+                <h4>3. 流媒体解锁测试</h4>
+                <pre><code># 测试 Netflix、YouTube 等解锁情况
+bash <(curl -L -s check.unlock.media)</code></pre>
+
+                <h4>4. IP 质量检测</h4>
+                <pre><code># 检测 IP 信誉、是否被墙
+curl ipinfo.io
+curl cip.cc</code></pre>
+            </div>
+
+            <h2>预算参考</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>预算/月</th>
+                        <th>可选配置</th>
+                        <th>推荐商家</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>$3-5</strong></td>
+                        <td>512MB RAM, 10GB SSD<br>普通线路</td>
+                        <td>Vultr、DigitalOcean、RackNerd</td>
+                    </tr>
+                    <tr>
+                        <td><strong>$5-10</strong></td>
+                        <td>1GB RAM, 20GB SSD<br>CN2 GT 或普通线路</td>
+                        <td>Vultr、Linode、BandwagonHost</td>
+                    </tr>
+                    <tr>
+                        <td><strong>$10-20</strong></td>
+                        <td>2GB RAM, 40GB SSD<br>CN2 GIA 线路</td>
+                        <td>BandwagonHost、DMIT</td>
+                    </tr>
+                    <tr>
+                        <td><strong>$20+</strong></td>
+                        <td>4GB+ RAM<br>IPLC 专线或高配 CN2</td>
+                        <td>DMIT、各类专线服务</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>下一步学习</h2>
+            <div class="success-box">
+                <p>了解了 VPS 基础后，接下来可以：</p>
+                <ul>
+                    <li><a href="providers.html">VPS 提供商</a> - 了解具体商家和选购建议</li>
+                    <li><a href="tools.html">部署工具</a> - 学习如何在 VPS 上部署代理</li>
+                    <li><a href="security.html">安全防护</a> - 加固 VPS 安全配置</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Proxy 101 知识库. 仅供技术学习使用.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

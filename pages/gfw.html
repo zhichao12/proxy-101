@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GFW 检测原理 - Proxy 101</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="light-mode">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>🚀 Proxy 101</h1>
+                <p class="nav-tagline">全面的代理知识库</p>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3>基础理论</h3>
+                    <ul>
+                        <li><a href="basics.html">代理基础概念</a></li>
+                        <li><a href="terminology.html">核心术语解析</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>VPS 相关</h3>
+                    <ul>
+                        <li><a href="vps.html">VPS 基础知识</a></li>
+                        <li><a href="providers.html">VPS 提供商</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>协议与工具</h3>
+                    <ul>
+                        <li><a href="protocols.html">代理协议详解</a></li>
+                        <li><a href="tools.html">部署工具</a></li>
+                        <li><a href="clients.html">客户端推荐</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>安全与防护</h3>
+                    <ul>
+                        <li><a href="security.html">安全防护机制</a></li>
+                        <li><a href="gfw.html">GFW 检测原理</a></li>
+                        <li><a href="ip-blocking.html">IP 封禁机制</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>进阶与实战</h3>
+                    <ul>
+                        <li><a href="advanced.html">进阶优化</a></li>
+                        <li><a href="faq.html">常见问题</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content content-page">
+            <div class="breadcrumb">
+                <a href="../index.html">首页</a>
+                <span>/</span>
+                <span>GFW 检测原理</span>
+            </div>
+
+            <h1>🔍 GFW 检测原理</h1>
+
+            <p>了解 GFW（Great Firewall）的检测机制，有助于我们选择更隐蔽的代理方案。</p>
+
+            <h2>GFW 的主要检测技术</h2>
+
+            <h3>1. IP 黑名单</h3>
+            <div class="info-box">
+                <h4>工作原理</h4>
+                <p>维护一个被封禁的 IP 地址列表，直接阻断与这些 IP 的连接。</p>
+                
+                <h4>触发条件</h4>
+                <ul>
+                    <li>被识别为代理服务器</li>
+                    <li>频繁访问敏感网站</li>
+                    <li>异常流量模式</li>
+                    <li>被举报</li>
+                </ul>
+                
+                <h4>对抗方法</h4>
+                <ul>
+                    <li>✅ 定期更换 IP</li>
+                    <li>✅ 使用住宅 IP</li>
+                    <li>✅ 避免异常流量</li>
+                </ul>
+            </div>
+
+            <h3>2. DPI 深度包检测</h3>
+            <div class="info-box">
+                <h4>工作原理</h4>
+                <p>检查数据包的内容和特征，识别代理协议的流量模式。</p>
+                
+                <h4>可检测的特征</h4>
+                <ul>
+                    <li>协议指纹（如 Shadowsocks 的特定模式）</li>
+                    <li>加密流量特征</li>
+                    <li>TLS 握手异常</li>
+                    <li>数据包时序特征</li>
+                </ul>
+                
+                <h4>对抗方法</h4>
+                <ul>
+                    <li>✅ 使用 Reality（完美伪装 TLS）</li>
+                    <li>✅ WebSocket + TLS（伪装成正常 HTTPS）</li>
+                    <li>✅ 流量混淆</li>
+                    <li>✅ 使用标准 TLS 证书</li>
+                </ul>
+            </div>
+
+            <h3>3. 主动探测</h3>
+            <div class="warning-box">
+                <h4>工作原理</h4>
+                <p>GFW 主动连接疑似代理服务器，尝试发送代理协议的握手包，如果服务器响应则确认是代理。</p>
+                
+                <h4>触发条件</h4>
+                <ul>
+                    <li>检测到可疑的 TLS 握手</li>
+                    <li>服务器在常见代理端口监听</li>
+                    <li>流量模式异常</li>
+                </ul>
+                
+                <h4>对抗方法</h4>
+                <ul>
+                    <li>✅ VLESS Reality（无法被探测）</li>
+                    <li>✅ 设置回落机制（探测时返回正常网站）</li>
+                    <li>✅ 使用认证机制</li>
+                    <li>✅ 避免使用自签名证书</li>
+                </ul>
+            </div>
+
+            <h3>4. DNS 污染</h3>
+            <div class="info-box">
+                <h4>工作原理</h4>
+                <p>返回错误的 DNS 解析结果，将域名指向错误的 IP 地址。</p>
+                
+                <h4>对抗方法</h4>
+                <ul>
+                    <li>✅ 使用加密 DNS（DoH、DoT）</li>
+                    <li>✅ 使用可信的国外 DNS（1.1.1.1、8.8.8.8）</li>
+                    <li>✅ 在代理内解析 DNS</li>
+                </ul>
+            </div>
+
+            <h3>5. QoS 限速</h3>
+            <div class="info-box">
+                <h4>工作原理</h4>
+                <p>识别国际流量或可疑流量后降低优先级，进行限速。</p>
+                
+                <h4>表现</h4>
+                <ul>
+                    <li>晚高峰严重降速</li>
+                    <li>YouTube 等视频卡顿</li>
+                    <li>下载速度异常慢</li>
+                </ul>
+                
+                <h4>对抗方法</h4>
+                <ul>
+                    <li>✅ 使用优质线路（CN2、IPLC）</li>
+                    <li>✅ 流量伪装成正常 HTTPS</li>
+                    <li>✅ 使用 CDN 中转</li>
+                </ul>
+            </div>
+
+            <h2>不同协议的抗检测能力</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>协议</th>
+                        <th>IP 封禁</th>
+                        <th>DPI 检测</th>
+                        <th>主动探测</th>
+                        <th>综合评分</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>VLESS Reality</strong></td>
+                        <td>🟢 强</td>
+                        <td>🟢 强</td>
+                        <td>🟢 强</td>
+                        <td><span class="badge badge-success">⭐⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Trojan + TLS</strong></td>
+                        <td>🟢 强</td>
+                        <td>🟢 强</td>
+                        <td>🟡 中</td>
+                        <td><span class="badge badge-success">⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hysteria2</strong></td>
+                        <td>🟢 强</td>
+                        <td>🟡 中</td>
+                        <td>🟢 强</td>
+                        <td><span class="badge badge-success">⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>VMess + WS + TLS</strong></td>
+                        <td>🟡 中</td>
+                        <td>🟡 中</td>
+                        <td>🟡 中</td>
+                        <td><span class="badge badge-warning">⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Shadowsocks</strong></td>
+                        <td>🔴 弱</td>
+                        <td>🔴 弱</td>
+                        <td>🔴 弱</td>
+                        <td><span class="badge badge-danger">⭐⭐</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>流量特征分析</h2>
+
+            <h3>容易被识别的特征</h3>
+            <div class="warning-box">
+                <ul>
+                    <li>❌ 固定的数据包大小</li>
+                    <li>❌ 规律的时间间隔</li>
+                    <li>❌ 异常的 TLS 握手</li>
+                    <li>❌ 自签名或无效证书</li>
+                    <li>❌ 非标准的端口使用</li>
+                    <li>❌ 持续的大流量传输</li>
+                </ul>
+            </div>
+
+            <h3>隐蔽的流量特征</h3>
+            <div class="success-box">
+                <ul>
+                    <li>✅ 模拟真实浏览器的 TLS 指纹</li>
+                    <li>✅ 使用合法域名和证书</li>
+                    <li>✅ 标准端口（443、80）</li>
+                    <li>✅ 流量大小和时序随机化</li>
+                    <li>✅ 模拟正常网站访问模式</li>
+                </ul>
+            </div>
+
+            <h2>最佳实践建议</h2>
+
+            <h3>协议选择</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>环境</th>
+                        <th>推荐方案</th>
+                        <th>原因</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>严格封锁</strong></td>
+                        <td>VLESS Reality</td>
+                        <td>完美伪装，无法识别</td>
+                    </tr>
+                    <tr>
+                        <td><strong>一般环境</strong></td>
+                        <td>Trojan + 前置网站</td>
+                        <td>高隐蔽性，成本适中</td>
+                    </tr>
+                    <tr>
+                        <td><strong>追求速度</strong></td>
+                        <td>Hysteria2 + 混淆</td>
+                        <td>速度快，需要频繁换端口</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>配置要点</h3>
+            <div class="success-box">
+                <ol>
+                    <li><strong>使用标准端口</strong> - 443 (HTTPS) 或 80 (HTTP)</li>
+                    <li><strong>配置正规证书</strong> - Let's Encrypt 免费证书</li>
+                    <li><strong>前置伪装网站</strong> - 访问根目录显示正常网站</li>
+                    <li><strong>启用回落机制</strong> - 探测时返回正常内容</li>
+                    <li><strong>避免大流量</strong> - 不要用于 BT 下载</li>
+                    <li><strong>控制连接数</strong> - 单用户 3-5 个连接</li>
+                </ol>
+            </div>
+
+            <h2>检测工具</h2>
+
+            <h3>测试 IP 是否被墙</h3>
+            <div class="info-box">
+                <pre><code># 从国内网络 ping
+ping your-vps-ip
+
+# 使用在线工具
+https://www.vps234.com/ipchecker/
+https://tools.ipip.net/ping.php</code></pre>
+            </div>
+
+            <h3>测试端口是否被墙</h3>
+            <div class="info-box">
+                <pre><code># 测试端口连通性
+telnet your-vps-ip 443
+
+# 使用 tcping（Windows）
+tcping your-vps-ip 443</code></pre>
+            </div>
+
+            <h2>下一步学习</h2>
+            <div class="success-box">
+                <p>了解了检测原理后，建议学习：</p>
+                <ul>
+                    <li><a href="ip-blocking.html">IP 封禁机制</a> - 了解封禁后的处理</li>
+                    <li><a href="advanced.html">进阶优化</a> - 提升隐蔽性的高级技巧</li>
+                    <li><a href="faq.html">常见问题</a> - 解决实际使用中的问题</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Proxy 101 知识库. 仅供技术学习使用.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

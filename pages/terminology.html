@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>核心术语解析 - Proxy 101</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="light-mode">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>🚀 Proxy 101</h1>
+                <p class="nav-tagline">全面的代理知识库</p>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3>基础理论</h3>
+                    <ul>
+                        <li><a href="basics.html">代理基础概念</a></li>
+                        <li><a href="terminology.html">核心术语解析</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>VPS 相关</h3>
+                    <ul>
+                        <li><a href="vps.html">VPS 基础知识</a></li>
+                        <li><a href="providers.html">VPS 提供商</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>协议与工具</h3>
+                    <ul>
+                        <li><a href="protocols.html">代理协议详解</a></li>
+                        <li><a href="tools.html">部署工具</a></li>
+                        <li><a href="clients.html">客户端推荐</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>安全与防护</h3>
+                    <ul>
+                        <li><a href="security.html">安全防护机制</a></li>
+                        <li><a href="gfw.html">GFW 检测原理</a></li>
+                        <li><a href="ip-blocking.html">IP 封禁机制</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>进阶与实战</h3>
+                    <ul>
+                        <li><a href="advanced.html">进阶优化</a></li>
+                        <li><a href="faq.html">常见问题</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content content-page">
+            <div class="breadcrumb">
+                <a href="../index.html">首页</a>
+                <span>/</span>
+                <span>核心术语解析</span>
+            </div>
+
+            <h1>📖 核心术语深度解析</h1>
+
+            <p>在代理和网络技术领域，有许多专业术语和"行业黑话"。本章将详细解释这些术语，帮助你更好地理解相关技术讨论。</p>
+
+            <h2>服务器角色术语</h2>
+
+            <h3>落地机 (Exit Node)</h3>
+            <div class="info-box">
+                <h4>定义</h4>
+                <p><strong>落地机</strong>是指最终访问目标网站的服务器，它的 IP 地址会暴露给目标网站。在代理链路中，落地机是流量的"出口"。</p>
+                
+                <h4>为什么叫"落地"？</h4>
+                <p>因为它是流量最终"落地"、真正访问互联网的地方。目标网站看到的 IP 地址就是落地机的 IP。</p>
+                
+                <h4>关键特点</h4>
+                <ul>
+                    <li>✅ 需要在目标地区（如美国、日本、香港）</li>
+                    <li>✅ IP 质量很重要（避免被封禁）</li>
+                    <li>✅ 带宽要足够（影响实际速度）</li>
+                    <li>⚠️ 容易被目标网站检测和封禁</li>
+                </ul>
+            </div>
+
+            <h3>线路机 / 中转机 (Relay Node)</h3>
+            <div class="info-box">
+                <h4>定义</h4>
+                <p><strong>线路机</strong>或<strong>中转机</strong>是位于客户端和落地机之间的中间服务器，用于转发流量。它可以隐藏落地机的真实 IP，也可以优化网络路由。</p>
+                
+                <h4>为什么需要中转？</h4>
+                <ul>
+                    <li>🚀 <strong>线路优化</strong> - 绕过国际网络拥堵，使用优质线路（如 CN2）</li>
+                    <li>🛡️ <strong>隐藏落地机</strong> - 防止落地机 IP 暴露给审查系统</li>
+                    <li>⚡ <strong>负载均衡</strong> - 一个中转可以连接多个落地机</li>
+                    <li>🔐 <strong>安全隔离</strong> - 即使中转被封，落地机仍然安全</li>
+                </ul>
+                
+                <h4>典型架构</h4>
+                <pre><code>用户 → 国内中转 → 香港中转 → 美国落地机 → 目标网站
+      (CN2 线路)  (IPLC 专线)    (原生IP)</code></pre>
+            </div>
+
+            <h3>中转 (Relay / Forward)</h3>
+            <p><strong>中转</strong>是一种技术手段，通过中间服务器转发流量。常见的中转方式包括：</p>
+            <ul>
+                <li><strong>端口转发</strong> - 使用 iptables、socat 等工具在 IP 层转发</li>
+                <li><strong>应用层中转</strong> - 使用 Nginx、HAProxy 等在应用层转发</li>
+                <li><strong>隧道中转</strong> - 使用 WireGuard、GRE 隧道等</li>
+                <li><strong>CDN 中转</strong> - 使用 Cloudflare 等 CDN 服务转发</li>
+            </ul>
+
+            <h2>网络与 IP 类型</h2>
+
+            <h3>家宽 (Residential IP)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>特点</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>定义</strong></td>
+                        <td>家庭宽带提供的 IP 地址，也称住宅 IP</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IP 段特征</strong></td>
+                        <td>属于 ISP 分配给家庭用户的 IP 段</td>
+                    </tr>
+                    <tr>
+                        <td><strong>信誉度</strong></td>
+                        <td>⭐⭐⭐⭐⭐ 极高，不易被封禁</td>
+                    </tr>
+                    <tr>
+                        <td><strong>稳定性</strong></td>
+                        <td>⭐⭐⭐ 中等，可能动态变化</td>
+                    </tr>
+                    <tr>
+                        <td><strong>带宽</strong></td>
+                        <td>上行通常较低（1-10 Mbps）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>价格</strong></td>
+                        <td>💰💰💰 昂贵（$20-100/月）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>适用场景</strong></td>
+                        <td>需要高信誉度的场景（爬虫、账号养号等）</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>机房 IP / 数据中心 IP (Data Center IP)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>特点</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>定义</strong></td>
+                        <td>数据中心机房的商业 IP 地址</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IP 段特征</strong></td>
+                        <td>属于 IDC、云服务商的 IP 段</td>
+                    </tr>
+                    <tr>
+                        <td><strong>信誉度</strong></td>
+                        <td>⭐⭐⭐ 中等，容易被识别</td>
+                    </tr>
+                    <tr>
+                        <td><strong>稳定性</strong></td>
+                        <td>⭐⭐⭐⭐⭐ 非常稳定</td>
+                    </tr>
+                    <tr>
+                        <td><strong>带宽</strong></td>
+                        <td>通常很高（100Mbps - 10Gbps）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>价格</strong></td>
+                        <td>💰 便宜（$5-20/月）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>适用场景</strong></td>
+                        <td>个人代理、一般性科学上网</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>原生 IP vs 广播 IP</h3>
+            <div class="info-box">
+                <h4>原生 IP (Native IP)</h4>
+                <p>IP 的注册地和实际服务器所在地一致的 IP。例如日本机房使用日本注册的 IP。</p>
+                <p><strong>优势</strong>：可以解锁地区限制的流媒体服务（如 Netflix、HBO）</p>
+                
+                <h4>广播 IP (Broadcast IP)</h4>
+                <p>IP 注册地和实际服务器所在地不一致。例如美国机房使用香港注册的 IP。</p>
+                <p><strong>劣势</strong>：可能无法解锁流媒体，被认为是代理</p>
+            </div>
+
+            <h2>线路类型术语</h2>
+
+            <h3>CN2 (China Telecom Next Carrier Network)</h3>
+            <p>中国电信的下一代承载网，是目前质量最好的国际线路之一。</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>类型</th>
+                        <th>全称</th>
+                        <th>特点</th>
+                        <th>价格</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>CN2 GIA</strong></td>
+                        <td>Global Internet Access</td>
+                        <td>
+                            <ul>
+                                <li>✅ 全程 CN2 线路（去程+回程）</li>
+                                <li>✅ 延迟最低，速度最快</li>
+                                <li>✅ 晚高峰不拥堵</li>
+                                <li>⭐⭐⭐⭐⭐ 最优质</li>
+                            </ul>
+                        </td>
+                        <td>💰💰💰 贵</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CN2 GT</strong></td>
+                        <td>Global Transit</td>
+                        <td>
+                            <ul>
+                                <li>⚠️ 部分 CN2（通常只有回程）</li>
+                                <li>✓ 比普通线路好</li>
+                                <li>⚠️ 晚高峰可能拥堵</li>
+                                <li>⭐⭐⭐ 中等质量</li>
+                            </ul>
+                        </td>
+                        <td>💰💰 中等</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>去程与回程</h3>
+            <div class="info-box">
+                <h4>去程 (Outbound)</h4>
+                <p>从你的设备到代理服务器的路径。影响你发送请求的速度。</p>
+                
+                <h4>回程 (Inbound / Return)</h4>
+                <p>从代理服务器返回到你设备的路径。影响接收数据的速度。</p>
+                
+                <h4>为什么回程更重要？</h4>
+                <p>因为下载数据量远大于上传（浏览网页、看视频主要是下载），所以回程质量对用户体验影响更大。</p>
+            </div>
+
+            <h3>IPLC (International Private Leased Circuit)</h3>
+            <div class="info-box">
+                <h4>定义</h4>
+                <p><strong>国际专线</strong>，是点对点的物理专线连接，不经过公网。</p>
+                
+                <h4>特点</h4>
+                <ul>
+                    <li>⚡ <strong>极低延迟</strong> - 物理专线，延迟最低</li>
+                    <li>🚀 <strong>极高速度</strong> - 不受公网拥堵影响</li>
+                    <li>🛡️ <strong>不过墙</strong> - 不经过 GFW，几乎不会被封</li>
+                    <li>💰 <strong>极贵</strong> - 价格是普通 VPS 的 5-10 倍</li>
+                </ul>
+                
+                <h4>价格参考</h4>
+                <p>通常 $50-200/月，按流量或带宽计费。</p>
+            </div>
+
+            <h3>BGP (Border Gateway Protocol)</h3>
+            <p><strong>BGP 线路</strong>是指服务器同时接入多条线路（电信、联通、移动等），通过 BGP 协议自动选择最优路径。</p>
+            <ul>
+                <li>✅ 多线接入，各运营商用户都能获得好速度</li>
+                <li>✅ 自动故障切换，稳定性高</li>
+                <li>⚠️ 价格较贵</li>
+            </ul>
+
+            <h2>MJJ 圈常见缩写</h2>
+            <p>MJJ (买家具) 是 hostloc 论坛对会员的戏称，这里列出论坛和社区常见的缩写：</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>缩写</th>
+                        <th>全称</th>
+                        <th>含义</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>VPS</strong></td>
+                        <td>Virtual Private Server</td>
+                        <td>虚拟专用服务器</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SS</strong></td>
+                        <td>Shadowsocks</td>
+                        <td>轻量级代理协议</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SSR</strong></td>
+                        <td>ShadowsocksR</td>
+                        <td>SS 的改进版（已过时）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>V2Ray</strong></td>
+                        <td>Project V</td>
+                        <td>复杂的代理平台</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Xray</strong></td>
+                        <td>Xray-core</td>
+                        <td>V2Ray 的升级版，性能更好</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Trojan</strong></td>
+                        <td>Trojan 协议</td>
+                        <td>伪装成 HTTPS 的代理</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hysteria</strong></td>
+                        <td>Hysteria 协议</td>
+                        <td>基于 QUIC 的高速代理</td>
+                    </tr>
+                    <tr>
+                        <td><strong>WS</strong></td>
+                        <td>WebSocket</td>
+                        <td>一种传输协议，常用于伪装</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TLS</strong></td>
+                        <td>Transport Layer Security</td>
+                        <td>传输层安全协议（HTTPS 加密）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CDN</strong></td>
+                        <td>Content Delivery Network</td>
+                        <td>内容分发网络，可用于中转</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>技术术语详解</h2>
+
+            <h3>Sing-box</h3>
+            <p>一个通用代理平台，类似 V2Ray，但更现代化，支持多种协议。</p>
+            <ul>
+                <li>✅ 支持 VLESS、Trojan、Hysteria2、TUIC 等新协议</li>
+                <li>✅ 性能优秀，资源占用低</li>
+                <li>✅ 配置简洁，易于维护</li>
+                <li>⚠️ 相对较新，社区相对小</li>
+            </ul>
+
+            <h3>混淆 (Obfuscation)</h3>
+            <p>通过技术手段伪装流量特征，使其看起来像普通流量（如 HTTPS、HTTP）。</p>
+            
+            <h4>常见混淆方式</h4>
+            <ul>
+                <li><strong>TLS 混淆</strong> - 伪装成 HTTPS 流量</li>
+                <li><strong>WebSocket 混淆</strong> - 伪装成 WebSocket 连接</li>
+                <li><strong>HTTP 伪装</strong> - 伪装成普通 HTTP 流量</li>
+                <li><strong>CDN 伪装</strong> - 通过 Cloudflare 等 CDN 转发</li>
+            </ul>
+
+            <h3>沙箱 (Sandbox)</h3>
+            <p>隔离的运行环境，用于安全地测试和运行不明程序。</p>
+            <ul>
+                <li>🔒 隔离系统环境，防止恶意代码破坏</li>
+                <li>🧪 测试不信任的脚本和程序</li>
+                <li>💡 常用技术：Docker、虚拟机、chroot</li>
+            </ul>
+
+            <h3>DPI (Deep Packet Inspection)</h3>
+            <p>深度包检测，一种网络流量分析技术，能够检查数据包的内容和特征。</p>
+            <ul>
+                <li>🔍 GFW 使用 DPI 识别和封锁代理流量</li>
+                <li>🛡️ 现代协议通过混淆对抗 DPI</li>
+                <li>⚠️ 简单的加密（如老版本 SS）容易被 DPI 识别</li>
+            </ul>
+
+            <h3>QoS (Quality of Service)</h3>
+            <p>服务质量控制，ISP 可以通过 QoS 对特定流量进行限速或优先级控制。</p>
+            <ul>
+                <li>⚠️ 运营商可能对国际流量进行 QoS 限速</li>
+                <li>⚠️ 识别到代理流量后可能降低优先级</li>
+                <li>✅ 使用伪装和混淆可以绕过 QoS</li>
+            </ul>
+
+            <h2>常见场景术语</h2>
+
+            <h3>翻墙 / 科学上网</h3>
+            <p>使用代理技术突破网络审查，访问被屏蔽的网站和服务。这是代理技术最常见的应用场景。</p>
+
+            <h3>落地 IP 被墙</h3>
+            <p>指代理服务器的 IP 地址被防火墙封锁，无法正常连接。</p>
+            <ul>
+                <li>⚠️ 表现：连接超时、丢包严重</li>
+                <li>🔧 解决：更换服务器 IP 或端口</li>
+                <li>🛡️ 预防：使用高隐蔽性协议、避免大流量</li>
+            </ul>
+
+            <h3>端口被墙</h3>
+            <p>特定端口被防火墙封锁，但 IP 地址仍然可用。</p>
+            <ul>
+                <li>✅ 表现：某些端口无法连接，但其他端口正常</li>
+                <li>🔧 解决：更换端口（推荐使用 443、80 等常见端口）</li>
+            </ul>
+
+            <h3>机场</h3>
+            <p>提供商业代理服务的平台，用户购买订阅后获得代理节点。得名于 "Airport"（Shadowsocks 客户端名称）。</p>
+            <ul>
+                <li>✅ 优点：开箱即用，无需自己搭建</li>
+                <li>⚠️ 缺点：隐私风险、可能跑路、价格较贵</li>
+            </ul>
+
+            <h2>性能相关术语</h2>
+
+            <h3>延迟 (Latency / Ping)</h3>
+            <p>数据从客户端到服务器的往返时间，单位通常是毫秒（ms）。</p>
+            <ul>
+                <li>⚡ <strong>优秀</strong>：< 50ms（香港、日本）</li>
+                <li>✅ <strong>良好</strong>：50-100ms（新加坡、韩国）</li>
+                <li>⚠️ <strong>一般</strong>：100-200ms（美国西海岸）</li>
+                <li>❌ <strong>较差</strong>：> 200ms（美国东海岸、欧洲）</li>
+            </ul>
+
+            <h3>带宽 (Bandwidth)</h3>
+            <p>网络连接的最大数据传输速率，单位通常是 Mbps 或 Gbps。</p>
+            <ul>
+                <li>📊 VPS 通常提供 100Mbps - 1Gbps 带宽</li>
+                <li>⚠️ 实际速度取决于线路质量，不是带宽越大越好</li>
+            </ul>
+
+            <h3>流量 (Traffic / Transfer)</h3>
+            <p>数据传输的总量，单位通常是 GB 或 TB。</p>
+            <ul>
+                <li>📊 个人使用：50-200GB/月</li>
+                <li>📊 重度使用（看视频）：500GB-1TB/月</li>
+                <li>💡 VPS 通常提供 500GB - 数 TB 流量</li>
+            </ul>
+
+            <h2>下一步学习</h2>
+            <div class="success-box">
+                <p>掌握了这些术语后，你可以更轻松地理解技术文档和社区讨论。接下来推荐学习：</p>
+                <ul>
+                    <li><a href="vps.html">VPS 基础知识</a> - 学习如何选择合适的 VPS</li>
+                    <li><a href="protocols.html">代理协议详解</a> - 深入了解各种代理协议</li>
+                    <li><a href="providers.html">VPS 提供商</a> - 了解主流 VPS 商家</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Proxy 101 知识库. 仅供技术学习使用.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP 封禁机制 - Proxy 101</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="light-mode">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>🚀 Proxy 101</h1>
+                <p class="nav-tagline">全面的代理知识库</p>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3>基础理论</h3>
+                    <ul>
+                        <li><a href="basics.html">代理基础概念</a></li>
+                        <li><a href="terminology.html">核心术语解析</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>VPS 相关</h3>
+                    <ul>
+                        <li><a href="vps.html">VPS 基础知识</a></li>
+                        <li><a href="providers.html">VPS 提供商</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>协议与工具</h3>
+                    <ul>
+                        <li><a href="protocols.html">代理协议详解</a></li>
+                        <li><a href="tools.html">部署工具</a></li>
+                        <li><a href="clients.html">客户端推荐</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>安全与防护</h3>
+                    <ul>
+                        <li><a href="security.html">安全防护机制</a></li>
+                        <li><a href="gfw.html">GFW 检测原理</a></li>
+                        <li><a href="ip-blocking.html">IP 封禁机制</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>进阶与实战</h3>
+                    <ul>
+                        <li><a href="advanced.html">进阶优化</a></li>
+                        <li><a href="faq.html">常见问题</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content content-page">
+            <div class="breadcrumb">
+                <a href="../index.html">首页</a>
+                <span>/</span>
+                <span>IP 封禁机制</span>
+            </div>
+
+            <h1>🚫 IP 封禁机制</h1>
+
+            <h2>IP 被墙的原因</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>原因</th>
+                        <th>说明</th>
+                        <th>概率</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>流量特征明显</strong></td>
+                        <td>使用容易识别的协议（如老版本 SS）</td>
+                        <td><span class="badge badge-danger">高</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>异常流量模式</strong></td>
+                        <td>长时间大流量、BT 下载、频繁连接</td>
+                        <td><span class="badge badge-warning">中</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>主动探测发现</strong></td>
+                        <td>服务器响应了 GFW 的探测请求</td>
+                        <td><span class="badge badge-warning">中</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>被举报</strong></td>
+                        <td>IP 被大量共享使用，引起注意</td>
+                        <td><span class="badge badge-info">低</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>敏感时期</strong></td>
+                        <td>特殊时期加强封锁</td>
+                        <td><span class="badge badge-warning">中</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>IP 段污染</strong></td>
+                        <td>整个 IP 段被封（殃及池鱼）</td>
+                        <td><span class="badge badge-info">低</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>如何判断 IP 是否被墙</h2>
+
+            <h3>方法 1: Ping 测试</h3>
+            <div class="info-box">
+                <pre><code># 从国内网络 ping
+ping your-vps-ip
+
+# 如果完全不通或丢包 100%，可能被墙
+# 注意：有些 VPS 禁 ping，需要结合其他方法</code></pre>
+            </div>
+
+            <h3>方法 2: TCP 端口测试</h3>
+            <div class="info-box">
+                <pre><code># Windows
+telnet your-vps-ip 22
+tcping your-vps-ip 443
+
+# Linux/Mac
+nc -zv your-vps-ip 22
+
+# 如果 22 端口（SSH）能连但代理端口不能连
+# 说明是端口被墙而非 IP 被墙</code></pre>
+            </div>
+
+            <h3>方法 3: 在线检测工具</h3>
+            <div class="info-box">
+                <ul>
+                    <li><a href="https://www.vps234.com/ipchecker/" target="_blank">VPS234 IP 检测</a></li>
+                    <li><a href="https://tools.ipip.net/ping.php" target="_blank">IPIP.NET Ping 测试</a></li>
+                    <li>站长工具 - 多地 Ping</li>
+                </ul>
+            </div>
+
+            <h3>判断标准</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>现象</th>
+                        <th>判断</th>
+                        <th>解决方案</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>国内全部超时，国外正常</td>
+                        <td>✅ IP 被墙</td>
+                        <td>更换 IP 或 VPS</td>
+                    </tr>
+                    <tr>
+                        <td>SSH 能连，代理端口不通</td>
+                        <td>✅ 端口被墙</td>
+                        <td>更换端口（443 推荐）</td>
+                    </tr>
+                    <tr>
+                        <td>偶尔能连，经常断线</td>
+                        <td>⚠️ QoS 限速或轻度干扰</td>
+                        <td>优化协议，使用伪装</td>
+                    </tr>
+                    <tr>
+                        <td>国内国外都不通</td>
+                        <td>❌ 服务器问题</td>
+                        <td>检查服务器状态</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>封禁类型</h2>
+
+            <h3>IP 封禁</h3>
+            <div class="warning-box">
+                <h4>特征</h4>
+                <ul>
+                    <li>所有端口都无法从国内访问</li>
+                    <li>从国外可以正常访问</li>
+                    <li>持续时间：几天到永久</li>
+                </ul>
+                
+                <h4>处理方法</h4>
+                <ol>
+                    <li>立即停止代理服务</li>
+                    <li>备份数据和配置</li>
+                    <li>更换服务器 IP（快照重建）</li>
+                    <li>分析原因，优化配置</li>
+                </ol>
+            </div>
+
+            <h3>端口封禁</h3>
+            <div class="info-box">
+                <h4>特征</h4>
+                <ul>
+                    <li>特定端口无法访问</li>
+                    <li>SSH（22）等其他端口正常</li>
+                    <li>持续时间：几小时到几天</li>
+                </ul>
+                
+                <h4>处理方法</h4>
+                <ol>
+                    <li>修改代理端口为 443 或 80</li>
+                    <li>重启代理服务</li>
+                    <li>观察 1-2 天，看是否恢复</li>
+                </ol>
+            </div>
+
+            <h3>协议封锁</h3>
+            <div class="info-box">
+                <h4>特征</h4>
+                <ul>
+                    <li>连接建立后立即断开</li>
+                    <li>流量被 DPI 识别</li>
+                    <li>换端口无效</li>
+                </ul>
+                
+                <h4>处理方法</h4>
+                <ol>
+                    <li>更换为更隐蔽的协议（Reality、Trojan）</li>
+                    <li>启用流量混淆</li>
+                    <li>配置 TLS 加密</li>
+                </ol>
+            </div>
+
+            <h2>预防措施</h2>
+
+            <h3>协议选择</h3>
+            <div class="success-box">
+                <h4>推荐（抗封锁强）</h4>
+                <ul>
+                    <li>✅ <strong>VLESS + Reality</strong> - 最强抗封锁</li>
+                    <li>✅ <strong>Trojan + 正规证书</strong> - 伪装 HTTPS</li>
+                    <li>✅ <strong>Hysteria2 + 混淆</strong> - 高速且隐蔽</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>不推荐（易被封）</h4>
+                <ul>
+                    <li>❌ <strong>Shadowsocks（无插件）</strong> - 特征明显</li>
+                    <li>❌ <strong>PPTP/L2TP</strong> - 已被完全封锁</li>
+                    <li>❌ <strong>OpenVPN（默认配置）</strong> - 容易识别</li>
+                </ul>
+            </div>
+
+            <h3>配置要点</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>配置项</th>
+                        <th>推荐值</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>端口</strong></td>
+                        <td>443 或 80</td>
+                        <td>标准 HTTPS/HTTP 端口</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TLS 版本</strong></td>
+                        <td>TLS 1.3</td>
+                        <td>最新最安全</td>
+                    </tr>
+                    <tr>
+                        <td><strong>证书</strong></td>
+                        <td>Let's Encrypt</td>
+                        <td>正规免费证书</td>
+                    </tr>
+                    <tr>
+                        <td><strong>前置伪装</strong></td>
+                        <td>正常网站</td>
+                        <td>防止主动探测</td>
+                    </tr>
+                    <tr>
+                        <td><strong>连接限制</strong></td>
+                        <td>3-5 个/用户</td>
+                        <td>避免异常流量</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>使用习惯</h3>
+            <div class="warning-box">
+                <h4>⚠️ 避免以下行为</h4>
+                <ul>
+                    <li>❌ 使用 BT、迅雷下载</li>
+                    <li>❌ 长时间大流量传输</li>
+                    <li>❌ 共享给多人使用</li>
+                    <li>❌ 频繁访问敏感网站</li>
+                    <li>❌ 用于攻击、扫描等行为</li>
+                </ul>
+            </div>
+
+            <h2>更换 IP 的方法</h2>
+
+            <h3>方法 1: 快照重建（Vultr、DO）</h3>
+            <div class="info-box">
+                <ol>
+                    <li>创建服务器快照（Snapshot）</li>
+                    <li>删除当前服务器</li>
+                    <li>使用快照创建新服务器（自动分配新 IP）</li>
+                    <li>测试新 IP 是否被墙</li>
+                </ol>
+                <p><strong>优点</strong>：保留所有配置，5-10 分钟完成</p>
+            </div>
+
+            <h3>方法 2: 付费更换 IP</h3>
+            <div class="info-box">
+                <p>部分商家提供付费更换 IP 服务：</p>
+                <ul>
+                    <li>BandwagonHost：$8.79 一次</li>
+                    <li>阿里云/腾讯云：约 ¥2-5 一次</li>
+                </ul>
+                <p><strong>优点</strong>：不用重新配置</p>
+            </div>
+
+            <h3>方法 3: 申请新 IP（部分商家）</h3>
+            <div class="info-box">
+                <p>联系客服说明情况，请求更换 IP（成功率不高）</p>
+            </div>
+
+            <h2>备用方案</h2>
+
+            <h3>准备多个备用节点</h3>
+            <div class="success-box">
+                <ul>
+                    <li>✅ 主节点：高质量线路（CN2 GIA）</li>
+                    <li>✅ 备用节点 1：不同地区（日本、新加坡）</li>
+                    <li>✅ 备用节点 2：不同商家（分散风险）</li>
+                </ul>
+                <p><strong>成本</strong>：总计 $15-30/月</p>
+            </div>
+
+            <h3>使用 CDN 中转</h3>
+            <div class="info-box">
+                <h4>Cloudflare CDN 方案</h4>
+                <p>通过 Cloudflare CDN 隐藏真实服务器 IP：</p>
+                <ul>
+                    <li>✅ 即使 CDN IP 被封，更换即可</li>
+                    <li>✅ 隐藏真实服务器 IP</li>
+                    <li>⚠️ 速度会有损失</li>
+                    <li>⚠️ 配置较复杂</li>
+                </ul>
+            </div>
+
+            <h2>紧急处理流程</h2>
+
+            <div class="warning-box">
+                <h4>IP 被墙后的处理步骤</h4>
+                <ol>
+                    <li><strong>确认被墙</strong> - 使用多种方法验证</li>
+                    <li><strong>停止服务</strong> - 避免继续触发检测</li>
+                    <li><strong>备份数据</strong> - 备份配置文件和重要数据</li>
+                    <li><strong>分析原因</strong> - 检查日志，找出可能原因</li>
+                    <li><strong>优化配置</strong> - 改进协议和配置</li>
+                    <li><strong>更换 IP</strong> - 重建服务器或购买新 VPS</li>
+                    <li><strong>重新部署</strong> - 使用优化后的配置</li>
+                    <li><strong>观察监控</strong> - 监控 1-2 周，确保稳定</li>
+                </ol>
+            </div>
+
+            <h2>长期稳定建议</h2>
+
+            <div class="success-box">
+                <ul>
+                    <li>🔐 <strong>使用高隐蔽性协议</strong> - Reality、Trojan</li>
+                    <li>📊 <strong>控制流量</strong> - 避免异常大流量</li>
+                    <li>🎯 <strong>精准使用</strong> - 只代理必要的网站</li>
+                    <li>💰 <strong>选择优质线路</strong> - CN2、IPLC</li>
+                    <li>🔄 <strong>定期维护</strong> - 更新软件，检查配置</li>
+                    <li>📦 <strong>准备备份方案</strong> - 多节点、多商家</li>
+                </ul>
+            </div>
+
+            <h2>下一步学习</h2>
+            <div class="success-box">
+                <p>了解了封禁机制后，建议学习：</p>
+                <ul>
+                    <li><a href="advanced.html">进阶优化</a> - 高级隐蔽技巧</li>
+                    <li><a href="faq.html">常见问题</a> - 更多实战问题解决</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Proxy 101 知识库. 仅供技术学习使用.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>
