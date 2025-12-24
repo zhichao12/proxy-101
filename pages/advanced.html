@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>进阶优化 - Proxy 101</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="light-mode">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>🚀 Proxy 101</h1>
+                <p class="nav-tagline">全面的代理知识库</p>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3>基础理论</h3>
+                    <ul>
+                        <li><a href="basics.html">代理基础概念</a></li>
+                        <li><a href="terminology.html">核心术语解析</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>VPS 相关</h3>
+                    <ul>
+                        <li><a href="vps.html">VPS 基础知识</a></li>
+                        <li><a href="providers.html">VPS 提供商</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>协议与工具</h3>
+                    <ul>
+                        <li><a href="protocols.html">代理协议详解</a></li>
+                        <li><a href="tools.html">部署工具</a></li>
+                        <li><a href="clients.html">客户端推荐</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>安全与防护</h3>
+                    <ul>
+                        <li><a href="security.html">安全防护机制</a></li>
+                        <li><a href="gfw.html">GFW 检测原理</a></li>
+                        <li><a href="ip-blocking.html">IP 封禁机制</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>进阶与实战</h3>
+                    <ul>
+                        <li><a href="advanced.html">进阶优化</a></li>
+                        <li><a href="faq.html">常见问题</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content content-page">
+            <div class="breadcrumb">
+                <a href="../index.html">首页</a>
+                <span>/</span>
+                <span>进阶优化</span>
+            </div>
+
+            <h1>🚀 进阶优化</h1>
+
+            <h2>BBR 加速</h2>
+            <div class="info-box">
+                <h4>什么是 BBR？</h4>
+                <p>BBR（Bottleneck Bandwidth and RTT）是 Google 开发的 TCP 拥塞控制算法，可以显著提升网络传输速度，特别是在高延迟、高丢包的网络环境中。</p>
+                
+                <h4>安装 BBR</h4>
+                <pre><code># 检查内核版本（需要 4.9+）
+uname -r
+
+# 启用 BBR
+echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+sysctl -p
+
+# 验证
+lsmod | grep bbr</code></pre>
+                
+                <h4>效果</h4>
+                <p>在高延迟网络（200ms+）下，速度可提升 20-50%</p>
+            </div>
+
+            <h2>CDN 中转</h2>
+            <h3>Cloudflare CDN 方案</h3>
+            <div class="success-box">
+                <h4>优势</h4>
+                <ul>
+                    <li>✅ 隐藏真实服务器 IP</li>
+                    <li>✅ 免费且稳定</li>
+                    <li>✅ 即使 CDN IP 被封也可更换</li>
+                    <li>✅ 全球节点，就近访问</li>
+                </ul>
+                
+                <h4>适用协议</h4>
+                <ul>
+                    <li>VMess + WebSocket + TLS</li>
+                    <li>VLESS + WebSocket + TLS</li>
+                    <li>Trojan + WebSocket</li>
+                </ul>
+                
+                <h4>配置步骤</h4>
+                <ol>
+                    <li>域名托管到 Cloudflare</li>
+                    <li>开启代理（橙色云朵）</li>
+                    <li>代理协议使用 WebSocket 传输</li>
+                    <li>TLS 端口使用 443</li>
+                </ol>
+            </div>
+
+            <h3>CDN 优选 IP</h3>
+            <div class="info-box">
+                <p>使用工具找到速度最快的 Cloudflare IP：</p>
+                <pre><code># 下载 CloudflareSpeedTest
+# https://github.com/XIU2/CloudflareSpeedTest
+
+# 运行测速
+./CloudflareST
+
+# 在客户端配置中使用优选 IP</code></pre>
+            </div>
+
+            <h2>分流规则</h2>
+            <h3>为什么需要分流？</h3>
+            <ul>
+                <li>🎯 <strong>提升速度</strong> - 国内网站直连，国外走代理</li>
+                <li>💰 <strong>节省流量</strong> - 减少不必要的代理流量</li>
+                <li>🔒 <strong>提高安全</strong> - 国内服务不经过代理</li>
+                <li>⚡ <strong>降低延迟</strong> - 本地访问延迟更低</li>
+            </ul>
+
+            <h3>分流规则示例</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>规则</th>
+                        <th>说明</th>
+                        <th>示例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>DIRECT（直连）</strong></td>
+                        <td>国内网站、局域网</td>
+                        <td>baidu.com, taobao.com, 192.168.*</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PROXY（代理）</strong></td>
+                        <td>国外网站</td>
+                        <td>google.com, youtube.com, twitter.com</td>
+                    </tr>
+                    <tr>
+                        <td><strong>REJECT（拒绝）</strong></td>
+                        <td>广告、追踪</td>
+                        <td>analytics.google.com, ad.doubleclick.net</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Clash 分流规则</h3>
+            <div class="info-box">
+                <h4>推荐规则订阅</h4>
+                <ul>
+                    <li><strong>ACL4SSR</strong> - 全面且更新及时</li>
+                    <li><strong>Loyalsoldier</strong> - 简洁高效</li>
+                    <li><strong>Hackl0us</strong> - 包含去广告</li>
+                </ul>
+                
+                <h4>规则配置示例</h4>
+                <pre><code>rules:
+  - DOMAIN-SUFFIX,google.com,PROXY
+  - DOMAIN-KEYWORD,google,PROXY
+  - GEOIP,CN,DIRECT
+  - MATCH,PROXY</code></pre>
+            </div>
+
+            <h2>多层代理</h2>
+            <h3>场景与架构</h3>
+            <div class="info-box">
+                <h4>架构示例</h4>
+                <pre><code>客户端 → 国内中转 → 国外落地 → 目标网站
+       (CN2 线路)  (原生 IP)</code></pre>
+                
+                <h4>优势</h4>
+                <ul>
+                    <li>🚀 优化线路，提升速度</li>
+                    <li>🛡️ 保护落地机 IP</li>
+                    <li>⚖️ 负载均衡</li>
+                </ul>
+                
+                <h4>适用场景</h4>
+                <ul>
+                    <li>落地机延迟高，需要中转优化</li>
+                    <li>落地机 IP 珍贵，需要保护</li>
+                    <li>多人共享，需要负载均衡</li>
+                </ul>
+            </div>
+
+            <h2>性能优化</h2>
+
+            <h3>系统参数优化</h3>
+            <div class="info-box">
+                <pre><code># 编辑 /etc/sysctl.conf
+# 增加连接数限制
+net.core.somaxconn = 65535
+net.core.netdev_max_backlog = 65535
+
+# TCP 优化
+net.ipv4.tcp_fastopen = 3
+net.ipv4.tcp_fin_timeout = 30
+net.ipv4.tcp_keepalive_time = 1200
+
+# 应用配置
+sysctl -p</code></pre>
+            </div>
+
+            <h3>代理服务优化</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>优化项</th>
+                        <th>建议值</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>MUX（多路复用）</strong></td>
+                        <td>启用</td>
+                        <td>减少握手次数，降低延迟</td>
+                    </tr>
+                    <tr>
+                        <td><strong>UDP 转发</strong></td>
+                        <td>启用</td>
+                        <td>支持游戏和语音通话</td>
+                    </tr>
+                    <tr>
+                        <td><strong>连接复用</strong></td>
+                        <td>启用</td>
+                        <td>提升连接效率</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>流媒体解锁</h2>
+            <h3>什么是流媒体解锁？</h3>
+            <p>访问 Netflix、Disney+、HBO 等流媒体服务时，需要特定地区的原生 IP 才能观看该地区的内容。</p>
+
+            <h3>解锁要求</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>服务</th>
+                        <th>要求</th>
+                        <th>推荐地区</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Netflix</strong></td>
+                        <td>原生 IP</td>
+                        <td>美国、日本、新加坡</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Disney+</strong></td>
+                        <td>原生 IP</td>
+                        <td>美国、新加坡</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HBO Max</strong></td>
+                        <td>原生 IP（美国）</td>
+                        <td>美国</td>
+                    </tr>
+                    <tr>
+                        <td><strong>YouTube Premium</strong></td>
+                        <td>任意</td>
+                        <td>印度（价格低）</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>测试工具</h3>
+            <div class="info-box">
+                <pre><code># 流媒体解锁检测
+bash <(curl -L -s check.unlock.media)
+
+# 显示各服务的解锁状态</code></pre>
+            </div>
+
+            <h2>监控与告警</h2>
+
+            <h3>监控服务器状态</h3>
+            <div class="info-box">
+                <h4>使用 UptimeRobot（免费）</h4>
+                <ul>
+                    <li>监控服务器 HTTP/HTTPS 响应</li>
+                    <li>每 5 分钟检测一次</li>
+                    <li>宕机时邮件/Telegram 通知</li>
+                </ul>
+                <p>访问：<a href="https://uptimerobot.com" target="_blank">uptimerobot.com</a></p>
+            </div>
+
+            <h3>流量监控</h3>
+            <div class="info-box">
+                <p>使用 3X-UI 或 S-UI 面板自带的流量统计功能：</p>
+                <ul>
+                    <li>实时流量监控</li>
+                    <li>用户流量统计</li>
+                    <li>到期自动停用</li>
+                    <li>Telegram Bot 通知</li>
+                </ul>
+            </div>
+
+            <h2>备份策略</h2>
+
+            <h3>配置备份</h3>
+            <div class="info-box">
+                <pre><code># 定期备份脚本
+#!/bin/bash
+BACKUP_DIR="/root/backup"
+DATE=$(date +%Y%m%d)
+
+mkdir -p $BACKUP_DIR
+
+# 备份配置
+tar -czf $BACKUP_DIR/config-$DATE.tar.gz \
+    /etc/xray \
+    /etc/nginx \
+    /etc/x-ui
+
+# 保留最近 7 天的备份
+find $BACKUP_DIR -name "config-*.tar.gz" -mtime +7 -delete</code></pre>
+            </div>
+
+            <h3>自动化备份</h3>
+            <div class="info-box">
+                <pre><code># 添加到 crontab（每天凌晨 2 点）
+0 2 * * * /root/backup.sh
+
+# 编辑 crontab
+crontab -e</code></pre>
+            </div>
+
+            <h2>故障转移</h2>
+
+            <h3>多节点配置</h3>
+            <div class="success-box">
+                <p>在客户端配置多个节点：</p>
+                <ul>
+                    <li><strong>主节点</strong> - 高速 CN2 线路</li>
+                    <li><strong>备用节点 1</strong> - 不同地区</li>
+                    <li><strong>备用节点 2</strong> - 不同商家</li>
+                </ul>
+                <p>Clash 等客户端支持自动故障转移和负载均衡</p>
+            </div>
+
+            <h2>进阶工具</h2>
+
+            <h3>Xray-core 配置生成器</h3>
+            <ul>
+                <li><strong>v2rayN</strong> - Windows 图形化配置</li>
+                <li><strong>在线生成器</strong> - 网页版配置工具</li>
+            </ul>
+
+            <h3>一键测速脚本</h3>
+            <div class="info-box">
+                <pre><code># Superbench
+wget -qO- git.io/superbench.sh | bash
+
+# Bench.sh
+wget -qO- bench.sh | bash</code></pre>
+            </div>
+
+            <h2>下一步学习</h2>
+            <div class="success-box">
+                <p>掌握了进阶技巧后，建议：</p>
+                <ul>
+                    <li><a href="faq.html">常见问题</a> - 解决实战中的问题</li>
+                    <li>实践应用 - 在实际环境中测试优化效果</li>
+                    <li>持续学习 - 关注新技术和协议更新</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Proxy 101 知识库. 仅供技术学习使用.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>
