@@ -8,9 +8,17 @@
 
 一份全面、专业、易懂的代理知识库，涵盖代理/VPS 的完整知识体系
 
-[🌐 在线预览](#本地预览) | [📖 快速开始](#快速开始) | [📚 内容导览](#内容导览)
+[🌐 在线访问](https://zhichao12.github.io/proxy-101) | [📖 快速开始](#快速开始) | [📚 内容导览](#内容导览)
 
 </div>
+
+---
+
+## 🌐 在线访问
+
+**网站地址：[https://zhichao12.github.io/proxy-101](https://zhichao12.github.io/proxy-101)**
+
+可以直接在线浏览完整的知识库内容，无需本地部署。
 
 ---
 
@@ -24,50 +32,56 @@
 - 🛠️ 一键脚本、可视化面板等部署工具
 - 🛡️ 安全防护、隐私保护、反检测技术
 - 🚀 性能优化、进阶技巧和故障排查
+- 🌐 ICMP 协议、NAT 穿透等网络基础知识
 
 ## ✨ 特性
 
 - ✅ **系统全面** - 从基础到进阶，覆盖代理技术的方方面面
 - ✅ **通俗易懂** - 用简单的语言解释复杂的技术概念
 - ✅ **实用性强** - 提供详细的操作步骤和实战案例
-- ✅ **现代化设计** - 清爽美观的界面，优秀的阅读体验
+- ✅ **现代化设计** - 高端杂志风格，优雅的阅读体验
 - ✅ **响应式布局** - 完美适配桌面、平板、手机
 - ✅ **深色模式** - 支持浅色/深色主题切换
-- ✅ **导航友好** - 清晰的章节结构和快速导航
+- ✅ **导航友好** - 左侧章节导航 + 右侧目录大纲
+- ✅ **目录导航** - 页面右侧 TOC，支持点击跳转和滚动高亮
 
 ## 📚 内容导览
 
 ### 基础理论
-- **[代理基础概念](pages/basics.html)** - 什么是代理、工作原理、核心组成
-- **[核心术语解析](pages/terminology.html)** - 落地机、线路机、CN2、IPLC 等术语详解
+- **[代理基础概念](https://zhichao12.github.io/proxy-101/pages/basics.html)** - 什么是代理、工作原理、核心组成
+- **[核心术语解析](https://zhichao12.github.io/proxy-101/pages/terminology.html)** - 落地机、线路机、CN2、IPLC 等术语详解
 
 ### VPS 相关
-- **[VPS 基础知识](pages/vps.html)** - VPS 定义、配置选择、线路类型
-- **[VPS 提供商](pages/providers.html)** - Vultr、DO、Linode、搬瓦工等商家对比
+- **[VPS 基础知识](https://zhichao12.github.io/proxy-101/pages/vps.html)** - VPS 定义、配置选择、线路类型
+- **[VPS 提供商](https://zhichao12.github.io/proxy-101/pages/providers.html)** - Vultr、DO、Linode、搬瓦工等商家对比
 
 ### 协议与工具
-- **[代理协议详解](pages/protocols.html)** - Xray、V2Ray、Trojan、Hysteria2 等协议对比
-- **[部署工具](pages/tools.html)** - 一键脚本、3X-UI、S-UI 等工具介绍
-- **[客户端推荐](pages/clients.html)** - Windows、macOS、Android、iOS 客户端
+- **[代理协议详解](https://zhichao12.github.io/proxy-101/pages/protocols.html)** - Xray、V2Ray、Trojan、Hysteria2 等协议对比
+- **[部署工具](https://zhichao12.github.io/proxy-101/pages/tools.html)** - 一键脚本、3X-UI、S-UI 等工具介绍
+- **[客户端推荐](https://zhichao12.github.io/proxy-101/pages/clients.html)** - Windows、macOS、Android、iOS 客户端
+
+### 网络基础
+- **[ICMP 协议详解](https://zhichao12.github.io/proxy-101/pages/icmp.html)** - ICMP 检测原理、ping 识别、ICMP 隧道
+- **[NAT 穿透机制](https://zhichao12.github.io/proxy-101/pages/nat.html)** - NAT 类型、端口映射、NAT 穿透方案
 
 ### 安全与防护
-- **[安全防护机制](pages/security.html)** - SSH 加固、防火墙、加密配置
-- **[GFW 检测原理](pages/gfw.html)** - DPI、主动探测、流量特征识别
-- **[IP 封禁机制](pages/ip-blocking.html)** - 判断方法、预防措施、解决方案
+- **[安全防护机制](https://zhichao12.github.io/proxy-101/pages/security.html)** - SSH 加固、防火墙、加密配置
+- **[GFW 检测原理](https://zhichao12.github.io/proxy-101/pages/gfw.html)** - DPI、主动探测、流量特征识别
+- **[IP 封禁机制](https://zhichao12.github.io/proxy-101/pages/ip-blocking.html)** - 判断方法、预防措施、解决方案
 
 ### 进阶与实战
-- **[进阶优化](pages/advanced.html)** - BBR 加速、CDN 中转、分流规则
-- **[常见问题](pages/faq.html)** - FAQ 和故障排查指南
+- **[进阶优化](https://zhichao12.github.io/proxy-101/pages/advanced.html)** - BBR 加速、CDN 中转、分流规则
+- **[常见问题](https://zhichao12.github.io/proxy-101/pages/faq.html)** - FAQ 和故障排查指南
 
 ## 🚀 快速开始
 
-### 在线访问
+### 在线访问（推荐）
 
-直接打开 `index.html` 即可在浏览器中访问。
+直接访问：**[https://zhichao12.github.io/proxy-101](https://zhichao12.github.io/proxy-101)**
 
 ### 本地预览
 
-#### 方法 1: 直接打开（推荐）
+#### 方法 1: 直接打开
 
 双击 `index.html` 文件，使用浏览器打开即可。
 
@@ -75,7 +89,7 @@
 
 ```bash
 # Python 3
-python -m http.server 8000
+python3 -m http.server 8000
 
 # Python 2
 python -m SimpleHTTPServer 8000
@@ -90,7 +104,15 @@ php -S localhost:8000
 
 然后访问 `http://localhost:8000`
 
-### 部署到服务器
+### 部署到 GitHub Pages
+
+1. Fork 本仓库
+2. 进入仓库设置 Settings > Pages
+3. 选择 Branch: `main` 和 `/root` 目录
+4. 点击 Save，等待部署完成
+5. 访问 `https://your-username.github.io/proxy-101`
+
+### 部署到自己的服务器
 
 将整个项目上传到 Web 服务器的根目录，配置 Nginx 或 Apache 即可。
 
@@ -118,9 +140,9 @@ proxy-101/
 ├── 自建梯子.md             # 参考文档
 ├── assets/                # 资源文件
 │   ├── css/
-│   │   └── style.css      # 样式文件
+│   │   └── style.css      # 样式文件（杂志风格）
 │   └── js/
-│       └── main.js        # JavaScript 脚本
+│       └── main.js        # JavaScript 脚本（主题切换、TOC导航）
 └── pages/                 # 内容页面
     ├── basics.html        # 代理基础概念
     ├── terminology.html   # 核心术语解析
@@ -129,6 +151,8 @@ proxy-101/
     ├── protocols.html     # 代理协议详解
     ├── tools.html         # 部署工具
     ├── clients.html       # 客户端推荐
+    ├── icmp.html          # ICMP 协议详解 ⭐ 新增
+    ├── nat.html           # NAT 穿透机制 ⭐ 新增
     ├── security.html      # 安全防护机制
     ├── gfw.html           # GFW 检测原理
     ├── ip-blocking.html   # IP 封禁机制
@@ -136,34 +160,42 @@ proxy-101/
     └── faq.html           # 常见问题
 ```
 
-## 🎨 技术栈
+## 🎨 技术栈与设计
 
+### 技术栈
 - **HTML5** - 语义化标签
 - **CSS3** - 现代化样式、响应式设计、CSS 变量
-- **JavaScript** - 主题切换、导航交互
+- **JavaScript** - 主题切换、导航交互、TOC 生成
 - **无依赖** - 纯原生实现，无需任何框架
+
+### 设计风格
+- **高端杂志风格** - 优雅的衬线字体（Georgia, Garamond）
+- **细线分隔** - 精致的细线替代粗重边框
+- **充分留白** - 简约扁平设计，提升阅读体验
+- **精致配色** - 深浅双主题，和谐统一
 
 ## 🌟 特色功能
 
 ### 响应式设计
 
 网站完美适配各种设备：
-- 🖥️ 桌面端（1920px+）
-- 💻 笔记本（1366px+）
-- 📱 平板（768px+）
-- 📱 手机（320px+）
+- 🖥️ 桌面端（1920px+）- 左侧导航 + 中间内容 + 右侧目录
+- 💻 笔记本（1366px+）- 左侧导航 + 中间内容
+- 📱 平板（768px+）- 折叠导航 + 内容
+- 📱 手机（320px+）- 移动端优化布局
 
 ### 深色模式
 
 点击右上角的主题切换按钮，即可在浅色和深色模式之间切换。主题偏好会自动保存到本地存储。
 
-### 侧边导航
+### 双侧导航
 
-左侧固定导航栏，支持：
-- 📑 章节分类
-- 🔗 快速跳转
-- 🎯 当前页面高亮
-- 📱 移动端自适应
+- **左侧导航栏** - 章节分类，快速跳转到不同页面
+- **右侧目录导航（TOC）** - 当前页面的目录大纲，支持：
+  - 📑 自动生成二级、三级标题目录
+  - 🔗 点击跳转到对应章节
+  - 🎯 滚动时自动高亮当前章节
+  - 📱 移动端自适应隐藏
 
 ### 内容优化
 
@@ -173,6 +205,33 @@ proxy-101/
 - 🎨 代码高亮显示
 - 🔗 面包屑导航
 - 🔖 自动生成锚点链接
+
+## 📖 使用指南
+
+1. **浏览首页** - 了解知识库整体结构和快速入口
+2. **左侧导航** - 点击章节名称跳转到对应页面
+3. **右侧目录** - 在内容页面中快速定位到具体章节
+4. **主题切换** - 根据环境选择浅色或深色模式
+5. **搜索功能** - 使用浏览器的查找功能（Ctrl+F / Cmd+F）
+
+## 📚 内容亮点
+
+### 深度专业
+- ICMP 协议的详细工作原理和应用场景
+- NAT 穿透的完整技术方案
+- GFW 检测机制的深度解析
+- 各种代理协议的技术对比
+
+### 实战导向
+- VPS 提供商的详细对比和选择建议
+- 一键脚本和可视化面板的使用教程
+- 安全防护的具体配置步骤
+- 常见问题的解决方案
+
+### 持续更新
+- 跟进最新的代理技术和协议
+- 补充实际使用中的经验总结
+- 优化内容结构和阅读体验
 
 ## ⚠️ 免责声明
 
@@ -189,11 +248,28 @@ proxy-101/
 
 ## 🤝 贡献
 
-欢迎提交 Issue 和 Pull Request 来改进这个项目。
+欢迎提交 Issue 和 Pull Request 来改进这个项目：
+
+- 报告错误或提出改进建议
+- 补充或完善内容
+- 优化排版和设计
+- 修正错别字和格式问题
 
 ## 📧 联系方式
 
-如有问题或建议，欢迎通过 GitHub Issues 联系。
+如有问题或建议，欢迎通过 [GitHub Issues](https://github.com/zhichao12/proxy-101/issues) 联系。
+
+## 🙏 致谢
+
+感谢所有为代理技术发展做出贡献的开发者和社区。
+
+## 🔗 相关资源
+
+- [V2Ray 官方文档](https://www.v2ray.com/)
+- [Xray 项目](https://github.com/XTLS/Xray-core)
+- [Clash 项目](https://github.com/Dreamacro/clash)
+- [Trojan 项目](https://github.com/trojan-gfw/trojan)
+- [Hysteria 项目](https://github.com/apernet/hysteria)
 
 ---
 
@@ -201,6 +277,6 @@ proxy-101/
 
 **⭐ 如果这个项目对你有帮助，请给它一个 Star！**
 
-Made with ❤️ for learning
+Made with ❤️ for learning | [在线访问](https://zhichao12.github.io/proxy-101)
 
 </div>

@@ -26,9 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
     navLinks.forEach(link => {
         if (link.getAttribute('href') === currentPath || 
             currentPath.includes(link.getAttribute('href'))) {
-            link.style.backgroundColor = 'var(--bg-tertiary)';
             link.style.color = 'var(--primary-color)';
-            link.style.fontWeight = '600';
+            link.style.borderLeftColor = 'var(--primary-color)';
+            link.style.fontWeight = '400';
         }
     });
     
@@ -68,12 +68,98 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', () => {
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 100) {
-                navbar.style.boxShadow = 'var(--shadow-md)';
-            } else {
-                navbar.style.boxShadow = 'var(--shadow-sm)';
-            }
-        }, 100);
+            updateActiveHeading();
+        }, 50);
     });
+    
+    generateTableOfContents();
+    
+    function generateTableOfContents() {
+        const contentPage = document.querySelector('.content-page');
+        if (!contentPage) return;
+        
+        const headings = contentPage.querySelectorAll('h2, h3');
+        if (headings.length === 0) return;
+        
+        contentPage.classList.add('has-toc');
+        
+        const toc = document.createElement('nav');
+        toc.className = 'toc';
+        
+        const tocTitle = document.createElement('div');
+        tocTitle.className = 'toc-title';
+        tocTitle.textContent = '目录';
+        toc.appendChild(tocTitle);
+        
+        const tocList = document.createElement('ul');
+        
+        headings.forEach(heading => {
+            if (!heading.id) {
+                const id = heading.textContent.toLowerCase()
+                    .replace(/\s+/g, '-')
+                    .replace(/[^\w\-\u4e00-\u9fa5]+/g, '');
+                heading.id = id;
+            }
+            
+            const li = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = `#${heading.id}`;
+            link.textContent = heading.textContent.replace(/^[🔍🔔🌐📚🎯🖥️🔐🛠️🛡️🚀⚠️]+\s*/, '');
+            
+            if (heading.tagName === 'H3') {
+                link.classList.add('toc-h3');
+            }
+            
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetElement = document.getElementById(heading.id);
+                if (targetElement) {
+                    const offset = 80;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                    
+                    history.pushState(null, null, `#${heading.id}`);
+                }
+            });
+            
+            li.appendChild(link);
+            tocList.appendChild(li);
+        });
+        
+        toc.appendChild(tocList);
+        document.body.appendChild(toc);
+    }
+    
+    function updateActiveHeading() {
+        const toc = document.querySelector('.toc');
+        if (!toc) return;
+        
+        const headings = document.querySelectorAll('.content-page h2, .content-page h3');
+        const tocLinks = toc.querySelectorAll('a');
+        
+        let activeHeading = null;
+        const scrollPosition = window.scrollY + 100;
+        
+        headings.forEach(heading => {
+            if (heading.offsetTop <= scrollPosition) {
+                activeHeading = heading;
+            }
+        });
+        
+        tocLinks.forEach(link => {
+            link.classList.remove('active');
+        });
+        
+        if (activeHeading) {
+            const activeLink = toc.querySelector(`a[href="#${activeHeading.id}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+    }
 });
