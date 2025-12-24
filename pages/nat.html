@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAT 穿透机制 - Proxy 101</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="light-mode">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>🚀 Proxy 101</h1>
+                <p class="nav-tagline">全面的代理知识库</p>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3>基础理论</h3>
+                    <ul>
+                        <li><a href="basics.html">代理基础概念</a></li>
+                        <li><a href="terminology.html">核心术语解析</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>VPS 相关</h3>
+                    <ul>
+                        <li><a href="vps.html">VPS 基础知识</a></li>
+                        <li><a href="providers.html">VPS 提供商</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>协议与工具</h3>
+                    <ul>
+                        <li><a href="protocols.html">代理协议详解</a></li>
+                        <li><a href="tools.html">部署工具</a></li>
+                        <li><a href="clients.html">客户端推荐</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>网络基础</h3>
+                    <ul>
+                        <li><a href="icmp.html">ICMP 协议详解</a></li>
+                        <li><a href="nat.html">NAT 穿透机制</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>安全与防护</h3>
+                    <ul>
+                        <li><a href="security.html">安全防护机制</a></li>
+                        <li><a href="gfw.html">GFW 检测原理</a></li>
+                        <li><a href="ip-blocking.html">IP 封禁机制</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>进阶与实战</h3>
+                    <ul>
+                        <li><a href="advanced.html">进阶优化</a></li>
+                        <li><a href="faq.html">常见问题</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content content-page">
+            <div class="breadcrumb">
+                <a href="../index.html">首页</a>
+                <span>/</span>
+                <span>NAT 穿透机制</span>
+            </div>
+
+            <h1>🌐 NAT 穿透机制</h1>
+
+            <p>NAT（Network Address Translation，网络地址转换）是现代互联网的核心技术之一。理解 NAT 工作原理和穿透技术，对于搭建代理、内网穿透等场景至关重要。</p>
+
+            <h2>NAT 基础概念</h2>
+
+            <h3>什么是 NAT</h3>
+            <div class="info-box">
+                <p><strong>NAT</strong> 是一种网络地址转换技术，允许多个内网设备共享一个公网 IP 地址访问互联网。</p>
+                
+                <h4>为什么需要 NAT</h4>
+                <ul>
+                    <li>💡 <strong>IPv4 地址短缺</strong> — 全球 IPv4 地址不足，NAT 缓解压力</li>
+                    <li>🛡️ <strong>安全隔离</strong> — 隐藏内网结构，提供一定的安全性</li>
+                    <li>💰 <strong>成本节约</strong> — 一个公网 IP 供多台设备使用</li>
+                    <li>🔄 <strong>灵活性</strong> — 内网设备可以使用私有 IP，易于管理</li>
+                </ul>
+
+                <h4>私有 IP 地址范围</h4>
+                <ul>
+                    <li><strong>A 类</strong>: 10.0.0.0 - 10.255.255.255 (10/8)</li>
+                    <li><strong>B 类</strong>: 172.16.0.0 - 172.31.255.255 (172.16/12)</li>
+                    <li><strong>C 类</strong>: 192.168.0.0 - 192.168.255.255 (192.168/16)</li>
+                </ul>
+            </div>
+
+            <h3>NAT 工作原理</h3>
+            <div class="info-box">
+                <h4>基本流程</h4>
+                <pre><code>内网设备 (192.168.1.100:5000) 
+    ↓ 发送请求
+NAT 路由器
+    - 记录映射关系: 192.168.1.100:5000 → 公网IP:12345
+    - 修改源地址为: 公网IP:12345
+    ↓ 转发
+互联网服务器 (接收到来自 公网IP:12345 的请求)
+    ↓ 返回响应
+NAT 路由器
+    - 查找映射: 公网IP:12345 → 192.168.1.100:5000
+    - 修改目标地址为: 192.168.1.100:5000
+    ↓ 转发
+内网设备 (192.168.1.100:5000 收到响应)</code></pre>
+
+                <h4>NAT 映射表示例</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>内网地址</th>
+                            <th>外网地址</th>
+                            <th>状态</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>192.168.1.100:5000</td>
+                            <td>1.2.3.4:12345</td>
+                            <td>活跃</td>
+                        </tr>
+                        <tr>
+                            <td>192.168.1.101:6000</td>
+                            <td>1.2.3.4:12346</td>
+                            <td>活跃</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>NAT 类型详解</h2>
+
+            <h3>四种主要 NAT 类型</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>NAT 类型</th>
+                        <th>映射规则</th>
+                        <th>穿透难度</th>
+                        <th>应用场景</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Full Cone</strong><br>完全锥型</td>
+                        <td>一对一映射，任何外部主机都可以访问</td>
+                        <td>🟢 容易</td>
+                        <td>最宽松，易于 P2P</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Restricted Cone</strong><br>受限锥型</td>
+                        <td>只有内网主动连接过的外部 IP 可以访问</td>
+                        <td>🟡 中等</td>
+                        <td>提供基本安全</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Port Restricted</strong><br>端口受限</td>
+                        <td>只有内网主动连接过的外部 IP:Port 可以访问</td>
+                        <td>🟠 较难</td>
+                        <td>较安全的 NAT</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Symmetric</strong><br>对称型</td>
+                        <td>不同目标使用不同映射，最严格</td>
+                        <td>🔴 非常难</td>
+                        <td>企业级防火墙</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>详细对比</h3>
+            <div class="info-box">
+                <h4>1. Full Cone NAT（完全锥型）</h4>
+                <p><strong>特征</strong>：内网 IP:Port 一旦映射到外网 IP:Port，任何外部主机都可以通过该映射发送数据</p>
+                <pre><code>内网 192.168.1.100:5000 → 外网 1.2.3.4:12345
+任何 IP:Port → 1.2.3.4:12345 → 转发到 192.168.1.100:5000 ✅</code></pre>
+                <ul>
+                    <li>✅ 最容易穿透</li>
+                    <li>✅ P2P 直连容易</li>
+                    <li>❌ 安全性较低</li>
+                </ul>
+
+                <h4>2. Restricted Cone NAT（受限锥型）</h4>
+                <p><strong>特征</strong>：只有内网主机曾经发送过数据的外部 IP 才能通过映射发送数据</p>
+                <pre><code>内网 192.168.1.100:5000 → 外网 1.2.3.4:12345
+内网先向 5.6.7.8:任意端口 发送过数据
+5.6.7.8:任意端口 → 1.2.3.4:12345 → 转发到 192.168.1.100:5000 ✅
+9.10.11.12:任意端口 → 1.2.3.4:12345 → 被拒绝 ❌</code></pre>
+                <ul>
+                    <li>✅ 较容易穿透</li>
+                    <li>✅ 安全性适中</li>
+                </ul>
+
+                <h4>3. Port Restricted Cone NAT（端口受限）</h4>
+                <p><strong>特征</strong>：只有内网主机曾经发送过数据的外部 IP:Port 才能通过映射</p>
+                <pre><code>内网 192.168.1.100:5000 → 外网 1.2.3.4:12345
+内网先向 5.6.7.8:8000 发送过数据
+5.6.7.8:8000 → 1.2.3.4:12345 → 转发到 192.168.1.100:5000 ✅
+5.6.7.8:9000 → 1.2.3.4:12345 → 被拒绝 ❌</code></pre>
+                <ul>
+                    <li>🟡 需要协调端口</li>
+                    <li>✅ 安全性较高</li>
+                </ul>
+
+                <h4>4. Symmetric NAT（对称型）</h4>
+                <p><strong>特征</strong>：对于不同的目标地址，使用不同的外网端口映射</p>
+                <pre><code>内网 192.168.1.100:5000 → 5.6.7.8:8000 → 使用外网 1.2.3.4:12345
+内网 192.168.1.100:5000 → 9.10.11.12:9000 → 使用外网 1.2.3.4:12346
+
+无法预测端口，P2P 直连几乎不可能 ❌</code></pre>
+                <ul>
+                    <li>🔴 最难穿透</li>
+                    <li>✅ 安全性最高</li>
+                    <li>❌ 需要服务器中转</li>
+                </ul>
+            </div>
+
+            <h2>测试 NAT 类型</h2>
+
+            <h3>在线测试工具</h3>
+            <div class="info-box">
+                <h4>推荐工具</h4>
+                <ul>
+                    <li><strong>STUN 服务器</strong> — <a href="https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/" target="_blank">WebRTC Test</a></li>
+                    <li><strong>NAT 类型检测</strong> — 使用 UDP 打洞测试工具</li>
+                </ul>
+
+                <h4>命令行工具</h4>
+                <pre><code># 使用 stun 客户端
+sudo apt install stun-client
+stun stun.l.google.com:19302
+
+# 输出示例
+# STUN client version 0.97
+# Primary: Full Cone NAT
+# Return value is 0x000001</code></pre>
+
+                <h4>返回值含义</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>值</th>
+                            <th>NAT 类型</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0x000001</td>
+                            <td>Full Cone NAT</td>
+                        </tr>
+                        <tr>
+                            <td>0x000002</td>
+                            <td>Symmetric NAT</td>
+                        </tr>
+                        <tr>
+                            <td>0x000004</td>
+                            <td>Restricted Cone NAT</td>
+                        </tr>
+                        <tr>
+                            <td>0x000005</td>
+                            <td>Port Restricted Cone NAT</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>NAT 穿透技术</h2>
+
+            <h3>端口映射（Port Forwarding）</h3>
+            <div class="info-box">
+                <h4>原理</h4>
+                <p>在路由器上手动配置固定的端口映射关系，将外网端口映射到内网设备。</p>
+
+                <h4>配置示例</h4>
+                <pre><code>外网端口 8080 → 内网 192.168.1.100:8080
+外网端口 22 → 内网 192.168.1.100:22</code></pre>
+
+                <h4>适用场景</h4>
+                <ul>
+                    <li>✅ <strong>自建代理服务器</strong> — 在家庭网络搭建代理</li>
+                    <li>✅ <strong>远程访问</strong> — SSH、RDP 等远程服务</li>
+                    <li>✅ <strong>服务器托管</strong> — 在内网运行 Web 服务器</li>
+                    <li>❌ 需要路由器管理权限</li>
+                    <li>❌ 运营商可能封禁端口</li>
+                </ul>
+
+                <h4>配置方法</h4>
+                <ol>
+                    <li>登录路由器管理页面（通常是 192.168.1.1）</li>
+                    <li>找到"端口转发"或"虚拟服务器"设置</li>
+                    <li>添加规则：外部端口 → 内网 IP:端口</li>
+                    <li>保存并重启路由器</li>
+                </ol>
+            </div>
+
+            <h3>UPnP（通用即插即用）</h3>
+            <div class="info-box">
+                <h4>原理</h4>
+                <p>设备自动向路由器请求开放端口，无需手动配置。</p>
+
+                <h4>优缺点</h4>
+                <ul>
+                    <li>✅ 自动化，用户无需配置</li>
+                    <li>✅ 适合临时端口映射</li>
+                    <li>❌ 安全风险（恶意软件可能利用）</li>
+                    <li>❌ 需要路由器支持并启用 UPnP</li>
+                </ul>
+
+                <h4>使用场景</h4>
+                <ul>
+                    <li>P2P 应用（BT 下载、游戏联机）</li>
+                    <li>视频会议软件</li>
+                    <li>智能家居设备</li>
+                </ul>
+            </div>
+
+            <h3>STUN（Session Traversal Utilities for NAT）</h3>
+            <div class="info-box">
+                <h4>原理</h4>
+                <p>通过 STUN 服务器发现自己的公网 IP 和端口，用于建立 P2P 连接。</p>
+
+                <h4>工作流程</h4>
+                <pre><code>1. 客户端向 STUN 服务器发送请求
+2. STUN 服务器返回客户端的公网 IP:Port
+3. 客户端将此信息发送给对方
+4. 双方尝试直接连接</code></pre>
+
+                <h4>常用 STUN 服务器</h4>
+                <ul>
+                    <li><code>stun.l.google.com:19302</code></li>
+                    <li><code>stun1.l.google.com:19302</code></li>
+                    <li><code>stun.stunprotocol.org:3478</code></li>
+                </ul>
+
+                <h4>适用 NAT 类型</h4>
+                <ul>
+                    <li>✅ Full Cone NAT</li>
+                    <li>✅ Restricted Cone NAT</li>
+                    <li>✅ Port Restricted Cone NAT</li>
+                    <li>❌ Symmetric NAT（需要 TURN 中转）</li>
+                </ul>
+            </div>
+
+            <h3>TURN（Traversal Using Relays around NAT）</h3>
+            <div class="info-box">
+                <h4>原理</h4>
+                <p>当 P2P 直连失败时，通过 TURN 服务器中转流量。</p>
+
+                <h4>工作流程</h4>
+                <pre><code>客户端 A → TURN 服务器 ← 客户端 B
+所有数据通过 TURN 服务器转发</code></pre>
+
+                <h4>特点</h4>
+                <ul>
+                    <li>✅ 能穿透所有类型的 NAT</li>
+                    <li>✅ 可靠性高</li>
+                    <li>❌ 消耗服务器带宽</li>
+                    <li>❌ 延迟较高</li>
+                    <li>❌ 需要自己部署或付费使用</li>
+                </ul>
+            </div>
+
+            <h3>ICE（Interactive Connectivity Establishment）</h3>
+            <div class="info-box">
+                <h4>原理</h4>
+                <p>综合使用 STUN 和 TURN，自动选择最佳连接方式。</p>
+
+                <h4>优先级</h4>
+                <ol>
+                    <li><strong>直连</strong> — 如果在同一网络</li>
+                    <li><strong>STUN</strong> — 尝试 P2P 穿透</li>
+                    <li><strong>TURN</strong> — 最后的中转方案</li>
+                </ol>
+
+                <h4>应用</h4>
+                <ul>
+                    <li>WebRTC（视频会议、实时通讯）</li>
+                    <li>现代 P2P 应用</li>
+                </ul>
+            </div>
+
+            <h2>常用穿透工具</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>工具</th>
+                        <th>类型</th>
+                        <th>特点</th>
+                        <th>难度</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>frp</strong></td>
+                        <td>内网穿透</td>
+                        <td>功能强大，支持多种协议</td>
+                        <td>⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ngrok</strong></td>
+                        <td>内网穿透</td>
+                        <td>简单易用，提供云服务</td>
+                        <td>⭐</td>
+                    </tr>
+                    <tr>
+                        <td><strong>nps</strong></td>
+                        <td>内网穿透</td>
+                        <td>Web 管理界面</td>
+                        <td>⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ZeroTier</strong></td>
+                        <td>虚拟局域网</td>
+                        <td>P2P，无需服务器</td>
+                        <td>⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tailscale</strong></td>
+                        <td>虚拟局域网</td>
+                        <td>基于 WireGuard，易用</td>
+                        <td>⭐</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cloudflare Tunnel</strong></td>
+                        <td>内网穿透</td>
+                        <td>免费，稳定，无需开放端口</td>
+                        <td>⭐⭐</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>frp 配置示例</h3>
+            <div class="info-box">
+                <h4>服务端配置（VPS）</h4>
+                <pre><code># frps.ini
+[common]
+bind_port = 7000
+token = your_secure_token
+
+# 启动
+./frps -c frps.ini</code></pre>
+
+                <h4>客户端配置（内网机器）</h4>
+                <pre><code># frpc.ini
+[common]
+server_addr = your_vps_ip
+server_port = 7000
+token = your_secure_token
+
+[ssh]
+type = tcp
+local_ip = 127.0.0.1
+local_port = 22
+remote_port = 6000
+
+[web]
+type = http
+local_port = 8080
+custom_domains = www.yourdomain.com
+
+# 启动
+./frpc -c frpc.ini</code></pre>
+
+                <h4>访问方式</h4>
+                <pre><code># SSH 访问
+ssh -p 6000 user@your_vps_ip
+
+# Web 访问
+http://www.yourdomain.com</code></pre>
+            </div>
+
+            <h2>NAT 与代理</h2>
+
+            <h3>NAT 对代理的影响</h3>
+            <div class="warning-box">
+                <h4>常见问题</h4>
+                <ul>
+                    <li>⚠️ <strong>家宽搭建代理</strong> — 需要端口映射或内网穿透</li>
+                    <li>⚠️ <strong>连接超时</strong> — NAT 映射表清理导致连接断开</li>
+                    <li>⚠️ <strong>P2P 失败</strong> — Symmetric NAT 无法直连</li>
+                    <li>⚠️ <strong>运营商 NAT</strong> — 移动网络可能使用多层 NAT</li>
+                </ul>
+
+                <h4>运营商级 NAT（CGNAT）</h4>
+                <p>移动、联通等运营商可能使用 CGNAT，用户获得的是"假公网 IP"（100.64.0.0/10 段）</p>
+                <ul>
+                    <li>❌ 无法从外部直接访问</li>
+                    <li>❌ 端口映射无效</li>
+                    <li>✅ 只能使用 VPS 中转或 VPN</li>
+                </ul>
+            </div>
+
+            <h3>最佳实践</h3>
+            <div class="success-box">
+                <h4>搭建代理服务器</h4>
+                <ol>
+                    <li><strong>优先使用公网 VPS</strong>
+                        <ul>
+                            <li>✅ 无需处理 NAT 问题</li>
+                            <li>✅ 固定公网 IP</li>
+                            <li>✅ 稳定性高</li>
+                        </ul>
+                    </li>
+                    <li><strong>家宽代理方案</strong>
+                        <ul>
+                            <li>配置端口映射（需路由器权限）</li>
+                            <li>使用 frp/ngrok 穿透到 VPS</li>
+                            <li>使用 Cloudflare Tunnel</li>
+                        </ul>
+                    </li>
+                    <li><strong>保持连接活跃</strong>
+                        <pre><code># TCP Keep-Alive
+net.ipv4.tcp_keepalive_time = 600
+net.ipv4.tcp_keepalive_intvl = 30
+net.ipv4.tcp_keepalive_probes = 3</code></pre>
+                    </li>
+                    <li><strong>使用心跳包</strong> — 定期发送数据防止 NAT 超时</li>
+                </ol>
+            </div>
+
+            <h2>故障排查</h2>
+
+            <h3>判断是否有公网 IP</h3>
+            <div class="info-box">
+                <pre><code># 查看本地 IP
+ip addr show
+
+# 查看公网 IP
+curl ifconfig.me
+curl ip.sb
+
+# 对比两者
+# 如果相同 → 有公网 IP ✅
+# 如果不同 → 在 NAT 后面 ❌</code></pre>
+
+                <h4>使用在线工具</h4>
+                <ul>
+                    <li><a href="https://www.whatismyip.com/" target="_blank">WhatIsMyIP</a></li>
+                    <li><a href="https://ip.sb/" target="_blank">IP.SB</a></li>
+                </ul>
+            </div>
+
+            <h3>测试端口映射</h3>
+            <div class="info-box">
+                <pre><code># 本地监听端口
+nc -l 8080
+
+# 从外网测试
+telnet your_public_ip 8080
+# 或
+nc -zv your_public_ip 8080
+
+# 在线端口检测
+# https://www.yougetsignal.com/tools/open-ports/</code></pre>
+            </div>
+
+            <h3>常见错误和解决</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>问题</th>
+                        <th>原因</th>
+                        <th>解决方案</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>端口映射无效</td>
+                        <td>CGNAT / 路由器配置错误</td>
+                        <td>确认公网IP，检查路由器设置</td>
+                    </tr>
+                    <tr>
+                        <td>连接频繁断开</td>
+                        <td>NAT 超时</td>
+                        <td>启用 TCP Keep-Alive</td>
+                    </tr>
+                    <tr>
+                        <td>P2P 无法建立</td>
+                        <td>Symmetric NAT</td>
+                        <td>使用 TURN 中转</td>
+                    </tr>
+                    <tr>
+                        <td>运营商封锁</td>
+                        <td>封禁常用端口</td>
+                        <td>使用非常规端口或 VPN</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>实战案例</h2>
+
+            <h3>案例 1：家宽搭建代理</h3>
+            <div class="info-box">
+                <h4>需求</h4>
+                <p>在家庭网络搭建代理服务器，供外出时使用。</p>
+
+                <h4>方案对比</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>方案</th>
+                            <th>优点</th>
+                            <th>缺点</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>端口映射</strong></td>
+                            <td>性能好，延迟低</td>
+                            <td>需要公网IP和路由器权限</td>
+                        </tr>
+                        <tr>
+                            <td><strong>frp 穿透</strong></td>
+                            <td>无需公网IP</td>
+                            <td>需要一台VPS中转</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tailscale</strong></td>
+                            <td>简单易用，P2P</td>
+                            <td>免费版有设备限制</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>推荐方案</h4>
+                <p><strong>Tailscale + Xray</strong>：使用 Tailscale 建立虚拟局域网，在其上运行代理</p>
+            </div>
+
+            <h3>案例 2：多层 NAT 穿透</h3>
+            <div class="info-box">
+                <h4>场景</h4>
+                <p>设备位于公司网络或校园网，处于多层 NAT 后面。</p>
+
+                <h4>解决方案</h4>
+                <ol>
+                    <li><strong>Cloudflare Tunnel</strong>
+                        <pre><code># 安装 cloudflared
+# 配置隧道连接到 Cloudflare
+# 无需开放任何端口</code></pre>
+                    </li>
+                    <li><strong>VPN 方案</strong>
+                        <pre><code># 使用 WireGuard 或 OpenVPN
+# 连接到 VPS 建立安全隧道</code></pre>
+                    </li>
+                </ol>
+            </div>
+
+            <h2>IPv6 与 NAT</h2>
+
+            <h3>IPv6 的优势</h3>
+            <div class="success-box">
+                <p><strong>IPv6 地址充足，无需 NAT</strong></p>
+                <ul>
+                    <li>✅ 每个设备都有公网地址</li>
+                    <li>✅ 无需端口映射</li>
+                    <li>✅ P2P 连接更容易</li>
+                    <li>✅ 减少网络复杂度</li>
+                </ul>
+
+                <h4>启用 IPv6</h4>
+                <pre><code># 检查 IPv6 支持
+ip -6 addr show
+
+# 测试 IPv6 连接
+ping6 google.com
+
+# 优先使用 IPv6
+# 在代理配置中绑定 IPv6 地址</code></pre>
+
+                <h4>注意事项</h4>
+                <ul>
+                    <li>⚠️ 需要运营商和 VPS 都支持 IPv6</li>
+                    <li>⚠️ 部分网络仍不支持 IPv6</li>
+                    <li>⚠️ 防火墙规则需要单独配置</li>
+                </ul>
+            </div>
+
+            <h2>下一步学习</h2>
+            <div class="success-box">
+                <p>学习了 NAT 穿透后，建议继续学习：</p>
+                <ul>
+                    <li><a href="icmp.html">ICMP 协议详解</a> — 了解网络层的诊断协议</li>
+                    <li><a href="advanced.html">进阶优化</a> — 学习 CDN 中转和多层代理</li>
+                    <li><a href="security.html">安全防护机制</a> — 保护你的代理服务器</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Proxy 101 知识库. 仅供技术学习使用.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>
