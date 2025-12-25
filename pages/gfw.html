@@ -10,12 +10,19 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-brand">
-                <h1>🚀 Proxy 101</h1>
+                <h1>Proxy 101</h1>
                 <p class="nav-tagline">全面的代理知识库</p>
             </div>
-            <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
-                <span class="theme-icon">🌙</span>
-            </button>
+            <div class="nav-actions">
+                <a class="nav-icon-link" href="https://github.com/zhichao12/proxy-101" target="_blank" rel="noopener" aria-label="GitHub 仓库">
+                    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+                    </svg>
+                </a>
+                <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -150,13 +157,28 @@
             <h3>4. DNS 污染</h3>
             <div class="info-box">
                 <h4>工作原理</h4>
-                <p>返回错误的 DNS 解析结果，将域名指向错误的 IP 地址。</p>
+                <p>在你向递归 DNS 服务器查询域名时，网络中的中间设备向你<strong>注入伪造的 DNS 响应</strong>（或劫持返回路径），使你拿到<strong>错误的解析结果</strong>，从而把域名指向不可用/错误的 IP。</p>
+                
+                <h4>常见表现</h4>
+                <ul>
+                    <li>同一域名在不同网络/不同 DNS 下解析结果差异很大</li>
+                    <li>解析到的 IP 无法访问，或证书/站点内容异常</li>
+                    <li>只要换成加密 DNS（DoH/DoT）就明显好转</li>
+                </ul>
+
+                <h4>快速自检（思路）</h4>
+                <ul>
+                    <li>对比不同解析器的结果：运营商 DNS vs 1.1.1.1/8.8.8.8</li>
+                    <li>对比不同协议的 DNS：普通 UDP 53 vs DoH/DoT</li>
+                    <li>检查是否存在 DNS 泄露：浏览器访问 <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a></li>
+                </ul>
                 
                 <h4>对抗方法</h4>
                 <ul>
-                    <li>✅ 使用加密 DNS（DoH、DoT）</li>
-                    <li>✅ 使用可信的国外 DNS（1.1.1.1、8.8.8.8）</li>
-                    <li>✅ 在代理内解析 DNS</li>
+                    <li>✅ 使用加密 DNS（DoH、DoT），避免明文 DNS 被注入</li>
+                    <li>✅ 选择可信解析器（1.1.1.1、8.8.8.8）并开启 ECS/缓存策略的合理配置</li>
+                    <li>✅ 在代理内解析 DNS（FakeIP / TUN / 远端 DNS），减少“直连 DNS”暴露与污染</li>
+                    <li>✅ 必要时启用 DNS 分流：国内域名走国内 DNS，国外域名走加密/远端 DNS</li>
                 </ul>
             </div>
 

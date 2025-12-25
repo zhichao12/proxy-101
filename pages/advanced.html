@@ -10,12 +10,19 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-brand">
-                <h1>🚀 Proxy 101</h1>
+                <h1>Proxy 101</h1>
                 <p class="nav-tagline">全面的代理知识库</p>
             </div>
-            <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
-                <span class="theme-icon">🌙</span>
-            </button>
+            <div class="nav-actions">
+                <a class="nav-icon-link" href="https://github.com/zhichao12/proxy-101" target="_blank" rel="noopener" aria-label="GitHub 仓库">
+                    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+                    </svg>
+                </a>
+                <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -137,6 +144,31 @@ lsmod | grep bbr</code></pre>
 ./CloudflareST
 
 # 在客户端配置中使用优选 IP</code></pre>
+            </div>
+
+            <h2>Cloudflare WARP：原理与用途</h2>
+            <div class="info-box">
+                <p><strong>WARP</strong> 是 Cloudflare 提供的基于 <strong>WireGuard</strong> 的加密隧道服务。它更像“把你的出口接到 Cloudflare 网络”，而不是传统意义上“按域名/规则转发的代理协议”。</p>
+
+                <h3>WARP 能解决什么</h3>
+                <ul>
+                    <li>✅ <strong>优化链路</strong>：部分网络下可改善到 Cloudflare/境外站点的路由质量</li>
+                    <li>✅ <strong>隐藏真实出口</strong>：对外呈现为 Cloudflare 的出口 IP（不等于完全匿名）</li>
+                    <li>✅ <strong>作为上游</strong>：与代理客户端/网关组合，做“WARP 出口 + 本地分流”</li>
+                </ul>
+
+                <h3>WARP 的限制与误区</h3>
+                <ul>
+                    <li>⚠️ <strong>不保证“可翻”</strong>：WARP 不是专门为突破封锁设计，地区策略/封锁强度不同效果差异很大</li>
+                    <li>⚠️ <strong>不等于代理分流</strong>：本身不提供 Clash 那种规则引擎，需要搭配客户端/路由方案</li>
+                    <li>⚠️ <strong>仍要做泄露防护</strong>：DNS/WebRTC/指纹问题依旧存在</li>
+                </ul>
+
+                <h3>快速上手（最常见）</h3>
+                <ul>
+                    <li>安装 Cloudflare 1.1.1.1 客户端，启用 WARP</li>
+                    <li>需要更灵活路由时：在网关/路由器侧用 WireGuard 方式接入，再结合分流规则</li>
+                </ul>
             </div>
 
             <h2>分流规则</h2>

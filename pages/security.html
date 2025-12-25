@@ -10,12 +10,19 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-brand">
-                <h1>🚀 Proxy 101</h1>
+                <h1>Proxy 101</h1>
                 <p class="nav-tagline">全面的代理知识库</p>
             </div>
-            <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
-                <span class="theme-icon">🌙</span>
-            </button>
+            <div class="nav-actions">
+                <a class="nav-icon-link" href="https://github.com/zhichao12/proxy-101" target="_blank" rel="noopener" aria-label="GitHub 仓库">
+                    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+                    </svg>
+                </a>
+                <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -272,6 +279,58 @@ sudo apt install nginx -y
 
 # 这样访问 80/443 显示正常网站
 # 特定路径才是代理</code></pre>
+            </div>
+
+            <h3>4. 流量特征识别与对抗</h3>
+            <div class="info-box">
+                <p>很多封锁/审查并不是“解密你的内容”，而是通过<strong>流量特征</strong>（时序、包长、握手、指纹）来判断你是不是在跑代理。</p>
+
+                <h4>常见识别维度</h4>
+                <ul>
+                    <li><strong>DPI</strong>：检查协议握手特征、可疑字段、异常包序列</li>
+                    <li><strong>TLS 指纹</strong>：JA3/JA4、ALPN、扩展顺序、SNI 行为等</li>
+                    <li><strong>行为特征</strong>：长连接占比、突发大流量、频繁重连、特定端口模式</li>
+                </ul>
+
+                <h4>实用对抗策略（由易到难）</h4>
+                <ul>
+                    <li>✅ 选对协议：优先 <strong>VLESS + Reality</strong>，其次 Trojan/WS+TLS + 正常站点</li>
+                    <li>✅ 走常见端口：443/80，避免明显代理端口</li>
+                    <li>✅ 配置回落/伪装站：探测时返回正常网页内容</li>
+                    <li>✅ 控制异常行为：避免 BT/长时间大下载；减少频繁断开重连</li>
+                </ul>
+            </div>
+
+            <h3>5. WebRTC 泄露 / IP 泄露测试</h3>
+            <div class="warning-box">
+                <p>即使代理开了，浏览器也可能通过 WebRTC、DNS 或系统直连路径暴露真实网络信息。</p>
+
+                <h4>常用自测站点</h4>
+                <ul>
+                    <li>WebRTC：<a href="https://browserleaks.com/webrtc" target="_blank" rel="noopener">browserleaks.com/webrtc</a></li>
+                    <li>IP 信息：<a href="https://ipinfo.io/" target="_blank" rel="noopener">ipinfo.io</a></li>
+                    <li>DNS 泄露：<a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a></li>
+                </ul>
+
+                <h4>常见修复方向</h4>
+                <ul>
+                    <li>✅ 客户端启用 TUN / 全局模式（按需）</li>
+                    <li>✅ 在浏览器/客户端中禁用或限制 WebRTC（不同浏览器入口不同）</li>
+                    <li>✅ DNS 走代理/加密 DNS，避免直连 DNS</li>
+                </ul>
+            </div>
+
+            <h3>6. 浏览器指纹防护</h3>
+            <div class="info-box">
+                <p>“指纹”不是单一特征，而是很多信息的组合（字体、Canvas、WebGL、时区、语言、插件、屏幕参数）。代理只能改 IP，<strong>不等于</strong>隐藏指纹。</p>
+
+                <h4>降低指纹可识别度的思路</h4>
+                <ul>
+                    <li>✅ 使用隐私向浏览器（Firefox + 合理隐私配置 / Brave / Tor Browser）</li>
+                    <li>✅ 减少插件数量，避免安装“很小众”的扩展</li>
+                    <li>✅ 避免频繁切换 UA、分辨率、语言、时区（反而更异常）</li>
+                    <li>✅ 需要更强匿名时：考虑隔离环境（独立浏览器配置/容器/虚拟机）</li>
+                </ul>
             </div>
 
             <h2>流量控制</h2>
