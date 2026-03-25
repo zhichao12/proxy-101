@@ -1,31 +1,84 @@
 document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
-    const themeIcon = themeToggle.querySelector('.theme-icon');
-    
+    const themeIcon = themeToggle ? themeToggle.querySelector('.theme-icon') : null;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const emojiRegex = /(?:\p{Regional_Indicator}{2}|\p{Emoji_Presentation}|\p{Extended_Pictographic})(?:\uFE0F|\u200D(?:\p{Emoji_Presentation}|\p{Extended_Pictographic}))*?/gu;
+
+    stripEmojiFromDocument();
+
     const savedTheme = localStorage.getItem('theme') || 'light-mode';
     body.className = savedTheme;
     updateThemeIcon(savedTheme);
-    
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = body.classList.contains('light-mode') ? 'light-mode' : 'dark-mode';
-        const newTheme = currentTheme === 'light-mode' ? 'dark-mode' : 'light-mode';
-        
-        body.className = newTheme;
-        localStorage.setItem('theme', newTheme);
-        updateThemeIcon(newTheme);
-    });
-    
-    function updateThemeIcon(theme) {
-        themeIcon.textContent = theme === 'light-mode' ? '🌙' : '☀️';
+
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.classList.contains('light-mode') ? 'light-mode' : 'dark-mode';
+            const newTheme = currentTheme === 'light-mode' ? 'dark-mode' : 'light-mode';
+
+            body.className = newTheme;
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
     }
-    
+
+    function updateThemeIcon(theme) {
+        if (!themeIcon || !themeToggle) return;
+        themeIcon.textContent = theme === 'light-mode' ? 'Dark' : 'Light';
+        themeToggle.setAttribute(
+            'aria-label',
+            theme === 'light-mode' ? '切换到深色模式' : '切换到浅色模式'
+        );
+    }
+
+    function stripEmoji(value) {
+        return value.replace(emojiRegex, '');
+    }
+
+    function stripEmojiFromDocument() {
+        document.title = stripEmoji(document.title).trim();
+
+        const walker = document.createTreeWalker(
+            document.body,
+            NodeFilter.SHOW_TEXT,
+            {
+                acceptNode(node) {
+                    const parent = node.parentElement;
+                    if (!parent || ['SCRIPT', 'STYLE'].includes(parent.tagName)) {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+            }
+        );
+
+        const textNodes = [];
+        while (walker.nextNode()) {
+            textNodes.push(walker.currentNode);
+        }
+
+        textNodes.forEach((node) => {
+            node.nodeValue = stripEmoji(node.nodeValue);
+        });
+
+        document.querySelectorAll('h1, h2, h3, h4, h5, a, button, th, td').forEach((element) => {
+            element.childNodes.forEach((child) => {
+                if (child.nodeType === Node.TEXT_NODE) {
+                    child.nodeValue = stripEmoji(child.nodeValue)
+                        .replace(/\s{2,}/g, ' ')
+                        .replace(/^\s+/, '');
+                }
+            });
+        });
+    }
+
     const navLinks = document.querySelectorAll('.sidebar-nav a');
     const currentPath = window.location.pathname;
-    
+
     navLinks.forEach(link => {
-        if (link.getAttribute('href') === currentPath || 
-            currentPath.includes(link.getAttribute('href'))) {
+        const href = link.getAttribute('href') || '';
+        const baseHref = href.split('#')[0];
+        if (baseHref === currentPath || currentPath.includes(baseHref)) {
             link.style.color = 'var(--primary-color)';
             link.style.borderLeftColor = 'var(--primary-color)';
             link.style.fontWeight = '400';
@@ -41,25 +94,26 @@ document.addEventListener('DOMContentLoaded', () => {
             wrapper.appendChild(table);
         }
     });
-    
+
     const headings = document.querySelectorAll('.content-page h2, .content-page h3');
     headings.forEach(heading => {
-        const id = heading.textContent.toLowerCase()
-            .replace(/\s+/g, '-')
-            .replace(/[^\w\-\u4e00-\u9fa5]+/g, '');
-        heading.id = id;
-        
+        if (!heading.id) {
+            heading.id = heading.textContent.toLowerCase()
+                .replace(/\s+/g, '-')
+                .replace(/[^\w\-\u4e00-\u9fa5]+/g, '');
+        }
+
         heading.style.cursor = 'pointer';
         heading.addEventListener('click', () => {
-            window.location.hash = id;
+            window.location.hash = heading.id;
         });
     });
-    
+
     if (window.location.hash) {
         setTimeout(() => {
             const element = document.querySelector(window.location.hash);
             if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
+                element.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
             }
         }, 100);
     }
@@ -95,17 +149,16 @@ document.addEventListener('DOMContentLoaded', () => {
         
         headings.forEach(heading => {
             if (!heading.id) {
-                const id = heading.textContent.toLowerCase()
+                heading.id = heading.textContent.toLowerCase()
                     .replace(/\s+/g, '-')
                     .replace(/[^\w\-\u4e00-\u9fa5]+/g, '');
-                heading.id = id;
             }
-            
+
             const li = document.createElement('li');
             const link = document.createElement('a');
             link.href = `#${heading.id}`;
-            link.textContent = heading.textContent.replace(/^[🔍🔔🌐📚🎯🖥️🔐🛠️🛡️🚀⚠️]+\s*/, '');
-            
+            link.textContent = stripEmoji(heading.textContent).trim();
+
             if (heading.tagName === 'H3') {
                 link.classList.add('toc-h3');
             }
@@ -120,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     window.scrollTo({
                         top: offsetPosition,
-                        behavior: 'smooth'
+                        behavior: prefersReducedMotion ? 'auto' : 'smooth'
                     });
                     
                     history.pushState(null, null, `#${heading.id}`);
