@@ -3,321 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Windows、macOS、Linux、Android 与 iOS 代理客户端选择指南">
     <title>客户端推荐 - Proxy 101</title>
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body class="light-mode">
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-brand">
-                <h1>Proxy 101</h1>
-                <p class="nav-tagline">全面的代理知识库</p>
-            </div>
-            <div class="nav-actions">
-                <a class="nav-icon-link" href="https://github.com/zhichao12/proxy-101" target="_blank" rel="noopener" aria-label="GitHub 仓库">
-                    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
-                    </svg>
-                </a>
-                <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
-                    <span class="theme-icon">🌙</span>
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container">
-        <aside class="sidebar">
-            <nav class="sidebar-nav">
-                                    <div class="nav-section">
-                    <h3>基础理论</h3>
-                    <ul>
-                        <li><a href="basics.html">代理基础概念</a></li>
-                        <li><a href="terminology.html">核心术语解析</a></li>
-                    </ul>
-                </div>
-                <div class="nav-section">
-                    <h3>VPS 相关</h3>
-                    <ul>
-                        <li><a href="vps.html">VPS 基础知识</a></li>
-                        <li><a href="providers.html">VPS 提供商</a></li>
-                    </ul>
-                </div>
-                <div class="nav-section">
-                    <h3>协议与工具</h3>
-                    <ul>
-                        <li><a href="protocols.html">代理协议详解</a></li>
-                        <li><a href="tools.html">部署工具</a></li>
-                        <li><a href="clients.html">客户端推荐</a></li>
-                    </ul>
-                </div>
-                <div class="nav-section">
-                    <h3>网络基础</h3>
-                    <ul>
-                        <li><a href="icmp.html">ICMP 协议详解</a></li>
-                        <li><a href="nat.html">NAT 穿透机制</a></li>
-                    </ul>
-                </div>
-                <div class="nav-section">
-                    <h3>安全与防护</h3>
-                    <ul>
-                        <li><a href="security.html">安全防护机制</a></li>
-                        <li><a href="gfw.html">GFW 检测原理</a></li>
-                        <li><a href="ip-blocking.html">IP 封禁机制</a></li>
-                    </ul>
-                </div>
-                <div class="nav-section">
-                    <h3>进阶与实战</h3>
-                    <ul>
-                        <li><a href="advanced.html">进阶优化</a></li>
-                        <li><a href="faq.html">常见问题</a></li>
-                    </ul>
-                </div>
-
-            </nav>
-        </aside>
-
-        <main class="main-content content-page">
-            <div class="breadcrumb">
-                <a href="../index.html">首页</a>
-                <span>/</span>
-                <span>客户端推荐</span>
-            </div>
-
-            <h1>📱 客户端推荐</h1>
-
-            <h2>Windows 客户端</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>客户端</th>
-                        <th>支持协议</th>
-                        <th>特点</th>
-                        <th>推荐度</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Clash Verge</strong></td>
-                        <td>全协议</td>
-                        <td>基于 Clash.Meta，规则分流强大，但更新较快、Bug 相对更多，建议作为“进阶/次选”<br><a href="https://github.com/clash-verge-rev/clash-verge-rev" target="_blank" rel="noopener">GitHub: clash-verge-rev</a></td>
-                        <td><span class="badge badge-info">推荐</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>v2rayN</strong></td>
-                        <td>V2Ray/Xray</td>
-                        <td>老牌稳定，操作简单，社区资料多<br><a href="https://github.com/2dust/v2rayN" target="_blank" rel="noopener">GitHub: 2dust/v2rayN</a></td>
-                        <td><span class="badge badge-success">强烈推荐</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>NekoRay</strong></td>
-                        <td>VMess/VLESS/Trojan/SS</td>
-                        <td>界面美观，跨平台，进阶可玩性强<br><a href="https://github.com/MatsuriDayo/nekoray" target="_blank" rel="noopener">GitHub: MatsuriDayo/nekoray</a></td>
-                        <td><span class="badge badge-info">推荐</span></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2>macOS 客户端</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>客户端</th>
-                        <th>特点</th>
-                        <th>推荐度</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Clash Verge</strong></td>
-                        <td>规则分流强，但更新较快、Bug 相对更多，建议作为“进阶/次选”<br><a href="https://github.com/clash-verge-rev/clash-verge-rev" target="_blank" rel="noopener">GitHub: clash-verge-rev</a></td>
-                        <td><span class="badge badge-info">推荐</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>ClashX</strong></td>
-                        <td>轻量级，简单易用</td>
-                        <td><span class="badge badge-success">推荐</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Qv2ray</strong></td>
-                        <td>功能丰富，需插件扩展</td>
-                        <td><span class="badge badge-info">推荐</span></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2>Android 客户端</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>客户端</th>
-                        <th>特点</th>
-                        <th>下载方式</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>v2rayNG</strong></td>
-                        <td>开源免费，更新频繁，功能全面</td>
-                        <td>Google Play / <a href="https://github.com/2dust/v2rayNG" target="_blank" rel="noopener">GitHub</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Clash Meta for Android</strong></td>
-                        <td>功能强大，规则丰富</td>
-                        <td><a href="https://github.com/MetaCubeX/ClashMetaForAndroid" target="_blank" rel="noopener">GitHub</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>SagerNet</strong></td>
-                        <td>基于 Sing-box，支持新协议</td>
-                        <td>Google Play / <a href="https://github.com/SagerNet/SagerNet" target="_blank" rel="noopener">GitHub</a></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2>iOS 客户端</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>客户端</th>
-                        <th>特点</th>
-                        <th>价格</th>
-                        <th>推荐度</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Shadowrocket</strong></td>
-                        <td>功能强大，易用性好，支持全协议</td>
-                        <td>$2.99</td>
-                        <td><span class="badge badge-success">强烈推荐</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Quantumult X</strong></td>
-                        <td>功能最强，规则复杂，适合进阶用户</td>
-                        <td>$7.99</td>
-                        <td><span class="badge badge-info">进阶</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Loon</strong></td>
-                        <td>配置灵活，界面美观</td>
-                        <td>$5.99</td>
-                        <td><span class="badge badge-info">推荐</span></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="warning-box">
-                <h4>⚠️ iOS 客户端说明</h4>
-                <p>iOS 客户端需要在<strong>美区 App Store</strong>购买。可以通过以下方式获取：</p>
-                <ul>
-                    <li>注册美区 Apple ID</li>
-                    <li>购买美区礼品卡充值</li>
-                    <li>使用双币信用卡</li>
-                </ul>
-            </div>
-
-            <h2>Linux 客户端</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>客户端</th>
-                        <th>特点</th>
-                        <th>推荐度</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Clash Verge</strong></td>
-                        <td>图形化界面，功能完整，但更新较快、Bug 相对更多<br><a href="https://github.com/clash-verge-rev/clash-verge-rev" target="_blank" rel="noopener">GitHub: clash-verge-rev</a></td>
-                        <td><span class="badge badge-info">推荐</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>sing-box</strong></td>
-                        <td>命令行，性能好，配置灵活，适合做网关/TUN<br><a href="https://github.com/SagerNet/sing-box" target="_blank" rel="noopener">GitHub: SagerNet/sing-box</a></td>
-                        <td><span class="badge badge-info">进阶</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>xray</strong></td>
-                        <td>命令行，官方核心</td>
-                        <td><span class="badge badge-info">进阶</span></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2>客户端选择建议</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>平台</th>
-                        <th>新手推荐</th>
-                        <th>进阶推荐</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Windows</strong></td>
-                        <td>v2rayN</td>
-                        <td>NekoRay / Clash Verge（次选）</td>
-                    </tr>
-                    <tr>
-                        <td><strong>macOS</strong></td>
-                        <td>ClashX</td>
-                        <td>ClashX / Clash Verge（次选）</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Android</strong></td>
-                        <td>v2rayNG</td>
-                        <td>Clash Meta</td>
-                    </tr>
-                    <tr>
-                        <td><strong>iOS</strong></td>
-                        <td>Shadowrocket</td>
-                        <td>Quantumult X</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Linux</strong></td>
-                        <td>Clash Verge（可选）</td>
-                        <td>sing-box</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2>使用教程（v2rayN）</h2>
-            <div class="info-box">
-                <h4>步骤 1: 下载安装</h4>
-                <p>访问 <a href="https://github.com/2dust/v2rayN/releases" target="_blank">GitHub Releases</a> 下载最新版</p>
-                
-                <h4>步骤 2: 添加服务器</h4>
-                <ul>
-                    <li>方式1: 扫描二维码</li>
-                    <li>方式2: 导入订阅链接</li>
-                    <li>方式3: 手动配置</li>
-                </ul>
-                
-                <h4>步骤 3: 测试连接</h4>
-                <p>右键服务器 → "测试服务器真连接延迟"</p>
-                
-                <h4>步骤 4: 启动代理</h4>
-                <p>点击底部"系统代理" → 选择"自动配置系统代理"</p>
-            </div>
-
-            <h2>下一步</h2>
-            <div class="success-box">
-                <p>配置好客户端后，建议学习：</p>
-                <ul>
-                    <li><a href="advanced.html">进阶优化</a> - 配置分流规则</li>
-                    <li><a href="faq.html">常见问题</a> - 解决连接问题</li>
-                </ul>
-            </div>
-        </main>
-    </div>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <p>&copy; 2024 Proxy 101 知识库. 仅供技术学习使用.</p>
-        </div>
-    </footer>
-
-    <script src="../assets/js/main.js"></script>
+    <nav class="navbar"><div class="nav-container"><div class="nav-brand"><h1>Proxy 101</h1><p class="nav-tagline">全面的代理知识库</p></div><div class="nav-actions"><a class="nav-icon-link" href="https://github.com/zhichao12/proxy-101" target="_blank" rel="noopener" aria-label="GitHub 仓库"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><button class="theme-toggle" id="themeToggle" aria-label="切换主题"><span class="theme-icon">Dark</span></button></div></div></nav>
+    <div class="container"><aside class="sidebar"><nav class="sidebar-nav">
+        <div class="nav-section"><h3>基础理论</h3><ul><li><a href="basics.html">代理基础概念</a></li><li><a href="terminology.html">核心术语解析</a></li></ul></div>
+        <div class="nav-section"><h3>VPS 相关</h3><ul><li><a href="vps.html">VPS 基础知识</a></li><li><a href="providers.html">VPS 提供商</a></li></ul></div>
+        <div class="nav-section"><h3>协议与工具</h3><ul><li><a href="protocols.html">协议、核心与客户端</a></li><li><a href="tools.html">部署与管理工具</a></li><li><a href="clients.html">客户端推荐</a></li></ul></div>
+        <div class="nav-section"><h3>网络基础</h3><ul><li><a href="icmp.html">ICMP 协议详解</a></li><li><a href="nat.html">NAT 穿透机制</a></li></ul></div>
+        <div class="nav-section"><h3>安全与防护</h3><ul><li><a href="security.html">安全防护机制</a></li><li><a href="gfw.html">GFW 检测原理</a></li><li><a href="ip-blocking.html">IP 封禁机制</a></li></ul></div>
+        <div class="nav-section"><h3>进阶与实战</h3><ul><li><a href="proxy-chain.html">家宽中转与链式代理</a></li><li><a href="advanced.html">进阶优化与维护</a></li><li><a href="faq.html">常见问题</a></li></ul></div>
+    </nav></aside>
+    <main class="main-content content-page">
+        <div class="breadcrumb"><a href="../index.html">首页</a><span>/</span><span>客户端推荐</span></div>
+        <h1>客户端推荐</h1>
+        <p>客户端的选择取决于平台、核心兼容性、TUN 能力、规则体系和 DNS 需求。版本、商店价格和协议支持会变化，静态文档只记录选择逻辑，不保存固定价格。</p>
+        <h2>桌面端</h2>
+        <table><thead><tr><th>客户端或核心</th><th>平台</th><th>适用场景</th><th>项目地址</th></tr></thead><tbody>
+            <tr><td>v2rayN</td><td>Windows</td><td>Xray、sing-box 等核心的图形管理</td><td><a href="https://github.com/2dust/v2rayN" target="_blank" rel="noopener">GitHub</a></td></tr>
+            <tr><td>Clash Verge Rev</td><td>Windows、macOS、Linux</td><td>Mihomo、订阅、规则与 TUN</td><td><a href="https://github.com/clash-verge-rev/clash-verge-rev" target="_blank" rel="noopener">GitHub</a></td></tr>
+            <tr><td>sing-box</td><td>Windows、macOS、Linux</td><td>命令行、高级路由与 TUN</td><td><a href="https://github.com/SagerNet/sing-box" target="_blank" rel="noopener">GitHub</a></td></tr>
+            <tr><td>Mihomo</td><td>Windows、macOS、Linux</td><td>命令行、规则与透明代理核心</td><td><a href="https://github.com/MetaCubeX/mihomo" target="_blank" rel="noopener">GitHub</a></td></tr>
+        </tbody></table>
+        <h2>移动端</h2>
+        <table><thead><tr><th>客户端</th><th>平台</th><th>说明</th></tr></thead><tbody>
+            <tr><td>v2rayNG</td><td>Android</td><td>开源，适合 Xray/V2Ray 常见协议</td></tr><tr><td>FlClash</td><td>Android 等</td><td>Mihomo 图形客户端，适合规则和 TUN</td></tr><tr><td>sing-box 客户端</td><td>Android、iOS</td><td>以官方当前发布渠道和平台政策为准</td></tr><tr><td>Shadowrocket</td><td>iOS</td><td>付费客户端，具体协议支持以当前版本为准</td></tr><tr><td>Loon</td><td>iOS</td><td>付费客户端，适合规则与脚本生态</td></tr><tr><td>Quantumult X</td><td>iOS</td><td>付费客户端，配置体系与 Clash 不同</td></tr>
+        </tbody></table>
+        <p>项目地址：<a href="https://github.com/2dust/v2rayNG" target="_blank" rel="noopener">v2rayNG</a>、<a href="https://github.com/chen08209/FlClash" target="_blank" rel="noopener">FlClash</a>。移动端商店价格、地区和协议支持会变化，以当前商店和项目发布页为准。</p>
+        <h2>按需求选择</h2>
+        <table><thead><tr><th>需求</th><th>建议</th><th>原因</th></tr></thead><tbody><tr><td>Windows 简单使用</td><td>v2rayN</td><td>面向 Xray、sing-box 等核心的图形管理</td></tr><tr><td>桌面端 Clash 配置</td><td>Clash Verge Rev</td><td>规则、订阅、代理组和 TUN 体系完整</td></tr><tr><td>Android Xray 节点</td><td>v2rayNG</td><td>开源且常见协议兼容</td></tr><tr><td>Android Mihomo 配置</td><td>FlClash</td><td>适合规则分流和 TUN</td></tr><tr><td>高级跨平台配置</td><td>sing-box</td><td>适合命令行、DNS、TUN 和复杂路由</td></tr><tr><td>iOS</td><td>按现有配置体系选择 Shadowrocket、Loon、Quantumult X 或 sing-box</td><td>不同应用的配置语法和协议支持并不相同</td></tr></tbody></table>
+        <h2>TUN、系统代理与 DNS</h2>
+        <p>客户端能连上节点，不代表所有应用都经过代理。系统代理通常只影响遵循系统设置的应用；TUN 才是在系统网络层接管更广泛的流量，但也会改变 DNS、局域网和 IPv6 行为。</p>
+        <ul><li>启用 TUN 前确认客户端获得所需系统权限。</li><li>检查系统 DNS、应用自带 DoH 和 IPv6 是否产生旁路。</li><li>确认局域网、私有域名和本地服务是否需要直连例外。</li><li>切换 Wi-Fi 与移动网络后重新验证路由。</li></ul>
+        <h2>导入配置后的检查</h2>
+        <ol><li>确认节点名称表达最终出口，而不是只写入口位置。</li><li>确认客户端版本支持对应协议、传输和字段。</li><li>分别测试 IPv4、IPv6、DNS 和 WebRTC。</li><li>查看客户端日志，确认失败发生在解析、握手、路由还是目标连接。</li><li>不要把家宽后端地址、源站地址或私密管理地址放进公开订阅。</li></ol>
+        <div class="warning-box"><p>没有“最好”的客户端。真正关键的是客户端、核心、配置格式和系统接管模式四者是否匹配；只比较应用名称会掩盖实际兼容性问题。</p></div>
+    </main></div>
+    <footer class="footer"><div class="footer-content"><p>&copy; 2026 Proxy 101 知识库. 仅供技术学习使用.</p></div></footer><script src="../assets/js/main.js"></script>
 </body>
 </html>

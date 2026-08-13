@@ -6,7 +6,7 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Status](https://img.shields.io/badge/status-active-success)
 
-一份全面、专业、易懂的代理知识库，涵盖代理/VPS 的完整知识体系
+一份按架构、协议、主机安全和运维组织的代理知识库，帮助读者理解代理/VPS 系统中的因果关系
 
 [🌐 在线访问](https://zhichao12.github.io/proxy-101) | [📖 快速开始](#快速开始) | [📚 内容导览](#内容导览)
 
@@ -27,11 +27,11 @@
 **Proxy 101** 是一个面向初学者和进阶用户的静态知识库网站，用通俗易懂的语言全面讲解：
 
 - 🎯 代理技术的基础概念和工作原理
-- 🔐 HTTP、SOCKS、VPN、Shadowsocks、V2Ray、Xray、Trojan 等协议详解
+- 🔐 HTTP、SOCKS、Shadowsocks、VLESS、Trojan、Hysteria2、WireGuard 等方案对比
 - 🖥️ VPS 选择、购买、配置的完整指南
-- 🛠️ 一键脚本、可视化面板等部署工具
-- 🛡️ 安全防护、隐私保护、反检测技术
-- 🚀 性能优化、进阶技巧和故障排查
+- 🛠️ Xray-core、sing-box、Mihomo、3x-ui、Marzban 等工具边界
+- 🛡️ SSH、防火墙、最小暴露面、日志、备份和 DNS 防泄露
+- 🚀 家宽中转、分流、性能测量、监控和故障排查
 - 🌐 ICMP 协议、NAT 穿透等网络基础知识
 
 ## ✨ 特性
@@ -40,7 +40,7 @@
 - ✅ **通俗易懂** - 用简单的语言解释复杂的技术概念
 - ✅ **实用性强** - 提供详细的操作步骤和实战案例
 - ✅ **现代化设计** - 高端杂志风格，优雅的阅读体验
-- ✅ **响应式布局** - 完美适配桌面、平板、手机
+- ✅ **响应式布局** - 适配桌面、平板和手机
 - ✅ **深色模式** - 支持浅色/深色主题切换
 - ✅ **导航友好** - 左侧章节导航 + 右侧目录大纲
 - ✅ **目录导航** - 页面右侧 TOC，支持点击跳转和滚动高亮
@@ -56,8 +56,8 @@
 - **[VPS 提供商](https://zhichao12.github.io/proxy-101/pages/providers.html)** - Vultr、DO、Linode、搬瓦工等商家对比
 
 ### 协议与工具
-- **[代理协议详解](https://zhichao12.github.io/proxy-101/pages/protocols.html)** - Xray、V2Ray、Trojan、Hysteria2 等协议对比
-- **[部署工具](https://zhichao12.github.io/proxy-101/pages/tools.html)** - 一键脚本、3X-UI、S-UI 等工具介绍
+- **[协议、核心与客户端](https://zhichao12.github.io/proxy-101/pages/protocols.html)** - Xray-core、sing-box、Mihomo 与 TCP/UDP 方案对比
+- **[部署与管理工具](https://zhichao12.github.io/proxy-101/pages/tools.html)** - 系统检查、3x-ui、Marzban、证书与备份
 - **[客户端推荐](https://zhichao12.github.io/proxy-101/pages/clients.html)** - Windows、macOS、Android、iOS 客户端
 
 ### 网络基础
@@ -70,7 +70,8 @@
 - **[IP 封禁机制](https://zhichao12.github.io/proxy-101/pages/ip-blocking.html)** - 判断方法、预防措施、解决方案
 
 ### 进阶与实战
-- **[进阶优化](https://zhichao12.github.io/proxy-101/pages/advanced.html)** - BBR 加速、CDN 中转、分流规则
+- **[家宽中转与链式代理](https://zhichao12.github.io/proxy-101/pages/proxy-chain.html)** - WireGuard、链式出站、来源限制与出口验证
+- **[进阶优化与维护](https://zhichao12.github.io/proxy-101/pages/advanced.html)** - BBR、CDN 边界、DNS、分流、监控与备份
 - **[常见问题](https://zhichao12.github.io/proxy-101/pages/faq.html)** - FAQ 和故障排查指南
 
 ## 🚀 快速开始
@@ -137,7 +138,6 @@ server {
 proxy-101/
 ├── index.html              # 首页
 ├── README.md              # 项目说明
-├── 自建梯子.md             # 参考文档
 ├── assets/                # 资源文件
 │   ├── css/
 │   │   └── style.css      # 样式文件（杂志风格）
@@ -148,15 +148,16 @@ proxy-101/
     ├── terminology.html   # 核心术语解析
     ├── vps.html           # VPS 基础知识
     ├── providers.html     # VPS 提供商
-    ├── protocols.html     # 代理协议详解
-    ├── tools.html         # 部署工具
+    ├── protocols.html     # 协议、核心与客户端
+    ├── tools.html         # 部署与管理工具
     ├── clients.html       # 客户端推荐
     ├── icmp.html          # ICMP 协议详解 ⭐ 新增
     ├── nat.html           # NAT 穿透机制 ⭐ 新增
     ├── security.html      # 安全防护机制
     ├── gfw.html           # GFW 检测原理
     ├── ip-blocking.html   # IP 封禁机制
-    ├── advanced.html      # 进阶优化
+    ├── proxy-chain.html   # 家宽中转与链式代理
+    ├── advanced.html      # 进阶优化与维护
     └── faq.html           # 常见问题
 ```
 
@@ -178,7 +179,7 @@ proxy-101/
 
 ### 响应式设计
 
-网站完美适配各种设备：
+网站适配常见设备：
 - 🖥️ 桌面端（1920px+）- 左侧导航 + 中间内容 + 右侧目录
 - 💻 笔记本（1366px+）- 左侧导航 + 中间内容
 - 📱 平板（768px+）- 折叠导航 + 内容
@@ -219,12 +220,14 @@ proxy-101/
 ### 深度专业
 - ICMP 协议的详细工作原理和应用场景
 - NAT 穿透的完整技术方案
-- GFW 检测机制的深度解析
-- 各种代理协议的技术对比
+- GFW 检测机制的基础解析
+- 协议、代理核心、客户端和管理面板的职责边界
+- 家宽中转、DNS 泄露、TUN、分流与出口验证
+- SSH、防火墙、日志、备份、监控和排障顺序
 
 ### 实战导向
 - VPS 提供商的详细对比和选择建议
-- 一键脚本和可视化面板的使用教程
+- 部署工具和面板的安全边界
 - 安全防护的具体配置步骤
 - 常见问题的解决方案
 
@@ -265,11 +268,14 @@ proxy-101/
 
 ## 🔗 相关资源
 
-- [V2Ray 官方文档](https://www.v2ray.com/)
 - [Xray 项目](https://github.com/XTLS/Xray-core)
-- [Clash 项目](https://github.com/Dreamacro/clash)
-- [Trojan 项目](https://github.com/trojan-gfw/trojan)
-- [Hysteria 项目](https://github.com/apernet/hysteria)
+- [Xray 文档](https://xtls.github.io/)
+- [sing-box 项目](https://github.com/SagerNet/sing-box)
+- [Mihomo 项目](https://github.com/MetaCubeX/mihomo)
+- [Hysteria2 项目](https://github.com/apernet/hysteria)
+- [WireGuard](https://www.wireguard.com/)
+- [3x-ui](https://github.com/MHSanaei/3x-ui)
+- [Marzban](https://github.com/Gozargah/Marzban)
 
 ---
 

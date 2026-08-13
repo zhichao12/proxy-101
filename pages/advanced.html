@@ -1,445 +1,52 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>进阶优化 - Proxy 101</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-</head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="代理的 BBR、CDN、DNS、TUN、分流、监控与维护指南"><title>进阶优化与维护 - Proxy 101</title><link rel="stylesheet" href="../assets/css/style.css"></head>
 <body class="light-mode">
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-brand">
-                <h1>Proxy 101</h1>
-                <p class="nav-tagline">全面的代理知识库</p>
-            </div>
-            <div class="nav-actions">
-                <a class="nav-icon-link" href="https://github.com/zhichao12/proxy-101" target="_blank" rel="noopener" aria-label="GitHub 仓库">
-                    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
-                    </svg>
-                </a>
-                <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
-                    <span class="theme-icon">🌙</span>
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container">
-        <aside class="sidebar">
-            <nav class="sidebar-nav">
-                                    <div class="nav-section">
-                    <h3>基础理论</h3>
-                    <ul>
-                        <li><a href="basics.html">代理基础概念</a></li>
-                        <li><a href="terminology.html">核心术语解析</a></li>
-                    </ul>
-                </div>
-                <div class="nav-section">
-                    <h3>VPS 相关</h3>
-                    <ul>
-                        <li><a href="vps.html">VPS 基础知识</a></li>
-                        <li><a href="providers.html">VPS 提供商</a></li>
-                    </ul>
-                </div>
-                <div class="nav-section">
-                    <h3>协议与工具</h3>
-                    <ul>
-                        <li><a href="protocols.html">代理协议详解</a></li>
-                        <li><a href="tools.html">部署工具</a></li>
-                        <li><a href="clients.html">客户端推荐</a></li>
-                    </ul>
-                </div>
-                <div class="nav-section">
-                    <h3>网络基础</h3>
-                    <ul>
-                        <li><a href="icmp.html">ICMP 协议详解</a></li>
-                        <li><a href="nat.html">NAT 穿透机制</a></li>
-                    </ul>
-                </div>
-                <div class="nav-section">
-                    <h3>安全与防护</h3>
-                    <ul>
-                        <li><a href="security.html">安全防护机制</a></li>
-                        <li><a href="gfw.html">GFW 检测原理</a></li>
-                        <li><a href="ip-blocking.html">IP 封禁机制</a></li>
-                    </ul>
-                </div>
-                <div class="nav-section">
-                    <h3>进阶与实战</h3>
-                    <ul>
-                        <li><a href="advanced.html">进阶优化</a></li>
-                        <li><a href="faq.html">常见问题</a></li>
-                    </ul>
-                </div>
-
-            </nav>
-        </aside>
-
-        <main class="main-content content-page">
-            <div class="breadcrumb">
-                <a href="../index.html">首页</a>
-                <span>/</span>
-                <span>进阶优化</span>
-            </div>
-
-            <h1>🚀 进阶优化</h1>
-
-            <h2>BBR 加速</h2>
-            <div class="info-box">
-                <h4>什么是 BBR？</h4>
-                <p>BBR（Bottleneck Bandwidth and RTT）是 Google 开发的 TCP 拥塞控制算法，可以显著提升网络传输速度，特别是在高延迟、高丢包的网络环境中。</p>
-                
-                <h4>安装 BBR</h4>
-                <pre><code># 检查内核版本（需要 4.9+）
-uname -r
-
-# 启用 BBR
-echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
-echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
-sysctl -p
-
-# 验证
-lsmod | grep bbr</code></pre>
-                
-                <h4>效果</h4>
-                <p>在高延迟网络（200ms+）下，速度可提升 20-50%</p>
-            </div>
-
-            <h2>CDN 中转</h2>
-            <h3>Cloudflare CDN 方案</h3>
-            <div class="success-box">
-                <h4>优势</h4>
-                <ul>
-                    <li>✅ 隐藏真实服务器 IP</li>
-                    <li>✅ 免费且稳定</li>
-                    <li>✅ 即使 CDN IP 被封也可更换</li>
-                    <li>✅ 全球节点，就近访问</li>
-                </ul>
-                
-                <h4>适用协议</h4>
-                <ul>
-                    <li>VMess + WebSocket + TLS</li>
-                    <li>VLESS + WebSocket + TLS</li>
-                    <li>Trojan + WebSocket</li>
-                </ul>
-                
-                <h4>配置步骤</h4>
-                <ol>
-                    <li>域名托管到 Cloudflare</li>
-                    <li>开启代理（橙色云朵）</li>
-                    <li>代理协议使用 WebSocket 传输</li>
-                    <li>TLS 端口使用 443</li>
-                </ol>
-            </div>
-
-            <h3>CDN 优选 IP</h3>
-            <div class="info-box">
-                <p>使用工具找到速度最快的 Cloudflare IP：</p>
-                <pre><code># 下载 CloudflareSpeedTest
-# https://github.com/XIU2/CloudflareSpeedTest
-
-# 运行测速
-./CloudflareST
-
-# 在客户端配置中使用优选 IP</code></pre>
-            </div>
-
-            <h2>Cloudflare WARP：原理与用途</h2>
-            <div class="info-box">
-                <p><strong>WARP</strong> 是 Cloudflare 提供的基于 <strong>WireGuard</strong> 的加密隧道服务。它更像“把你的出口接到 Cloudflare 网络”，而不是传统意义上“按域名/规则转发的代理协议”。</p>
-
-                <h3>WARP 能解决什么</h3>
-                <ul>
-                    <li>✅ <strong>优化链路</strong>：部分网络下可改善到 Cloudflare/境外站点的路由质量</li>
-                    <li>✅ <strong>隐藏真实出口</strong>：对外呈现为 Cloudflare 的出口 IP（不等于完全匿名）</li>
-                    <li>✅ <strong>作为上游</strong>：与代理客户端/网关组合，做“WARP 出口 + 本地分流”</li>
-                </ul>
-
-                <h3>WARP 的限制与误区</h3>
-                <ul>
-                    <li>⚠️ <strong>不保证“可翻”</strong>：WARP 不是专门为突破封锁设计，地区策略/封锁强度不同效果差异很大</li>
-                    <li>⚠️ <strong>不等于代理分流</strong>：本身不提供 Clash 那种规则引擎，需要搭配客户端/路由方案</li>
-                    <li>⚠️ <strong>仍要做泄露防护</strong>：DNS/WebRTC/指纹问题依旧存在</li>
-                </ul>
-
-                <h3>快速上手（最常见）</h3>
-                <ul>
-                    <li>安装 Cloudflare 1.1.1.1 客户端，启用 WARP</li>
-                    <li>需要更灵活路由时：在网关/路由器侧用 WireGuard 方式接入，再结合分流规则</li>
-                </ul>
-            </div>
-
-            <h2>分流规则</h2>
-            <h3>为什么需要分流？</h3>
-            <ul>
-                <li>🎯 <strong>提升速度</strong> - 国内网站直连，国外走代理</li>
-                <li>💰 <strong>节省流量</strong> - 减少不必要的代理流量</li>
-                <li>🔒 <strong>提高安全</strong> - 国内服务不经过代理</li>
-                <li>⚡ <strong>降低延迟</strong> - 本地访问延迟更低</li>
-            </ul>
-
-            <h3>分流规则示例</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>规则</th>
-                        <th>说明</th>
-                        <th>示例</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>DIRECT（直连）</strong></td>
-                        <td>国内网站、局域网</td>
-                        <td>baidu.com, taobao.com, 192.168.*</td>
-                    </tr>
-                    <tr>
-                        <td><strong>PROXY（代理）</strong></td>
-                        <td>国外网站</td>
-                        <td>google.com, youtube.com, twitter.com</td>
-                    </tr>
-                    <tr>
-                        <td><strong>REJECT（拒绝）</strong></td>
-                        <td>广告、追踪</td>
-                        <td>analytics.google.com, ad.doubleclick.net</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>Clash 分流规则</h3>
-            <div class="info-box">
-                <h4>推荐规则订阅</h4>
-                <ul>
-                    <li><strong>ACL4SSR</strong> - 全面且更新及时</li>
-                    <li><strong>Loyalsoldier</strong> - 简洁高效</li>
-                    <li><strong>Hackl0us</strong> - 包含去广告</li>
-                </ul>
-                
-                <h4>规则配置示例</h4>
-                <pre><code>rules:
-  - DOMAIN-SUFFIX,google.com,PROXY
-  - DOMAIN-KEYWORD,google,PROXY
-  - GEOIP,CN,DIRECT
-  - MATCH,PROXY</code></pre>
-            </div>
-
-            <h2>多层代理</h2>
-            <h3>场景与架构</h3>
-            <div class="info-box">
-                <h4>架构示例</h4>
-                <pre><code>客户端 → 国内中转 → 国外落地 → 目标网站
-       (CN2 线路)  (原生 IP)</code></pre>
-                
-                <h4>优势</h4>
-                <ul>
-                    <li>🚀 优化线路，提升速度</li>
-                    <li>🛡️ 保护落地机 IP</li>
-                    <li>⚖️ 负载均衡</li>
-                </ul>
-                
-                <h4>适用场景</h4>
-                <ul>
-                    <li>落地机延迟高，需要中转优化</li>
-                    <li>落地机 IP 珍贵，需要保护</li>
-                    <li>多人共享，需要负载均衡</li>
-                </ul>
-            </div>
-
-            <h2>性能优化</h2>
-
-            <h3>系统参数优化</h3>
-            <div class="info-box">
-                <pre><code># 编辑 /etc/sysctl.conf
-# 增加连接数限制
-net.core.somaxconn = 65535
-net.core.netdev_max_backlog = 65535
-
-# TCP 优化
-net.ipv4.tcp_fastopen = 3
-net.ipv4.tcp_fin_timeout = 30
-net.ipv4.tcp_keepalive_time = 1200
-
-# 应用配置
-sysctl -p</code></pre>
-            </div>
-
-            <h3>代理服务优化</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>优化项</th>
-                        <th>建议值</th>
-                        <th>说明</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>MUX（多路复用）</strong></td>
-                        <td>启用</td>
-                        <td>减少握手次数，降低延迟</td>
-                    </tr>
-                    <tr>
-                        <td><strong>UDP 转发</strong></td>
-                        <td>启用</td>
-                        <td>支持游戏和语音通话</td>
-                    </tr>
-                    <tr>
-                        <td><strong>连接复用</strong></td>
-                        <td>启用</td>
-                        <td>提升连接效率</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2>流媒体解锁</h2>
-            <h3>什么是流媒体解锁？</h3>
-            <p>访问 Netflix、Disney+、HBO 等流媒体服务时，需要特定地区的原生 IP 才能观看该地区的内容。</p>
-
-            <h3>解锁要求</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>服务</th>
-                        <th>要求</th>
-                        <th>推荐地区</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Netflix</strong></td>
-                        <td>原生 IP</td>
-                        <td>美国、日本、新加坡</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Disney+</strong></td>
-                        <td>原生 IP</td>
-                        <td>美国、新加坡</td>
-                    </tr>
-                    <tr>
-                        <td><strong>HBO Max</strong></td>
-                        <td>原生 IP（美国）</td>
-                        <td>美国</td>
-                    </tr>
-                    <tr>
-                        <td><strong>YouTube Premium</strong></td>
-                        <td>任意</td>
-                        <td>印度（价格低）</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>测试工具</h3>
-            <div class="info-box">
-                <pre><code># 流媒体解锁检测
-bash <(curl -L -s check.unlock.media)
-
-# 显示各服务的解锁状态</code></pre>
-            </div>
-
-            <h2>监控与告警</h2>
-
-            <h3>监控服务器状态</h3>
-            <div class="info-box">
-                <h4>使用 UptimeRobot（免费）</h4>
-                <ul>
-                    <li>监控服务器 HTTP/HTTPS 响应</li>
-                    <li>每 5 分钟检测一次</li>
-                    <li>宕机时邮件/Telegram 通知</li>
-                </ul>
-                <p>访问：<a href="https://uptimerobot.com" target="_blank">uptimerobot.com</a></p>
-            </div>
-
-            <h3>流量监控</h3>
-            <div class="info-box">
-                <p>使用 3X-UI 或 S-UI 面板自带的流量统计功能：</p>
-                <ul>
-                    <li>实时流量监控</li>
-                    <li>用户流量统计</li>
-                    <li>到期自动停用</li>
-                    <li>Telegram Bot 通知</li>
-                </ul>
-            </div>
-
-            <h2>备份策略</h2>
-
-            <h3>配置备份</h3>
-            <div class="info-box">
-                <pre><code># 定期备份脚本
-#!/bin/bash
-BACKUP_DIR="/root/backup"
-DATE=$(date +%Y%m%d)
-
-mkdir -p $BACKUP_DIR
-
-# 备份配置
-tar -czf $BACKUP_DIR/config-$DATE.tar.gz \
-    /etc/xray \
-    /etc/nginx \
-    /etc/x-ui
-
-# 保留最近 7 天的备份
-find $BACKUP_DIR -name "config-*.tar.gz" -mtime +7 -delete</code></pre>
-            </div>
-
-            <h3>自动化备份</h3>
-            <div class="info-box">
-                <pre><code># 添加到 crontab（每天凌晨 2 点）
-0 2 * * * /root/backup.sh
-
-# 编辑 crontab
-crontab -e</code></pre>
-            </div>
-
-            <h2>故障转移</h2>
-
-            <h3>多节点配置</h3>
-            <div class="success-box">
-                <p>在客户端配置多个节点：</p>
-                <ul>
-                    <li><strong>主节点</strong> - 高速 CN2 线路</li>
-                    <li><strong>备用节点 1</strong> - 不同地区</li>
-                    <li><strong>备用节点 2</strong> - 不同商家</li>
-                </ul>
-                <p>Clash 等客户端支持自动故障转移和负载均衡</p>
-            </div>
-
-            <h2>进阶工具</h2>
-
-            <h3>Xray-core 配置生成器</h3>
-            <ul>
-                <li><strong>v2rayN</strong> - Windows 图形化配置</li>
-                <li><strong>在线生成器</strong> - 网页版配置工具</li>
-            </ul>
-
-            <h3>一键测速脚本</h3>
-            <div class="info-box">
-                <pre><code># Superbench
-wget -qO- git.io/superbench.sh | bash
-
-# Bench.sh
-wget -qO- bench.sh | bash</code></pre>
-            </div>
-
-            <h2>下一步学习</h2>
-            <div class="success-box">
-                <p>掌握了进阶技巧后，建议：</p>
-                <ul>
-                    <li><a href="faq.html">常见问题</a> - 解决实战中的问题</li>
-                    <li>实践应用 - 在实际环境中测试优化效果</li>
-                    <li>持续学习 - 关注新技术和协议更新</li>
-                </ul>
-            </div>
-        </main>
-    </div>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <p>&copy; 2024 Proxy 101 知识库. 仅供技术学习使用.</p>
-        </div>
-    </footer>
-
-    <script src="../assets/js/main.js"></script>
-</body>
-</html>
+<nav class="navbar"><div class="nav-container"><div class="nav-brand"><h1>Proxy 101</h1><p class="nav-tagline">全面的代理知识库</p></div><div class="nav-actions"><a class="nav-icon-link" href="https://github.com/zhichao12/proxy-101" target="_blank" rel="noopener" aria-label="GitHub 仓库"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><button class="theme-toggle" id="themeToggle" aria-label="切换主题"><span class="theme-icon">Dark</span></button></div></div></nav>
+<div class="container"><aside class="sidebar"><nav class="sidebar-nav"><div class="nav-section"><h3>基础理论</h3><ul><li><a href="basics.html">代理基础概念</a></li><li><a href="terminology.html">核心术语解析</a></li></ul></div><div class="nav-section"><h3>VPS 相关</h3><ul><li><a href="vps.html">VPS 基础知识</a></li><li><a href="providers.html">VPS 提供商</a></li></ul></div><div class="nav-section"><h3>协议与工具</h3><ul><li><a href="protocols.html">协议、核心与客户端</a></li><li><a href="tools.html">部署与管理工具</a></li><li><a href="clients.html">客户端推荐</a></li></ul></div><div class="nav-section"><h3>网络基础</h3><ul><li><a href="icmp.html">ICMP 协议详解</a></li><li><a href="nat.html">NAT 穿透机制</a></li></ul></div><div class="nav-section"><h3>安全与防护</h3><ul><li><a href="security.html">SSH 与主机安全</a></li><li><a href="gfw.html">GFW 检测原理</a></li><li><a href="ip-blocking.html">IP 封禁机制</a></li></ul></div><div class="nav-section"><h3>进阶与实战</h3><ul><li><a href="proxy-chain.html">家宽中转与链式代理</a></li><li><a href="advanced.html">进阶优化与维护</a></li><li><a href="faq.html">常见问题</a></li></ul></div></nav></aside>
+<main class="main-content content-page"><div class="breadcrumb"><a href="../index.html">首页</a><span>/</span><span>进阶优化与维护</span></div><h1>进阶优化与维护</h1><p>性能优化必须先定位瓶颈：TCP 拥塞控制、线路质量、UDP 可用性、DNS、MTU、路由和服务端资源分别影响不同阶段。没有测量就直接改参数，通常只会增加变量。</p>
+<h2>BBR：只针对 TCP</h2><p>现代 Debian/Ubuntu 内核通常已经包含 BBR。先检查可用算法，不要重复追加配置。BBR 影响 TCP 拥塞控制，不会直接加速 Hysteria2 或 WireGuard 的 UDP 流量。</p><pre><code>sysctl net.ipv4.tcp_congestion_control
+sysctl net.ipv4.tcp_available_congestion_control</code></pre><p>需要启用时创建独立配置：</p><pre><code>cat &gt;/etc/sysctl.d/99-bbr.conf &lt;&lt;'EOF'
+net.core.default_qdisc=fq
+net.ipv4.tcp_congestion_control=bbr
+EOF
+sysctl --system
+sysctl net.ipv4.tcp_congestion_control</code></pre>
+<h2>CDN 的边界</h2><p>Cloudflare 普通橙云主要代理受支持端口上的 HTTP/HTTPS 流量，不是任意 TCP/UDP 转发器。</p><table><thead><tr><th>通常可能适配</th><th>不能直接套用</th></tr></thead><tbody><tr><td>WebSocket over TLS；满足 CDN 条件的 HTTP/2 或 gRPC；普通网站和反向代理</td><td>VLESS + REALITY；任意裸 TCP；WireGuard；Hysteria2；任意 UDP 服务</td></tr></tbody></table><p>使用 CDN 前核对当前服务条款、端口支持、WebSocket/gRPC 支持和回源设置。橙云不保证源站 IP 不会通过历史 DNS、证书透明度、其他子域名或主动探测泄露。</p><h3>源站保护</h3><ul><li>源站防火墙只允许官方 CDN 回源 IP，并自动维护 IP 段。</li><li>管理面板和 SSH 不通过同一公开反向代理路径暴露。</li><li>不在公开 DNS、日志、截图或订阅中泄露源站地址。</li><li>定期检查历史 DNS、证书记录和旁路端口。</li></ul>
+<h2>DNS 与泄露防护</h2><p>选择家宽出口时，目标不是“打开 DoH”这么简单，而是分别验证访问流量、DNS 查询和客户端配置：</p><pre><code>访问流量 → 家宽出口
+DNS 查询 → 指定代理路径或家宽链路
+客户端配置 → 不包含家宽 VDS 公网地址</code></pre><p>DoH/DoT 只加密客户端到 DNS 服务器的查询，不自动保证 DNS 使用家宽出口。实际出口由代理核心、路由规则和引导解析共同决定。</p><h3>Mihomo 结构示例</h3><pre><code>dns:
+  enable: true
+  listen: 127.0.0.1:1053
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  nameserver:
+    - https://cloudflare-dns.com/dns-query
+    - https://dns.google/dns-query</code></pre><p><code>listen: 127.0.0.1</code> 仅服务本机。只有明确需要为局域网提供 DNS 并已配置防火墙时，才监听 <code>0.0.0.0</code>。</p><h3>TUN 与 DNS 劫持</h3><pre><code>tun:
+  enable: true
+  stack: system
+  auto-route: true
+  dns-hijack:
+    - any:53</code></pre><ul><li>检查系统 DNS 是否指向内核监听地址。</li><li>检查应用自带 DoH 是否绕过系统设置。</li><li>检查 IPv6 DNS 是否仍然直连。</li><li>为局域网和私有域名保留必要例外。</li></ul><h3>引导解析与链式出站</h3><p>DoH 服务器本身是域名时，需要先解析其地址。应区分默认 DNS、代理节点域名、DoH/DoT 服务器引导解析、直连域名 DNS 和代理域名 DNS。</p><p><code>domainStrategy: AsIs</code> 只是尽量保留域名，不保证最终由家宽 VDS 解析。最终行为还取决于应用传入域名还是 IP、中间协议是否传递域名、下一跳处理方式、路由是否提前解析以及最终出站和系统 DNS。需要通过查询日志、抓包或专用测试验证。</p><h3>WireGuard DNS</h3><pre><code>家宽策略流量 → WireGuard
+对应 DNS 流量 → WireGuard 或指定代理 DNS</code></pre><p>只把目标网站 IP 路由进 WireGuard，而 DNS 仍从机房或本地发出，会造成出口不一致。</p>
+<h2>分流与出口选择</h2><pre><code>proxy-groups:
+  - name: 出口选择
+    type: select
+    proxies:
+      - IDC-机房出口
+      - Home-家宽出口</code></pre><ul><li>默认使用机房出口，减少家宽链路负载。</li><li>只有明确需要住宅网络环境的服务才使用家宽出口。</li><li>登录、支付和账号敏感服务尽量保持出口地区与 IP 稳定。</li><li>同一会话不要频繁切换国家、ASN 或住宅/机房属性。</li><li>先处理私网、局域网和必要直连，再处理代理服务。</li><li>规则更新后检查是否误伤 DNS、NTP、软件更新和服务器管理流量。</li></ul><p>节点名称应表达实际出口，不要把入口服务器位置误写成最终出口位置。</p>
+<h2>网络测试与排查</h2><pre><code>ping -c 4 目标地址
+tracepath 目标地址
+curl -4 https://ipinfo.io
+curl -6 https://ipinfo.io
+ss -s</code></pre><ol><li>DNS 是否正确解析。</li><li>服务是否监听预期地址和端口。</li><li>云安全组与系统防火墙是否同时放行。</li><li>TCP、UDP 类型是否匹配。</li><li>客户端与服务器时间是否正确。</li><li>证书、SNI、UUID、密钥和 <code>shortId</code> 是否一致。</li><li>MTU、IPv6 和策略路由是否引发异常。</li><li>服务商是否限制端口、代理或持续 UDP。</li></ol><p>排障时临时提高日志级别，解决后恢复；日志中的客户端 IP、目标域名、用户标识和订阅信息都应按敏感数据处理。</p>
+<h2>监控与维护</h2><h3>服务状态</h3><pre><code>systemctl --failed
+systemctl status xray
+journalctl -u xray --since today
+ss -lntup</code></pre><p>服务名按实际安装方式调整。</p><h3>流量监控</h3><pre><code>apt install -y vnstat
+systemctl enable --now vnstat
+vnstat
+ip link
+vnstat --iflist</code></pre><h3>备份示例</h3><pre><code>install -d -m 700 /root/backups
+tar -czf /root/backups/proxy-backup.tar.gz /usr/local/etc/xray /etc/wireguard /etc/ufw 2&gt;/dev/null</code></pre><p>备份前确认目录存在；恢复演练比只生成备份更重要。实际环境应使用带时间戳且权限受限的备份命名。</p><h3>定期检查</h3><ul><li>操作系统安全更新。</li><li>Xray、sing-box、Mihomo 和面板版本。</li><li>证书剩余有效期、磁盘、内存、连接数和日志轮转。</li><li>防火墙规则及订阅是否泄露敏感地址。</li><li>家宽出口 ASN 与分类是否变化。</li><li>IPv6 是否意外形成旁路出口。</li></ul>
+</main></div><footer class="footer"><div class="footer-content"><p>&copy; 2026 Proxy 101 知识库. 仅供技术学习使用.</p></div></footer><script src="../assets/js/main.js"></script></body></html>

@@ -46,8 +46,8 @@
                 <div class="nav-section">
                     <h3>协议与工具</h3>
                     <ul>
-                        <li><a href="protocols.html">代理协议详解</a></li>
-                        <li><a href="tools.html">部署工具</a></li>
+                        <li><a href="protocols.html">协议、核心与客户端</a></li>
+                        <li><a href="tools.html">部署与管理工具</a></li>
                         <li><a href="clients.html">客户端推荐</a></li>
                     </ul>
                 </div>
@@ -69,7 +69,8 @@
                 <div class="nav-section">
                     <h3>进阶与实战</h3>
                     <ul>
-                        <li><a href="advanced.html">进阶优化</a></li>
+                        <li><a href="proxy-chain.html">家宽中转与链式代理</a></li>
+                        <li><a href="advanced.html">进阶优化与维护</a></li>
                         <li><a href="faq.html">常见问题</a></li>
                     </ul>
                 </div>
@@ -155,7 +156,7 @@
                     </tr>
                     <tr>
                         <td><strong>信誉度</strong></td>
-                        <td>⭐⭐⭐⭐⭐ 极高，不易被封禁</td>
+                        <td>不能仅凭住宅标签判断；需结合 ASN、WHOIS、数据库和目标服务实际识别</td>
                     </tr>
                     <tr>
                         <td><strong>稳定性</strong></td>
@@ -167,11 +168,11 @@
                     </tr>
                     <tr>
                         <td><strong>价格</strong></td>
-                        <td>💰💰💰 昂贵（$20-100/月）</td>
+                        <td>价格、带宽和稳定性取决于服务商与接入方式，不能用固定范围概括</td>
                     </tr>
                     <tr>
                         <td><strong>适用场景</strong></td>
-                        <td>需要高信誉度的场景（爬虫、账号养号等）</td>
+                        <td>需要核验住宅属性的合规业务场景；住宅属性不保证账号安全或服务可用</td>
                     </tr>
                 </tbody>
             </table>
@@ -195,7 +196,7 @@
                     </tr>
                     <tr>
                         <td><strong>信誉度</strong></td>
-                        <td>⭐⭐⭐ 中等，容易被识别</td>
+                        <td>通常可被识别为数据中心网络，但实际分类依赖 ASN、数据库和目标服务</td>
                     </tr>
                     <tr>
                         <td><strong>稳定性</strong></td>
@@ -207,7 +208,7 @@
                     </tr>
                     <tr>
                         <td><strong>价格</strong></td>
-                        <td>💰 便宜（$5-20/月）</td>
+                        <td>价格随商家、地区、带宽和流量变化</td>
                     </tr>
                     <tr>
                         <td><strong>适用场景</strong></td>
@@ -249,8 +250,8 @@
                             <ul>
                                 <li>✅ 全程 CN2 线路（去程+回程）</li>
                                 <li>✅ 延迟最低，速度最快</li>
-                                <li>✅ 晚高峰不拥堵</li>
-                                <li>⭐⭐⭐⭐⭐ 最优质</li>
+                                <li>⚠️ 具体质量取决于运营商、地区、去程回程和时段实测</li>
+                                <li>不能脱离线路测试做固定排名</li>
                             </ul>
                         </td>
                         <td>💰💰💰 贵</td>
@@ -260,10 +261,8 @@
                         <td>Global Transit</td>
                         <td>
                             <ul>
-                                <li>⚠️ 部分 CN2（通常只有回程）</li>
-                                <li>✓ 比普通线路好</li>
-                                <li>⚠️ 晚高峰可能拥堵</li>
-                                <li>⭐⭐⭐ 中等质量</li>
+                                <li>⚠️ 覆盖范围和去程回程需要实测</li>
+                                <li>表现受地区、运营商和时段影响</li>
                             </ul>
                         </td>
                         <td>💰💰 中等</td>
@@ -292,12 +291,12 @@
                 <ul>
                     <li>⚡ <strong>极低延迟</strong> - 物理专线，延迟最低</li>
                     <li>🚀 <strong>极高速度</strong> - 不受公网拥堵影响</li>
-                    <li>🛡️ <strong>不过墙</strong> - 不经过 GFW，几乎不会被封</li>
-                    <li>💰 <strong>极贵</strong> - 价格是普通 VPS 的 5-10 倍</li>
+                    <li>⚠️ 路径和服务商实现不同，不能据此保证不会被干扰或封禁</li>
+                    <li>价格和带宽方案差异很大，应以当前服务商条款为准</li>
                 </ul>
                 
-                <h4>价格参考</h4>
-                <p>通常 $50-200/月，按流量或带宽计费。</p>
+                <h4>核验重点</h4>
+                <p>确认是否真的是点对点专线、计费方式、带宽承诺、可用区域、服务条款和故障赔付，不能用固定价格判断。</p>
             </div>
 
             <h3>BGP (Border Gateway Protocol)</h3>
@@ -492,7 +491,7 @@
                 <p>掌握了这些术语后，你可以更轻松地理解技术文档和社区讨论。接下来推荐学习：</p>
                 <ul>
                     <li><a href="vps.html">VPS 基础知识</a> - 学习如何选择合适的 VPS</li>
-                    <li><a href="protocols.html">代理协议详解</a> - 深入了解各种代理协议</li>
+                    <li><a href="protocols.html">协议、核心与客户端</a> - 按场景比较协议和核心</li>
                     <li><a href="providers.html">VPS 提供商</a> - 了解主流 VPS 商家</li>
                 </ul>
             </div>

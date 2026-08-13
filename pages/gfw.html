@@ -46,8 +46,8 @@
                 <div class="nav-section">
                     <h3>协议与工具</h3>
                     <ul>
-                        <li><a href="protocols.html">代理协议详解</a></li>
-                        <li><a href="tools.html">部署工具</a></li>
+                        <li><a href="protocols.html">协议、核心与客户端</a></li>
+                        <li><a href="tools.html">部署与管理工具</a></li>
                         <li><a href="clients.html">客户端推荐</a></li>
                     </ul>
                 </div>
@@ -69,7 +69,8 @@
                 <div class="nav-section">
                     <h3>进阶与实战</h3>
                     <ul>
-                        <li><a href="advanced.html">进阶优化</a></li>
+                        <li><a href="proxy-chain.html">家宽中转与链式代理</a></li>
+                        <li><a href="advanced.html">进阶优化与维护</a></li>
                         <li><a href="faq.html">常见问题</a></li>
                     </ul>
                 </div>
@@ -126,7 +127,7 @@
                 
                 <h4>对抗方法</h4>
                 <ul>
-                    <li>✅ 使用 Reality（完美伪装 TLS）</li>
+                    <li>✅ 测试 VLESS + REALITY，但不要把它视为无条件的伪装保证</li>
                     <li>✅ WebSocket + TLS（伪装成正常 HTTPS）</li>
                     <li>✅ 流量混淆</li>
                     <li>✅ 使用标准 TLS 证书</li>
@@ -147,7 +148,7 @@
                 
                 <h4>对抗方法</h4>
                 <ul>
-                    <li>✅ VLESS Reality（无法被探测）</li>
+                    <li>✅ 使用正确配置的 VLESS + REALITY，并验证握手、目标站、时间和日志</li>
                     <li>✅ 设置回落机制（探测时返回正常网站）</li>
                     <li>✅ 使用认证机制</li>
                     <li>✅ 避免使用自签名证书</li>
@@ -293,7 +294,7 @@
                     <tr>
                         <td><strong>严格封锁</strong></td>
                         <td>VLESS Reality</td>
-                        <td>完美伪装，无法识别</td>
+                        <td>参数和目标站正确时可作为一种 TLS 类方案，效果依网络和实现而变</td>
                     </tr>
                     <tr>
                         <td><strong>一般环境</strong></td>
@@ -346,7 +347,7 @@ tcping your-vps-ip 443</code></pre>
                 <p>了解了检测原理后，建议学习：</p>
                 <ul>
                     <li><a href="ip-blocking.html">IP 封禁机制</a> - 了解封禁后的处理</li>
-                    <li><a href="advanced.html">进阶优化</a> - 提升隐蔽性的高级技巧</li>
+                    <li><a href="advanced.html">进阶优化与维护</a> - 学习 CDN、DNS、分流与监控边界</li>
                     <li><a href="faq.html">常见问题</a> - 解决实际使用中的问题</li>
                 </ul>
             </div>
